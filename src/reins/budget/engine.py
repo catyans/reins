@@ -161,11 +161,15 @@ class BudgetEngine:
         raise BudgetExceededError(agent, balance)
 
     def _estimate_cost(self, span: SpanData) -> Decimal:
-        """Estimate cost before the call (using average output tokens)."""
-        # Assume ~500 output tokens for estimation
-        estimated_out = 500
-        # Input tokens are harder to estimate pre-call, use a rough estimate
-        estimated_in = 1000
+        """Estimate cost before the call using actual prompt token estimates.
+
+        Uses estimated_input_tokens (from prompt char count) and
+        estimated_max_output_tokens (from max_tokens param) for a much
+        more accurate pre-call estimate than a hardcoded number.
+        """
+        estimated_in = span.estimated_input_tokens or 500
+        # Use max_tokens as upper bound, but assume ~50% utilization
+        estimated_out = max((span.estimated_max_output_tokens or 1024) // 2, 100)
         return get_price(span.provider, span.model, estimated_in, estimated_out)
 
     def _get_balance(self, agent: str, default: Decimal | None = None) -> Decimal:
