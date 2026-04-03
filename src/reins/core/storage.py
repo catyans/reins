@@ -177,6 +177,17 @@ class Storage:
         columns = [desc[0] for desc in result.description]
         return [dict(zip(columns, row)) for row in result.fetchall()]
 
+    def find_run(self, run_id_prefix: str) -> dict[str, Any] | None:
+        """Find a run by ID prefix (safe from SQL injection)."""
+        rows = self.query("SELECT * FROM runs WHERE run_id LIKE ? LIMIT 1", [run_id_prefix + "%"])
+        return rows[0] if rows else None
+
+    def get_run_spans(self, run_id: str) -> list[dict[str, Any]]:
+        """Get all spans for a run (safe from SQL injection)."""
+        return self.query(
+            "SELECT * FROM spans WHERE run_id = ? ORDER BY started_at ASC", [run_id]
+        )
+
     def close(self) -> None:
         self._conn.close()
 
