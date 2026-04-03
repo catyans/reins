@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import threading
+from datetime import datetime, timezone
 from decimal import Decimal
 from typing import Any
 
@@ -44,8 +45,79 @@ class BudgetEngine:
         self._reservations: dict[str, Decimal] = {}  # span_id -> reserved amount
         self._circuit_breaker = CircuitBreaker()
 
+        # Load persisted balances from DuckDB
+        self._ensure_balance_table()
+        self._load_balances()
+
         # Listen for context rot to reduce budgets
         event_bus.on(Events.CONTEXT_ROT, self._on_context_rot)
+
+    def _ensure_balance_table(self) -> None:
+        """Create budget_balances table if it doesn't exist."""
+        try:
+            self._storage.query("""
+                CREATE TABLE IF NOT EXISTS budget_balances (
+                    agent_name VARCHAR PRIMARY KEY,
+                    balance DOUBLE NOT NULL,
+                    period_type VARCHAR NOT NULL,
+                    period_start VARCHAR NOT NULL,
+                    updated_at VARCHAR NOT NULL
+                )
+            """)
+        except Exception:
+            logger.debug("Failed to create budget_balances table", exc_info=True)
+
+    def _load_balances(self) -> None:
+        """Load persisted balances, resetting if the period has expired."""
+        try:
+            rows = self._storage.query("SELECT * FROM budget_balances")
+        except Exception:
+            return
+
+        now = datetime.now(timezone.utc)
+
+        for row in rows:
+            agent = row["agent_name"]
+            balance = Decimal(str(row["balance"]))
+            period_type = row["period_type"]
+            period_start = row["period_start"]
+
+            if self._period_expired(period_type, period_start, now):
+                # Period expired — reset balance (will be re-initialized on next call)
+                logger.info("Budget period expired for %s, resetting", agent)
+                continue
+
+            self._balances[agent] = balance
+
+    def _persist_balance(self, agent: str, balance: Decimal, period_type: str = "daily") -> None:
+        """Persist balance to DuckDB for crash recovery."""
+        now = datetime.now(timezone.utc)
+        try:
+            # Upsert
+            self._storage.query(f"""
+                DELETE FROM budget_balances WHERE agent_name = '{agent}'
+            """)
+            self._storage.query(f"""
+                INSERT INTO budget_balances (agent_name, balance, period_type, period_start, updated_at)
+                VALUES ('{agent}', {float(balance)}, '{period_type}', '{now.date().isoformat()}', '{now.isoformat()}')
+            """)
+        except Exception:
+            logger.debug("Failed to persist balance for %s", agent, exc_info=True)
+
+    @staticmethod
+    def _period_expired(period_type: str, period_start: str, now: datetime) -> bool:
+        """Check if a budget period has expired."""
+        try:
+            start_date = datetime.fromisoformat(period_start).date() if "T" in period_start else datetime.strptime(period_start, "%Y-%m-%d").date()
+        except Exception:
+            return True
+
+        today = now.date()
+        if period_type == "daily":
+            return today > start_date
+        elif period_type == "monthly":
+            return today.year > start_date.year or today.month > start_date.month
+        return False
 
     def on_span_start(self, span: SpanData) -> SpanData:
         """Pre-call: reserve budget, degrade if needed."""
@@ -107,8 +179,11 @@ class BudgetEngine:
 
         with self._lock:
             self._balances[agent] = self._balances.get(agent, Decimal("0")) + delta
+            new_balance = self._balances[agent]
 
-        self._log_event(agent, "commit", float(actual), float(self._balances[agent]), span)
+        self._log_event(agent, "commit", float(actual), float(new_balance), span)
+        # Persist updated balance
+        self._persist_balance(agent, new_balance)
 
     def _handle_exceed(
         self,
