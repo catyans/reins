@@ -154,9 +154,7 @@ class Instrumentor:
     ) -> Any:
         span = SpanData.from_llm_call(provider, kwargs)
         run = get_current_run()
-        if run:
-            span.run_id = run.run_id
-            span.metadata["agent_name"] = run.agent_name
+        self._enrich_span_from_run(span, run)
 
         # Pre-hooks (e.g. Budget modifies model)
         for module in self._modules:
@@ -194,9 +192,7 @@ class Instrumentor:
     ) -> Any:
         span = SpanData.from_llm_call(provider, kwargs)
         run = get_current_run()
-        if run:
-            span.run_id = run.run_id
-            span.metadata["agent_name"] = run.agent_name
+        self._enrich_span_from_run(span, run)
 
         for module in self._modules:
             try:
@@ -221,6 +217,20 @@ class Instrumentor:
 
         self._finalize_span(span, run)
         return response
+
+    @staticmethod
+    def _enrich_span_from_run(span: SpanData, run: Any) -> None:
+        """Propagate run-level metadata (agent_name, on_exceed, budget) to span."""
+        if run is None:
+            return
+        span.run_id = run.run_id
+        span.metadata["agent_name"] = run.agent_name
+        # Propagate on_exceed strategy so Budget engine can read it
+        if "on_exceed" in run.metadata:
+            span.metadata["on_exceed"] = run.metadata["on_exceed"]
+        # Propagate budget limit for run-level budget enforcement
+        if run.budget_limit is not None:
+            span.metadata["budget_limit"] = str(run.budget_limit)
 
     def _finalize_span(self, span: SpanData, run: Any) -> None:
         """Post-hooks + persist."""

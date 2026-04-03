@@ -129,21 +129,16 @@ class BudgetEngine:
             self._event_bus.emit(Events.BUDGET_CIRCUIT_BREAK, agent=agent)
             raise BudgetExceededError(agent, self._get_balance(agent))
 
-        # Get budget config
+        # Get budget config from YAML or from decorator (via span metadata)
         budget_config = self._config.get_agent_budget(agent)
-        if not budget_config:
-            # Check run-level budget from decorator
-            from reins.core.context import get_current_run
-
-            run = get_current_run()
-            if run and run.budget_limit:
-                limit = run.budget_limit
-                on_exceed_run = run.metadata.get("on_exceed", "alert")
-            else:
-                return span  # No budget configured
-        else:
+        if budget_config:
             limit = budget_config.per_run or budget_config.daily or Decimal("999999")
             on_exceed = budget_config.on_exceed
+        elif "budget_limit" in span.metadata:
+            # Run-level budget from @trace(budget="$0.50") decorator
+            limit = Decimal(span.metadata["budget_limit"])
+        else:
+            return span  # No budget configured
 
         # Estimate cost
         estimated = self._estimate_cost(span)
