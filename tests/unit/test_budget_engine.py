@@ -66,8 +66,9 @@ def test_degradation_on_budget_exceed(event_bus, storage, budget_config):
     final_span.metadata["agent_name"] = "test_agent"
     result = engine.on_span_start(final_span)
 
-    # Should have degraded at some point
-    assert result.degraded or len(degraded_events) > 0 or True  # Engine didn't crash
+    # Should have degraded at some point (either this span or an earlier one)
+    assert result.degraded or len(degraded_events) > 0, \
+        "Expected degradation after exhausting $0.50 budget with 20x$0.03 calls"
 
 
 def test_reject_on_exceed(engine):
