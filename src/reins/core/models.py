@@ -9,6 +9,45 @@ from decimal import Decimal
 from typing import Any
 
 
+def _estimate_input_tokens(provider: str, kwargs: dict[str, Any]) -> int:
+    """Estimate input token count from request kwargs.
+
+    Uses a rough heuristic: ~4 chars per token for English text.
+    This is much better than a hardcoded number because it scales
+    with actual prompt size.
+    """
+    CHARS_PER_TOKEN = 4  # conservative estimate
+
+    total_chars = 0
+
+    # Anthropic format: messages=[{"role": ..., "content": ...}]
+    # OpenAI format: messages=[{"role": ..., "content": ...}]
+    messages = kwargs.get("messages", [])
+    for msg in messages:
+        content = msg.get("content", "")
+        if isinstance(content, str):
+            total_chars += len(content)
+        elif isinstance(content, list):
+            # Content blocks (Anthropic multimodal)
+            for block in content:
+                if isinstance(block, dict):
+                    total_chars += len(block.get("text", ""))
+                elif isinstance(block, str):
+                    total_chars += len(block)
+
+    # System prompt
+    system = kwargs.get("system", "")
+    if isinstance(system, str):
+        total_chars += len(system)
+    elif isinstance(system, list):
+        for block in system:
+            if isinstance(block, dict):
+                total_chars += len(block.get("text", ""))
+
+    estimated = max(total_chars // CHARS_PER_TOKEN, 50)  # minimum 50 tokens
+    return estimated
+
+
 def _utcnow() -> datetime:
     return datetime.now(timezone.utc)
 
@@ -52,6 +91,10 @@ class SpanData:
     eval_scores: dict[str, float] | None = None
     safety_flags: list[str] | None = None
 
+    # Pre-call estimates (for budget reservation)
+    estimated_input_tokens: int = 0
+    estimated_max_output_tokens: int = 0
+
     # General
     status: str = "ok"  # ok | error
     error_message: str | None = None
@@ -60,12 +103,16 @@ class SpanData:
     @classmethod
     def from_llm_call(cls, provider: str, kwargs: dict[str, Any]) -> SpanData:
         model = kwargs.get("model", "unknown")
+        estimated_in = _estimate_input_tokens(provider, kwargs)
+        estimated_out = kwargs.get("max_tokens", 1024)
         return cls(
             span_type="llm",
             provider=provider,
             model=model,
             model_requested=model,
             name=f"{provider}.chat.create",
+            estimated_input_tokens=estimated_in,
+            estimated_max_output_tokens=estimated_out,
         )
 
     @classmethod
