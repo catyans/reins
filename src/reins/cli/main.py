@@ -128,6 +128,160 @@ def proxy(port: int, host: str, budget: str | None, on_exceed: str) -> None:
     web.run_app(app, host=host, port=port, print=None)
 
 
+# ─── Trace commands ──────────────────────────────────────────────────────────
+
+@cli.group()
+def trace() -> None:
+    """Trace inspection commands."""
+    pass
+
+
+@trace.command("list")
+@click.option("--limit", default=20, help="Number of recent runs to show")
+@click.option("--agent", default=None, help="Filter by agent name")
+def trace_list(limit: int, agent: str | None) -> None:
+    """List recent agent runs."""
+    from reins.trace.visualizer import render_run_list
+
+    storage = _get_storage()
+    where = "WHERE 1=1"
+    if agent:
+        where += f" AND r.agent_name = '{agent}'"
+
+    rows = storage.query(f"""
+        SELECT
+            r.run_id, r.agent_name, r.status, r.total_cost,
+            r.degraded_count, r.started_at,
+            COUNT(s.span_id) as span_count
+        FROM runs r
+        LEFT JOIN spans s ON r.run_id = s.run_id
+        {where}
+        GROUP BY r.run_id, r.agent_name, r.status, r.total_cost,
+                 r.degraded_count, r.started_at
+        ORDER BY r.started_at DESC
+        LIMIT {limit}
+    """)
+    click.echo(render_run_list(rows))
+
+
+@trace.command("show")
+@click.argument("run_id")
+def trace_show(run_id: str) -> None:
+    """Show call tree for a specific run."""
+    from reins.trace.visualizer import render_call_tree
+
+    storage = _get_storage()
+
+    # Support partial run_id match
+    runs = storage.query(f"""
+        SELECT * FROM runs WHERE run_id LIKE '{run_id}%' LIMIT 1
+    """)
+    if not runs:
+        click.echo(f"Run not found: {run_id}", err=True)
+        sys.exit(1)
+
+    run = runs[0]
+    full_id = run["run_id"]
+
+    spans = storage.query(f"""
+        SELECT * FROM spans WHERE run_id = '{full_id}'
+        ORDER BY started_at ASC
+    """)
+
+    click.echo(render_call_tree(run, spans))
+
+
+@trace.command("spans")
+@click.argument("run_id")
+def trace_spans(run_id: str) -> None:
+    """Show detailed span list for a run."""
+    from reins.trace.visualizer import render_span_detail
+
+    storage = _get_storage()
+    spans = storage.query(f"""
+        SELECT * FROM spans WHERE run_id LIKE '{run_id}%'
+        ORDER BY started_at ASC
+    """)
+    if not spans:
+        click.echo(f"No spans found for run: {run_id}", err=True)
+        sys.exit(1)
+
+    for span in spans:
+        click.echo(render_span_detail(span))
+
+
+@trace.command("export")
+@click.option("--format", "fmt", default="json", type=click.Choice(["json", "otel"]))
+@click.option("--run-id", default=None, help="Export specific run")
+@click.option("--output", "-o", default=None, help="Output file (default: stdout)")
+def trace_export(fmt: str, run_id: str | None, output: str | None) -> None:
+    """Export traces."""
+    storage = _get_storage()
+
+    if run_id:
+        spans = storage.query(f"SELECT * FROM spans WHERE run_id LIKE '{run_id}%' ORDER BY started_at")
+    else:
+        spans = storage.query("SELECT * FROM spans ORDER BY started_at DESC LIMIT 1000")
+
+    if fmt == "json":
+        data = json.dumps(spans, indent=2, default=str)
+    elif fmt == "otel":
+        from reins.trace.exporter import spans_to_otlp_json
+        data = spans_to_otlp_json(spans)
+
+    if output:
+        with open(output, "w") as f:
+            f.write(data)
+        click.echo(f"Exported {len(spans)} spans to {output}")
+    else:
+        click.echo(data)
+
+
+# ─── Lens commands ───────────────────────────────────────────────────────────
+
+@cli.command()
+@click.argument("run_id")
+def replay(run_id: str) -> None:
+    """Step-by-step replay of an agent run."""
+    from reins.lens.replay import replay_run
+
+    storage = _get_storage()
+    runs = storage.query(f"SELECT * FROM runs WHERE run_id LIKE '{run_id}%' LIMIT 1")
+    if not runs:
+        click.echo(f"Run not found: {run_id}", err=True)
+        sys.exit(1)
+
+    run = runs[0]
+    spans = storage.query(f"""
+        SELECT * FROM spans WHERE run_id = '{run['run_id']}'
+        ORDER BY started_at ASC
+    """)
+
+    replay_run(run, spans)
+
+
+@cli.command()
+@click.argument("run_id")
+def health(run_id: str) -> None:
+    """Show context health curve for a run."""
+    from reins.lens.context_health import render_health_report
+
+    storage = _get_storage()
+    runs = storage.query(f"SELECT * FROM runs WHERE run_id LIKE '{run_id}%' LIMIT 1")
+    if not runs:
+        click.echo(f"Run not found: {run_id}", err=True)
+        sys.exit(1)
+
+    spans = storage.query(f"""
+        SELECT * FROM spans WHERE run_id = '{runs[0]['run_id']}'
+        ORDER BY started_at ASC
+    """)
+
+    click.echo(render_health_report(runs[0], spans))
+
+
+# ─── Config ──────────────────────────────────────────────────────────────────
+
 @cli.command()
 def config() -> None:
     """Show current configuration."""
