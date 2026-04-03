@@ -13,7 +13,18 @@ from reins.core.storage import Storage
 
 def _get_storage() -> Storage:
     config = ReinsConfig.load()
-    return Storage(config.storage_path)
+    try:
+        return Storage(config.storage_path)
+    except Exception as e:
+        click.echo(f"Failed to open storage: {e}", err=True)
+        click.echo("Run an agent with @trace() first to create the database.", err=True)
+        sys.exit(1)
+
+
+def _sanitize_identifier(value: str) -> str:
+    """Sanitize a value for safe use in SQL (alphanumeric + underscore + hyphen only)."""
+    import re
+    return re.sub(r"[^a-zA-Z0-9_\-.]", "", value)
 
 
 @click.group()
@@ -40,7 +51,8 @@ def report(period: str, agent: str | None, fmt: str) -> None:
         where += " AND r.started_at >= CURRENT_DATE - INTERVAL 30 DAY"
 
     if agent:
-        where += f" AND r.agent_name = '{agent}'"
+        safe_agent = _sanitize_identifier(agent)
+        where += f" AND r.agent_name = '{safe_agent}'"
 
     # Summary by agent
     rows = storage.query(f"""
@@ -144,9 +156,11 @@ def trace_list(limit: int, agent: str | None) -> None:
     from reins.trace.visualizer import render_run_list
 
     storage = _get_storage()
-    where = "WHERE 1=1"
+    params: list = []
+    agent_filter = ""
     if agent:
-        where += f" AND r.agent_name = '{agent}'"
+        agent_filter = "WHERE r.agent_name = ?"
+        params.append(_sanitize_identifier(agent))
 
     rows = storage.query(f"""
         SELECT
@@ -155,12 +169,12 @@ def trace_list(limit: int, agent: str | None) -> None:
             COUNT(s.span_id) as span_count
         FROM runs r
         LEFT JOIN spans s ON r.run_id = s.run_id
-        {where}
+        {agent_filter}
         GROUP BY r.run_id, r.agent_name, r.status, r.total_cost,
                  r.degraded_count, r.started_at
         ORDER BY r.started_at DESC
-        LIMIT {limit}
-    """)
+        LIMIT {int(limit)}
+    """, params or None)
     click.echo(render_run_list(rows))
 
 
@@ -171,23 +185,13 @@ def trace_show(run_id: str) -> None:
     from reins.trace.visualizer import render_call_tree
 
     storage = _get_storage()
-
-    # Support partial run_id match
-    runs = storage.query(f"""
-        SELECT * FROM runs WHERE run_id LIKE '{run_id}%' LIMIT 1
-    """)
-    if not runs:
+    safe_id = _sanitize_identifier(run_id)
+    run = storage.find_run(safe_id)
+    if not run:
         click.echo(f"Run not found: {run_id}", err=True)
         sys.exit(1)
 
-    run = runs[0]
-    full_id = run["run_id"]
-
-    spans = storage.query(f"""
-        SELECT * FROM spans WHERE run_id = '{full_id}'
-        ORDER BY started_at ASC
-    """)
-
+    spans = storage.get_run_spans(run["run_id"])
     click.echo(render_call_tree(run, spans))
 
 
@@ -198,14 +202,13 @@ def trace_spans(run_id: str) -> None:
     from reins.trace.visualizer import render_span_detail
 
     storage = _get_storage()
-    spans = storage.query(f"""
-        SELECT * FROM spans WHERE run_id LIKE '{run_id}%'
-        ORDER BY started_at ASC
-    """)
-    if not spans:
+    safe_id = _sanitize_identifier(run_id)
+    run = storage.find_run(safe_id)
+    if not run:
         click.echo(f"No spans found for run: {run_id}", err=True)
         sys.exit(1)
 
+    spans = storage.get_run_spans(run["run_id"])
     for span in spans:
         click.echo(render_span_detail(span))
 
@@ -219,7 +222,11 @@ def trace_export(fmt: str, run_id: str | None, output: str | None) -> None:
     storage = _get_storage()
 
     if run_id:
-        spans = storage.query(f"SELECT * FROM spans WHERE run_id LIKE '{run_id}%' ORDER BY started_at")
+        safe_id = _sanitize_identifier(run_id)
+        spans = storage.query(
+            "SELECT * FROM spans WHERE run_id LIKE ? ORDER BY started_at",
+            [safe_id + "%"],
+        )
     else:
         spans = storage.query("SELECT * FROM spans ORDER BY started_at DESC LIMIT 1000")
 
@@ -246,17 +253,13 @@ def replay(run_id: str) -> None:
     from reins.lens.replay import replay_run
 
     storage = _get_storage()
-    runs = storage.query(f"SELECT * FROM runs WHERE run_id LIKE '{run_id}%' LIMIT 1")
-    if not runs:
+    safe_id = _sanitize_identifier(run_id)
+    run = storage.find_run(safe_id)
+    if not run:
         click.echo(f"Run not found: {run_id}", err=True)
         sys.exit(1)
 
-    run = runs[0]
-    spans = storage.query(f"""
-        SELECT * FROM spans WHERE run_id = '{run['run_id']}'
-        ORDER BY started_at ASC
-    """)
-
+    spans = storage.get_run_spans(run["run_id"])
     replay_run(run, spans)
 
 
@@ -267,17 +270,14 @@ def health(run_id: str) -> None:
     from reins.lens.context_health import render_health_report
 
     storage = _get_storage()
-    runs = storage.query(f"SELECT * FROM runs WHERE run_id LIKE '{run_id}%' LIMIT 1")
-    if not runs:
+    safe_id = _sanitize_identifier(run_id)
+    run = storage.find_run(safe_id)
+    if not run:
         click.echo(f"Run not found: {run_id}", err=True)
         sys.exit(1)
 
-    spans = storage.query(f"""
-        SELECT * FROM spans WHERE run_id = '{runs[0]['run_id']}'
-        ORDER BY started_at ASC
-    """)
-
-    click.echo(render_health_report(runs[0], spans))
+    spans = storage.get_run_spans(run["run_id"])
+    click.echo(render_health_report(run, spans))
 
 
 # ─── Config ──────────────────────────────────────────────────────────────────
