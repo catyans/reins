@@ -35,8 +35,13 @@ budget = []
 trace = []
 lens = ["reins[trace]"]
 pulse = []
-all = ["reins[budget]", "reins[trace]", "reins[lens]", "reins[pulse]"]
 proxy = ["aiohttp>=3.9"]
+# Framework adapters (each is optional)
+langchain = []     # No extra deps — uses duck-typing
+openai-agents = [] # No extra deps — uses duck-typing
+crewai = []        # No extra deps — uses duck-typing
+otel = ["opentelemetry-api>=1.20", "opentelemetry-sdk>=1.20"]
+all = ["reins[budget]", "reins[trace]", "reins[lens]", "reins[pulse]"]
 dev = [
     "pytest>=8.0",
     "pytest-asyncio>=0.23",
