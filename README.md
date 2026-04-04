@@ -1,6 +1,6 @@
 <p align="center">
-  <img src="docs/assets/logo.png" alt="Reins Logo" width="180"/>
   <h1 align="center">Reins</h1>
+  <p align="center"><img src="docs/assets/logo.png" alt="Reins Logo" width="120"/></p>
   <p align="center"><strong>Take Control of Your AI Agents</strong></p>
   <p align="center">
     The runtime platform that makes AI agents debuggable, affordable, and reliable.<br/>
