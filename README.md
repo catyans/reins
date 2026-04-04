@@ -365,7 +365,7 @@ MIT License. See [LICENSE](LICENSE).
 
 ## Author
 
-**Yanshu Wang** ([@catyans](https://github.com/catyans))
+**Yanshu Wang** ([@catyans](https://github.com/catyans)) — [https://catyans.github.io](https://catyans.github.io)
 
 ---
 
