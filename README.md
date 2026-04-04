@@ -282,7 +282,7 @@ provider.add_span_processor(ReinsSpanProcessor())
 | **Context health** | Yes | No | No | No | No |
 | **Framework adapters** | 10+ frameworks | N/A | 12+ | N/A | 5+ |
 | **Setup** | `pip install reins` | `docker-compose up` | `docker-compose up` | Cloud signup | Cloud signup |
-| **Open source** | MIT | Enterprise paywall | MIT | MIT | Proprietary |
+| **Open source** | BSL 1.1 (→ Apache 2030) | Enterprise paywall | MIT | MIT | Proprietary |
 
 **One-line difference**: LiteLLM is an API Gateway (needs infra, hard-rejects on exceed). Reins is an Agent Runtime (zero-infra, degrades gracefully).
 
@@ -344,7 +344,13 @@ python scripts/generate_charts.py
 
 ## License
 
-MIT License. See [LICENSE](LICENSE).
+[Business Source License 1.1](LICENSE) (BSL 1.1)
+
+- **Free for**: personal use, internal enterprise use, academic research, contributing back
+- **Not allowed**: building a competing commercial AI agent cost governance product/service
+- **Auto-converts to Apache 2.0** on April 4, 2030
+
+For commercial licensing inquiries: 237344440@qq.com
 
 ---
 

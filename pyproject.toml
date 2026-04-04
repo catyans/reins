@@ -7,7 +7,7 @@ name = "reins"
 version = "0.1.0"
 description = "Take control of your AI agents — debuggable, affordable, reliable."
 readme = "README.md"
-license = "MIT"
+license = "BSL-1.1"
 requires-python = ">=3.9"
 authors = [
     { name = "Reins Team" },
@@ -16,7 +16,7 @@ keywords = ["ai", "agents", "llm", "observability", "cost", "budget", "tracing"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
+    "License :: Other/Proprietary License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
