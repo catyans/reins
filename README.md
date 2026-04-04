@@ -290,25 +290,9 @@ provider.add_span_processor(ReinsSpanProcessor())
 
 ## Architecture
 
-```
-┌──────────────────────────────────────────────────────────────┐
-│  pip install reins[all]                                       │
-│                                                              │
-│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐        │
-│  │  Budget   │ │  Trace   │ │   Lens   │ │  Pulse   │  Plugins│
-│  │  $0.50    │ │  Tree    │ │  Health  │ │  Guard   │        │
-│  └────┬─────┘ └────┬─────┘ └────┬─────┘ └────┬─────┘        │
-│       └────────────┼────────────┼────────────┘               │
-│              ┌─────▼─────┐                                   │
-│              │   Core    │  Instrumentation + DuckDB + Events │
-│              └─────┬─────┘                                   │
-│       ┌────────────┼────────────┐                            │
-│  ┌────▼────┐ ┌─────▼─────┐ ┌───▼────────┐                   │
-│  │ Library │ │   Proxy   │ │  Adapters  │                    │
-│  │  Mode   │ │   Mode    │ │ LC/OAI/Crew│                    │
-│  └─────────┘ └───────────┘ └────────────┘                    │
-└──────────────────────────────────────────────────────────────┘
-```
+<p align="center">
+  <img src="docs/assets/architecture.png" alt="Reins Architecture" width="700"/>
+</p>
 
 Modules communicate via an **event bus** — install only what you need, they auto-cooperate when co-installed. For example: Lens detects context rot → notifies Budget → Budget reduces remaining allocation.
 
