@@ -1,6 +1,6 @@
 <p align="center">
   <h1 align="center">Reins</h1>
-  <p align="center"><img src="docs/assets/logo.png" alt="Reins Logo" width="120"/></p>
+  <p align="center"><img src="docs/assets/reins-wordmark-v3.svg" alt="Reins Logo" width="400"/></p>
   <p align="center"><strong>Take Control of Your AI Agents</strong></p>
   <p align="center">
     The runtime platform that makes AI agents debuggable, affordable, and reliable.<br/>
@@ -30,6 +30,35 @@ async def my_agent(task: str):
 ```
 
 **One decorator. Budget control + cost tracking + auto-degradation + trace recording.**
+
+---
+
+## Measured Gemini cases
+
+Selected completed benchmarks, synchronized with the public case page on September 30, 2026.
+
+| Workload | Accepted test records | Lower API cost per accepted result | Comparison baseline |
+|---|---:|---:|---|
+| Incremental data refresh | 300/300 | 72.0% | One-item Gemini 2.5 Flash Lite |
+| Research paper collection | 300/300 | 63.5% | One-item Gemini 2.5 Flash |
+| Project research | 300/300 | 49.6% | One-item Gemini 2.5 Flash |
+
+[Interactive cases](https://47.245.114.167:8443/cases.html) ·
+[Readable benchmark report](docs/assets/reins-savings-report.pdf) ·
+[Recorded comparison data](docs/assets/featured-cases.json)
+
+Real API calls on reformatted public metadata and controlled updates, selected
+retrospectively from completed experiments. Acceptance checks required reference
+fields; these are not customer production results. Savings include failed attempts
+and fallback calls and are relative to the named baseline. Deterministic parsing
+is also a baseline for these structured inputs. Paper collection is an offline
+workload (p95 79.04 seconds); the other two examples have p95 below 60 seconds.
+These results do not imply that every workflow benefits or that savings are exclusive
+to Reins. The report includes the full four-workload presentation, including invoices.
+
+The latest local raw-document project-update experiment is separate from these
+benchmarks and has not established production-quality savings. Local experimental
+SDK features are not part of this documentation-only update.
 
 ---
 
