@@ -119,9 +119,7 @@ class Instrumentor:
             self._originals["openai.AsyncCompletions.create"] = orig_async_fn
 
             async def patched_async(self_inner: Any, *args: Any, **kwargs: Any) -> Any:
-                return await inst._wrap_async(
-                    orig_async_fn, self_inner, "openai", args, kwargs
-                )
+                return await inst._wrap_async(orig_async_fn, self_inner, "openai", args, kwargs)
 
             orig_async.create = patched_async  # type: ignore[assignment]
 

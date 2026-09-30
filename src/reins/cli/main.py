@@ -24,6 +24,7 @@ def _get_storage() -> Storage:
 def _sanitize_identifier(value: str) -> str:
     """Sanitize a value for safe use in SQL (alphanumeric + underscore + hyphen only)."""
     import re
+
     return re.sub(r"[^a-zA-Z0-9_\-.]", "", value)
 
 
@@ -117,7 +118,9 @@ def query(sql: str) -> None:
 @click.option("--port", default=8082, help="Proxy port")
 @click.option("--host", default="localhost", help="Proxy host")
 @click.option("--budget", default=None, help="Budget limit (e.g., '$5/day')")
-@click.option("--on-exceed", default="alert", type=click.Choice(["degrade", "pause", "alert", "reject"]))
+@click.option(
+    "--on-exceed", default="alert", type=click.Choice(["degrade", "pause", "alert", "reject"])
+)
 def proxy(port: int, host: str, budget: str | None, on_exceed: str) -> None:
     """Start the local transparent proxy server."""
     try:
@@ -142,6 +145,7 @@ def proxy(port: int, host: str, budget: str | None, on_exceed: str) -> None:
 
 # ─── Trace commands ──────────────────────────────────────────────────────────
 
+
 @cli.group()
 def trace() -> None:
     """Trace inspection commands."""
@@ -162,7 +166,8 @@ def trace_list(limit: int, agent: str | None) -> None:
         agent_filter = "WHERE r.agent_name = ?"
         params.append(_sanitize_identifier(agent))
 
-    rows = storage.query(f"""
+    rows = storage.query(
+        f"""
         SELECT
             r.run_id, r.agent_name, r.status, r.total_cost,
             r.degraded_count, r.started_at,
@@ -174,7 +179,9 @@ def trace_list(limit: int, agent: str | None) -> None:
                  r.degraded_count, r.started_at
         ORDER BY r.started_at DESC
         LIMIT {int(limit)}
-    """, params or None)
+    """,
+        params or None,
+    )
     click.echo(render_run_list(rows))
 
 
@@ -234,6 +241,7 @@ def trace_export(fmt: str, run_id: str | None, output: str | None) -> None:
         data = json.dumps(spans, indent=2, default=str)
     elif fmt == "otel":
         from reins.trace.exporter import spans_to_otlp_json
+
         data = spans_to_otlp_json(spans)
 
     if output:
@@ -245,6 +253,7 @@ def trace_export(fmt: str, run_id: str | None, output: str | None) -> None:
 
 
 # ─── Lens commands ───────────────────────────────────────────────────────────
+
 
 @cli.command()
 @click.argument("run_id")
@@ -282,6 +291,7 @@ def health(run_id: str) -> None:
 
 # ─── Config ──────────────────────────────────────────────────────────────────
 
+
 @cli.command()
 def config() -> None:
     """Show current configuration."""
@@ -301,6 +311,7 @@ def config() -> None:
 def version() -> None:
     """Show version information."""
     from reins import __version__
+
     click.echo(f"reins {__version__}")
 
 

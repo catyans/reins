@@ -63,7 +63,7 @@ class ReinsTracingProcessor:
             if hasattr(span_data, "model"):
                 span_type = "llm"
                 model = span_data.model or ""
-                name = f"openai.chat.create"
+                name = "openai.chat.create"
             # FunctionSpanData / ToolCallSpanData
             elif hasattr(span_data, "name") and hasattr(span_data, "input"):
                 span_type = "tool"
@@ -72,7 +72,10 @@ class ReinsTracingProcessor:
             # HandoffSpanData
             elif hasattr(span_data, "from_agent"):
                 span_type = "custom"
-                name = f"handoff.{getattr(span_data, 'from_agent', '')}→{getattr(span_data, 'to_agent', '')}"
+                name = (
+                    f"handoff.{getattr(span_data, 'from_agent', '')}"
+                    f"→{getattr(span_data, 'to_agent', '')}"
+                )
 
         reins_span = SpanData(
             span_id=span_id,
@@ -109,11 +112,15 @@ class ReinsTracingProcessor:
             usage = getattr(span_data, "usage", None)
             if usage:
                 tokens_in = getattr(usage, "input_tokens", 0) or getattr(usage, "prompt_tokens", 0)
-                tokens_out = getattr(usage, "output_tokens", 0) or getattr(usage, "completion_tokens", 0)
+                tokens_out = getattr(usage, "output_tokens", 0) or getattr(
+                    usage, "completion_tokens", 0
+                )
                 reins_span.complete(tokens_in=tokens_in, tokens_out=tokens_out)
             else:
                 reins_span.ended_at = _utcnow()
-                reins_span.duration_ms = (reins_span.ended_at - reins_span.started_at).total_seconds() * 1000
+                reins_span.duration_ms = (
+                    reins_span.ended_at - reins_span.started_at
+                ).total_seconds() * 1000
 
             # Check model used (may differ from requested if degraded)
             model_used = getattr(span_data, "model", None)
@@ -121,14 +128,18 @@ class ReinsTracingProcessor:
                 reins_span.model = model_used
         elif span_data and reins_span.span_type == "tool":
             reins_span.ended_at = _utcnow()
-            reins_span.duration_ms = (reins_span.ended_at - reins_span.started_at).total_seconds() * 1000
-            output = getattr(span_data, "output", None)
+            reins_span.duration_ms = (
+                reins_span.ended_at - reins_span.started_at
+            ).total_seconds() * 1000
+            _output = getattr(span_data, "output", None)
             reins_span.tool_status = "error" if getattr(span_data, "error", None) else "success"
             if getattr(span_data, "error", None):
                 reins_span.tool_error = str(span_data.error)
         else:
             reins_span.ended_at = _utcnow()
-            reins_span.duration_ms = (reins_span.ended_at - reins_span.started_at).total_seconds() * 1000
+            reins_span.duration_ms = (
+                reins_span.ended_at - reins_span.started_at
+            ).total_seconds() * 1000
 
         # Check for error
         error = getattr(span, "error", None) or getattr(span_data, "error", None)

@@ -2,7 +2,6 @@
 
 import tempfile
 from decimal import Decimal
-from pathlib import Path
 
 from reins.core.config import ReinsConfig, _parse_money
 

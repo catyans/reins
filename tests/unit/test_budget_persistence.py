@@ -31,7 +31,9 @@ def test_balance_persisted_after_span(tmp_path):
     engine = BudgetEngine(event_bus, storage, config)
 
     # Make a call
-    span = SpanData.from_llm_call("anthropic", {"model": "claude-sonnet-4", "messages": [{"role": "user", "content": "hi"}]})
+    span = SpanData.from_llm_call(
+        "anthropic", {"model": "claude-sonnet-4", "messages": [{"role": "user", "content": "hi"}]}
+    )
     span.metadata["agent_name"] = "test_agent"
     engine.on_span_start(span)
     span.cost = Decimal("0.01")
@@ -53,12 +55,14 @@ def test_balance_survives_restart(tmp_path):
     storage1 = Storage(db_path)
     engine1 = BudgetEngine(EventBus(), storage1, config)
 
-    span = SpanData.from_llm_call("anthropic", {"model": "claude-sonnet-4", "messages": [{"role": "user", "content": "hi"}]})
+    span = SpanData.from_llm_call(
+        "anthropic", {"model": "claude-sonnet-4", "messages": [{"role": "user", "content": "hi"}]}
+    )
     span.metadata["agent_name"] = "test_agent"
     engine1.on_span_start(span)
     span.cost = Decimal("0.05")
     engine1.on_span_end(span)
-    balance_after = engine1._balances.get("test_agent")
+    _balance_after = engine1._balances.get("test_agent")
     storage1.close()
 
     # Second engine: should load persisted balance

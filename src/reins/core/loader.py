@@ -42,9 +42,7 @@ def discover_modules() -> list[type[ReinsModule]]:
     return modules
 
 
-def load_modules(
-    event_bus: EventBus, storage: Storage, config: ReinsConfig
-) -> list[ReinsModule]:
+def load_modules(event_bus: EventBus, storage: Storage, config: ReinsConfig) -> list[ReinsModule]:
     """Load and initialize all enabled modules."""
     instances: list[ReinsModule] = []
     for cls in discover_modules():

@@ -3,8 +3,8 @@
   <p align="center"><img src="docs/assets/reins-wordmark-v3.svg" alt="Reins Logo" width="400"/></p>
   <p align="center"><strong>Take Control of Your AI Agents</strong></p>
   <p align="center">
-    The runtime platform that makes AI agents debuggable, affordable, and reliable.<br/>
-    Existing tools show you what happened. Reins lets you <strong>control what happens next</strong>.
+    Trace agent execution, control budgets, and compare measured data workflows.<br/>
+    <strong>Meet the quality bar. Reduce the cost of accepted results.</strong>
   </p>
   <p align="center">
     <a href="#quick-start">Quick Start</a> &bull;
@@ -37,6 +37,8 @@ async def my_agent(task: str):
 
 Selected completed benchmarks, synchronized with the public case page on September 30, 2026.
 
+<p align="center"><img src="docs/assets/measured-savings.svg" alt="Measured API savings: incremental refresh 72.0%, paper collection 63.5%, project research 49.6%; each has 300 of 300 accepted test records, against its named baseline" width="900"></p>
+
 | Workload | Accepted test records | Lower API cost per accepted result | Comparison baseline |
 |---|---:|---:|---|
 | Incremental data refresh | 300/300 | 72.0% | One-item Gemini 2.5 Flash Lite |
@@ -64,54 +66,17 @@ SDK features are not part of this documentation-only update.
 
 ## Why Reins?
 
-### Enterprise LLM Spending is Exploding — But Cost Controls Haven't Kept Up
+Agent teams need to understand what each task costs, where it fails, and which
+execution policy still delivers the required result with less model work.
 
-Enterprise LLM API spending has surged from **$1.8B** (2023 H2) to **$8.4B** (2025 H1) — a **4.7x increase** in 18 months. Menlo Ventures projects it will hit **$15B by 2026** if current velocity holds. Total enterprise GenAI investment reached **$37B in 2025**, tripling from $11.5B in 2024.
+The published SDK provides tracing, budget controls and execution diagnostics.
+The measured data workflows above explore three practical optimizations: reuse
+unchanged fields, batch compatible records, and choose a model for the task.
+Their benchmark results are separate from the published SDK's feature coverage.
 
-<p align="center">
-  <img src="docs/assets/llm_spend_growth.png" alt="Enterprise LLM API Spending Growth" width="700"/>
-</p>
-
-Yet the tools to govern this spending are shockingly primitive:
-
-| Capability | Available Today? |
-|---|---|
-| Cost **tracking** (after the fact) | Widely available (Langfuse, LangSmith, Helicone) |
-| Hard budget **limits** (block when exceeded) | Partial (LiteLLM, Portkey) |
-| **Auto-degradation** (switch to cheaper model) | **No existing tool** |
-| **Circuit breakers** (halt runaway loops) | **No existing tool** |
-| **Per-agent** budget scoping | **No existing tool** |
-
-<p align="center">
-  <img src="docs/assets/cost_governance_gap.png" alt="Cost Governance Gap" width="750"/>
-</p>
-
-### Real Cost Overruns Are Already Happening
-
-- **$47K LangChain Loop** (Nov 2025): Four agents in a research pipeline entered an infinite conversation loop for 11 days. The team assumed growing costs were "organic growth" — until the $47,000 bill arrived.
-- **$47K Retry Storm** (Feb 2026): A data enrichment agent misinterpreted an API error code, running 2.3 million API calls over a weekend. Only the external API's rate limiter slowed it down — not the team's own controls.
-- **Gartner (2025)**: Over **40% of agentic AI projects** will be canceled by 2027 due to escalating costs, unclear value, or inadequate risk controls.
-
-### Agent Reliability is a Crisis
-
-<p align="center">
-  <img src="docs/assets/reliability_crisis.png" alt="Agent Reliability Crisis" width="700"/>
-</p>
-
-- Top SWE-bench Verified score: **79%** — but real-world performance overestimates by **up to 54%**
-- Agent success rates **decline exponentially** with task duration. Claude Sonnet's "half-life" is ~59 minutes
-- A survey of 306 practitioners found **reliability is the #1 barrier** to enterprise agent adoption
-
-### Who Needs Cost Governance?
-
-| Industry | AI Spend (2025) | Growth | Key Concern |
-|----------|----------------|--------|-------------|
-| **Healthcare** | ~$1.5B in vertical AI | 3.3x YoY | Compliance + cost predictability |
-| **Financial Services** | 23.7% of enterprise AI market | Steady | Risk controls + audit trails |
-| **Legal** | $650M market | Fast-growing | Per-case cost attribution |
-| **Customer Service** | Largest agent deployment sector | Rapid | Per-conversation cost caps |
-
-**86% of enterprises** plan to increase AI budgets in 2026 (Deloitte). The question isn't whether to spend — it's whether to spend *blindly*.
+Use the named baseline and acceptance check to interpret every comparison.
+A lower token bill alone is not proof of a better outcome, and ordinary caching
+or deterministic parsing can be the right baseline.
 
 ---
 
@@ -297,33 +262,24 @@ provider.add_span_processor(ReinsSpanProcessor())
 
 ---
 
-## How It Compares
+## Runtime architecture
 
-| | **Reins** | LiteLLM | Langfuse | Helicone | Portkey |
-|---|---|---|---|---|---|
-| **Architecture** | SDK + Proxy | Proxy only | SDK | Proxy | Proxy/SDK |
-| **Infrastructure** | Zero (embedded DuckDB) | Redis + Postgres | PostgreSQL | Cloud | Cloud |
-| **Budget enforcement** | Smart degradation | Hard reject (400) | None | Rate limit | Key limit |
-| **Auto model switch** | Yes | No | No | No | No |
-| **Circuit breaker** | Yes | No | No | No | No |
-| **Per-agent budgets** | Yes | Per-key | No | No | Partial |
-| **Agent replay** | Yes | No | No | No | No |
-| **Context health** | Yes | No | No | No | No |
-| **Framework adapters** | 10+ frameworks | N/A | 12+ | N/A | 5+ |
-| **Setup** | `pip install reins` | `docker-compose up` | `docker-compose up` | Cloud signup | Cloud signup |
-| **Open source** | BSL 1.1 (→ Apache 2030) | Enterprise paywall | MIT | MIT | Proprietary |
+```mermaid
+flowchart TB
+    A[Agent application / framework adapter / local proxy] --> B[Instrumentation]
+    B --> C[Run context and event bus]
+    C --> D[Budget controls]
+    C --> E[Trace recording]
+    C --> F[Context diagnostics]
+    C --> G[Safety checks]
+    C --> H[(Local DuckDB)]
+    H --> I[CLI inspection and export]
+```
 
-**One-line difference**: LiteLLM is an API Gateway (needs infra, hard-rejects on exceed). Reins is an Agent Runtime (zero-infra, degrades gracefully).
-
----
-
-## Architecture
-
-<p align="center">
-  <img src="docs/assets/architecture.png" alt="Reins Architecture" width="700"/>
-</p>
-
-Modules communicate via an **event bus** — install only what you need, they auto-cooperate when co-installed. For example: Lens detects context rot → notifies Budget → Budget reduces remaining allocation.
+This diagram describes the published SDK. Benchmark policy evaluation and the
+public website are separate artifacts; this release does not automatically deploy
+an optimized production policy. See the source and technical design for the
+behavior of each optional module.
 
 ---
 
@@ -331,22 +287,6 @@ Modules communicate via an **event bus** — install only what you need, they au
 
 - [Product Requirements (PRD)](docs/PRD.md) — What we build and why
 - [Technical Design](docs/DESIGN.md) — Architecture, data models, API design
-
----
-
-## Market Context
-
-| Metric | Value | Source |
-|--------|-------|--------|
-| Enterprise LLM API spend (2025 H1) | **$8.4B** | [Menlo Ventures](https://menlovc.com/perspective/2025-mid-year-llm-market-update/) |
-| YoY GenAI enterprise investment growth | **3.2x** ($11.5B → $37B) | [Menlo Ventures](https://menlovc.com/perspective/2025-the-state-of-generative-ai-in-the-enterprise/) |
-| Projected LLM API spend (2026) | **$15B+** | [Menlo Ventures](https://menlovc.com/perspective/2025-mid-year-llm-market-update/) |
-| Agentic AI projects to be canceled by 2027 | **>40%** | [Gartner](https://www.gartner.com) |
-| Agent reliability as #1 enterprise barrier | **72%** of practitioners | [Pan et al. (2025)](https://simmering.dev/blog/agent-benchmarks/) |
-| Enterprises increasing AI budget in 2026 | **86%** | [Deloitte State of AI 2026](https://www.deloitte.com/us/en/what-we-do/capabilities/applied-artificial-intelligence/content/state-of-ai-in-the-enterprise.html) |
-| Langfuse: SDK installs/month | **26M+** | [ClickHouse acquisition](https://langfuse.com/) |
-| LangChain valuation (Oct 2025) | **$1.25B** | [Series B](https://latenode.com/blog/ai-frameworks-technical-infrastructure/langchain-setup-tools-agents-memory/langchain-funding-valuation-2025-complete-financial-overview) |
-| Healthcare vertical AI spend (2025) | **$1.5B** (3.3x YoY) | [Menlo Ventures](https://menlovc.com/perspective/2025-the-state-of-generative-ai-in-the-enterprise/) |
 
 ---
 

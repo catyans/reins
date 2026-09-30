@@ -5,7 +5,6 @@ from __future__ import annotations
 import json
 import logging
 from decimal import Decimal
-from typing import Any
 
 from aiohttp import ClientSession, web
 
@@ -77,9 +76,7 @@ class ReinsProxy:
             logger.info("Degraded: %s → %s", span.model_requested, span.model)
 
         # Forward headers
-        headers = {
-            k: v for k, v in request.headers.items() if k.lower() not in _HOP_HEADERS
-        }
+        headers = {k: v for k, v in request.headers.items() if k.lower() not in _HOP_HEADERS}
 
         upstream_url = f"{ANTHROPIC_UPSTREAM}/v1/messages"
 
@@ -166,7 +163,9 @@ class ReinsProxy:
                     if "usage" in data:
                         u = data["usage"]
                         usage["input_tokens"] = u.get("input_tokens", usage.get("input_tokens", 0))
-                        usage["output_tokens"] = u.get("output_tokens", usage.get("output_tokens", 0))
+                        usage["output_tokens"] = u.get(
+                            "output_tokens", usage.get("output_tokens", 0)
+                        )
         except Exception:
             pass
 
@@ -174,16 +173,12 @@ class ReinsProxy:
         """Pass through non-messages requests."""
         path = request.match_info["path"]
         url = f"{ANTHROPIC_UPSTREAM}/v1/{path}"
-        headers = {
-            k: v for k, v in request.headers.items() if k.lower() not in _HOP_HEADERS
-        }
+        headers = {k: v for k, v in request.headers.items() if k.lower() not in _HOP_HEADERS}
 
         body = await request.read() if request.can_read_body else None
 
         async with ClientSession() as session:
-            async with session.request(
-                request.method, url, headers=headers, data=body
-            ) as resp:
+            async with session.request(request.method, url, headers=headers, data=body) as resp:
                 resp_body = await resp.read()
                 return web.Response(
                     body=resp_body,
@@ -232,6 +227,7 @@ def create_proxy_app(
     budget_decimal = None
     if budget:
         from reins.core.config import _parse_money
+
         budget_decimal = _parse_money(budget)
 
     proxy = ReinsProxy(

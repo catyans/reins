@@ -1,8 +1,9 @@
 """Tests for streaming wrapper."""
 
+import asyncio
 from types import SimpleNamespace
 
-from reins.core.instrumentor import _StreamWrapper, _AsyncStreamWrapper
+from reins.core.instrumentor import _AsyncStreamWrapper, _StreamWrapper
 from reins.core.models import SpanData
 
 
@@ -62,8 +63,6 @@ def test_sync_stream_context_manager():
     assert len(fake.finalized) == 1
 
 
-import asyncio
-
 def test_async_stream_wrapper():
     """Async stream wrapper should yield all events and capture usage."""
 
@@ -84,7 +83,7 @@ def test_async_stream_wrapper():
             collected.append(event)
         return collected
 
-    collected = asyncio.get_event_loop().run_until_complete(run())
+    collected = asyncio.run(run())
     assert len(collected) == 2
     assert len(fake.finalized) == 1
     assert fake.finalized[0][0].tokens_in == 200

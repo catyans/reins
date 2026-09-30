@@ -9,7 +9,7 @@ from decimal import Decimal
 from typing import Any, Callable, TypeVar, overload
 
 from reins.core.config import ReinsConfig
-from reins.core.context import get_current_run, set_current_run
+from reins.core.context import set_current_run
 from reins.core.models import RunData
 
 logger = logging.getLogger("reins")
@@ -56,6 +56,7 @@ def _parse_budget(budget: str | float | None) -> Decimal | None:
     if isinstance(budget, (int, float)):
         return Decimal(str(budget))
     from reins.core.config import _parse_money
+
     return _parse_money(budget)
 
 
@@ -99,7 +100,7 @@ def trace(
             run = RunData(agent_name=name, budget_limit=budget_limit)
             run.metadata["on_exceed"] = on_exceed
 
-            token = set_current_run(run)
+            _token = set_current_run(run)
             try:
                 runtime.storage.insert_run(run)
                 runtime.event_bus.emit("core.run_start", run=run)
@@ -107,7 +108,7 @@ def trace(
                 result = await func(*args, **kw)
 
                 run.complete("completed")
-            except Exception as e:
+            except Exception:
                 run.complete("failed")
                 raise
             finally:
@@ -126,7 +127,7 @@ def trace(
             run = RunData(agent_name=name, budget_limit=budget_limit)
             run.metadata["on_exceed"] = on_exceed
 
-            token = set_current_run(run)
+            _token = set_current_run(run)
             try:
                 runtime.storage.insert_run(run)
                 runtime.event_bus.emit("core.run_start", run=run)
@@ -134,7 +135,7 @@ def trace(
                 result = func(*args, **kw)
 
                 run.complete("completed")
-            except Exception as e:
+            except Exception:
                 run.complete("failed")
                 raise
             finally:

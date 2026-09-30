@@ -98,8 +98,10 @@ class BudgetEngine:
                 DELETE FROM budget_balances WHERE agent_name = '{agent}'
             """)
             self._storage.query(f"""
-                INSERT INTO budget_balances (agent_name, balance, period_type, period_start, updated_at)
-                VALUES ('{agent}', {float(balance)}, '{period_type}', '{now.date().isoformat()}', '{now.isoformat()}')
+                INSERT INTO budget_balances
+                    (agent_name, balance, period_type, period_start, updated_at)
+                VALUES ('{agent}', {float(balance)}, '{period_type}',
+                        '{now.date().isoformat()}', '{now.isoformat()}')
             """)
         except Exception:
             logger.debug("Failed to persist balance for %s", agent, exc_info=True)
@@ -108,7 +110,11 @@ class BudgetEngine:
     def _period_expired(period_type: str, period_start: str, now: datetime) -> bool:
         """Check if a budget period has expired."""
         try:
-            start_date = datetime.fromisoformat(period_start).date() if "T" in period_start else datetime.strptime(period_start, "%Y-%m-%d").date()
+            start_date = (
+                datetime.fromisoformat(period_start).date()
+                if "T" in period_start
+                else datetime.strptime(period_start, "%Y-%m-%d").date()
+            )
         except Exception:
             return True
 
@@ -207,9 +213,14 @@ class BudgetEngine:
                 )
                 logger.info(
                     "Degraded %s: %s → %s (balance: $%.4f)",
-                    agent, span.model_requested, cheaper, self._balances[agent],
+                    agent,
+                    span.model_requested,
+                    cheaper,
+                    self._balances[agent],
                 )
-                self._log_event(agent, "degrade", float(new_est), float(self._balances[agent]), span)
+                self._log_event(
+                    agent, "degrade", float(new_est), float(self._balances[agent]), span
+                )
                 return span
 
             # No cheaper model, fall through to reject

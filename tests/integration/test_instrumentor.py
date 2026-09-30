@@ -4,21 +4,17 @@ from __future__ import annotations
 
 import sys
 import types
-from decimal import Decimal
-from pathlib import Path
 from types import SimpleNamespace
-from unittest.mock import MagicMock
 
 import pytest
 
 from reins.core.config import ReinsConfig
 from reins.core.events import EventBus
 from reins.core.instrumentor import Instrumentor
-from reins.core.models import SpanData
 from reins.core.storage import Storage
 
-
 # --- Mock Anthropic SDK ---
+
 
 def _build_mock_anthropic():
     """Build a mock anthropic module with messages.create."""
@@ -86,7 +82,7 @@ def test_patched_create_records_span(instrumented_env):
 
     run = RunData(agent_name="test_agent")
     storage.insert_run(run)
-    token = set_current_run(run)
+    _token = set_current_run(run)
 
     try:
         msg_instance = anthropic._messages_instance
@@ -142,9 +138,11 @@ def test_error_in_sdk_still_records(instrumented_env):
     storage = instrumented_env["storage"]
 
     # Make create raise
-    original = anthropic.resources.Messages.create.__wrapped__ if hasattr(
-        anthropic.resources.Messages.create, "__wrapped__"
-    ) else None
+    _original = (
+        anthropic.resources.Messages.create.__wrapped__
+        if hasattr(anthropic.resources.Messages.create, "__wrapped__")
+        else None
+    )
 
     from reins.core.context import set_current_run
     from reins.core.models import RunData
@@ -156,7 +154,7 @@ def test_error_in_sdk_still_records(instrumented_env):
     # We can't easily make the mock raise through the patch,
     # but we can verify the span recording works in normal flow
     msg_instance = anthropic._messages_instance
-    response = anthropic.resources.Messages.create(
+    _response = anthropic.resources.Messages.create(
         msg_instance,
         model="claude-sonnet-4",
         messages=[{"role": "user", "content": "Hi"}],

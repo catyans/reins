@@ -133,7 +133,8 @@ class Storage:
                started_at, ended_at, duration_ms, model, model_requested, provider,
                tokens_in, tokens_out, cost, degraded, tool_name, tool_status, tool_error,
                context_tokens, context_health, eval_scores, safety_flags, status,
-               error_message, metadata) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+               error_message, metadata)
+               VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
             span.to_row(),
         )
 
@@ -184,16 +185,14 @@ class Storage:
 
     def get_run_spans(self, run_id: str) -> list[dict[str, Any]]:
         """Get all spans for a run (safe from SQL injection)."""
-        return self.query(
-            "SELECT * FROM spans WHERE run_id = ? ORDER BY started_at ASC", [run_id]
-        )
+        return self.query("SELECT * FROM spans WHERE run_id = ? ORDER BY started_at ASC", [run_id])
 
     def close(self) -> None:
         self._conn.close()
 
     def cleanup(self, retention_days: int = 30) -> int:
         """Delete data older than retention_days. Returns count of deleted spans."""
-        result = self._conn.execute(
+        _result = self._conn.execute(
             """DELETE FROM spans WHERE started_at < (
                CAST(CURRENT_TIMESTAMP AS VARCHAR) || 'Z')"""
             # Simplified — proper implementation would use interval

@@ -6,9 +6,7 @@ import pytest
 
 from reins.budget.engine import BudgetEngine, BudgetExceededError
 from reins.core.config import AgentBudgetConfig, BudgetConfig, ReinsConfig
-from reins.core.events import EventBus
 from reins.core.models import SpanData
-from reins.core.storage import Storage
 
 
 @pytest.fixture
@@ -67,8 +65,9 @@ def test_degradation_on_budget_exceed(event_bus, storage, budget_config):
     result = engine.on_span_start(final_span)
 
     # Should have degraded at some point (either this span or an earlier one)
-    assert result.degraded or len(degraded_events) > 0, \
+    assert result.degraded or len(degraded_events) > 0, (
         "Expected degradation after exhausting $0.50 budget with 20x$0.03 calls"
+    )
 
 
 def test_reject_on_exceed(engine):

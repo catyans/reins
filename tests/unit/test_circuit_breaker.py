@@ -1,7 +1,5 @@
 """Tests for circuit breaker."""
 
-from datetime import timedelta
-
 from reins.budget.circuit_breaker import CircuitBreaker
 
 

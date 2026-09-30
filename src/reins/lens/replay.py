@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import sys
 import time
 from typing import Any
 
@@ -40,7 +39,9 @@ def replay_run(run: dict[str, Any], spans: list[dict[str, Any]], auto: bool = Fa
     click.echo(f"  {_BOLD}{'─' * 70}{_RESET}")
     click.echo(f"  {_BOLD}🎬 Agent Replay{_RESET}")
     click.echo(f"  Agent: {_CYAN}{agent}{_RESET}  |  Run: {run.get('run_id', '')[:10]}")
-    click.echo(f"  Status: {_status_color(status)}{status}{_RESET}  |  Total Cost: ${total_cost:.4f}")
+    click.echo(
+        f"  Status: {_status_color(status)}{status}{_RESET}  |  Total Cost: ${total_cost:.4f}"
+    )
     click.echo(f"  Spans: {len(spans)}")
     click.echo(f"  {_BOLD}{'─' * 70}{_RESET}")
     click.echo(f"  {_DIM}[Enter] next step  [a] auto-play  [q] quit{_RESET}")
@@ -57,10 +58,10 @@ def replay_run(run: dict[str, Any], spans: list[dict[str, Any]], auto: bool = Fa
         if not autoplay:
             try:
                 key = click.getchar()
-                if key == 'q':
+                if key == "q":
                     click.echo(f"\n  {_DIM}Replay stopped.{_RESET}\n")
                     return
-                if key == 'a':
+                if key == "a":
                     autoplay = True
             except (EOFError, KeyboardInterrupt):
                 return
@@ -86,9 +87,7 @@ def replay_run(run: dict[str, Any], spans: list[dict[str, Any]], auto: bool = Fa
     click.echo()
 
 
-def _render_step(
-    step: int, total: int, span: dict[str, Any], cumulative_cost: float
-) -> None:
+def _render_step(step: int, total: int, span: dict[str, Any], cumulative_cost: float) -> None:
     """Render a single replay step."""
     span_type = span.get("span_type", "custom")
     icon = _ICONS.get(span_type, "⚙️")

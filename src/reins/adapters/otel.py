@@ -28,7 +28,6 @@ Usage:
 from __future__ import annotations
 
 import logging
-from decimal import Decimal
 from typing import Any, Sequence
 
 from reins.adapters.base import finalize_span
