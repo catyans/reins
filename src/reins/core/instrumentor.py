@@ -168,6 +168,9 @@ class Instrumentor:
         span = SpanData.from_llm_call(provider, kwargs)
         run = get_current_run()
         self._enrich_span_from_run(span, run)
+        from reins.control.instrumentation import enrich
+
+        enrich(span)
         span._prices = self._config.prices if self._config else {}
         counter = self._config.token_counter if self._config else None
         if counter:
@@ -228,6 +231,18 @@ class Instrumentor:
         # Apply modifications
         if span.degraded:
             kwargs["model"] = span.model
+        from reins.control.instrumentation import admit
+
+        try:
+            admit(span, self._config)
+        except Exception as exc:
+            # No provider dispatch occurred: local reservation can settle at zero.
+            span.mark_error(exc)
+            span.metadata["cost_status"] = "known"
+            self._finalize_span(span, run)
+            raise
+        if span.degraded:
+            kwargs["model"] = span.model
         self._event_bus.emit("core.span_admitted", span=span)
 
         try:
@@ -261,6 +276,9 @@ class Instrumentor:
         span = SpanData.from_llm_call(provider, kwargs)
         run = get_current_run()
         self._enrich_span_from_run(span, run)
+        from reins.control.instrumentation import enrich
+
+        enrich(span)
         span._prices = self._config.prices if self._config else {}
         counter = self._config.token_counter if self._config else None
         if counter:
@@ -320,6 +338,18 @@ class Instrumentor:
 
         if span.degraded:
             kwargs["model"] = span.model
+        from reins.control.instrumentation import admit
+
+        try:
+            admit(span, self._config)
+        except Exception as exc:
+            # No provider dispatch occurred: local reservation can settle at zero.
+            span.mark_error(exc)
+            span.metadata["cost_status"] = "known"
+            self._finalize_span(span, run)
+            raise
+        if span.degraded:
+            kwargs["model"] = span.model
         self._event_bus.emit("core.span_admitted", span=span)
 
         try:
@@ -363,6 +393,9 @@ class Instrumentor:
         if getattr(span, "_recorded", False):
             return
         span._recorded = True
+        from reins.control.instrumentation import settle
+
+        settle(span)
         for module in self._modules:
             try:
                 module.on_span_end(span)

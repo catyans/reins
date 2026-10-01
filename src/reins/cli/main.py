@@ -7,6 +7,7 @@ import sys
 
 import click
 
+from reins.control.cli import control
 from reins.core.config import ReinsConfig
 from reins.core.storage import Storage
 
@@ -393,6 +394,8 @@ cli.add_command(projects)
 def main() -> None:
     cli()
 
+
+cli.add_command(control)
 
 if __name__ == "__main__":
     main()

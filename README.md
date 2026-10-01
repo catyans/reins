@@ -15,8 +15,27 @@ tasks, exclude those that miss quality or latency constraints, and select the
 lowest recorded cost per accepted result. Trace execution and enforce budgets
 through the same runtime.
 
-**v0.2 is a local, single-writer pilot release.** Observation is the default.
+**v0.2 is a local pilot.** Observation is the default. Worker traces remain single-writer.
+The optional shared control service coordinates multiple processes on one host.
 No savings or quality improvement is claimed until measured on your tasks.
+
+## Shared runtime economic control
+
+Reserve before spending. Attribute every paid operation to a customer, workflow
+and parent task. Keep uncertain charges held, constrain runaway branches, and
+reconcile confirmed invoice lines without erasing history.
+
+```sh
+reins control serve
+# Local read-only dashboard: http://127.0.0.1:8795
+```
+
+[Integration guide and failure semantics](docs/RUNTIME_CONTROL.md) ·
+[Local simulated example](examples/runtime_control.py)
+
+Explicit enforcement can pause work or fall back only to task-approved models.
+Remaining-cost forecasts become available after 30 matching measured histories;
+they advise operators and do not automatically terminate tasks.
 
 ## Measured Gemini cases
 
@@ -44,8 +63,7 @@ These results do not imply that every workflow benefits or that savings are excl
 to Reins. The report includes the full four-workload presentation, including invoices.
 
 The latest local raw-document project-update experiment is separate from these
-benchmarks and has not established production-quality savings. Local experimental
-SDK features are not part of this documentation-only update.
+benchmarks and has not established production-quality savings. The runtime-control integration study is also separate from these public cases.
 
 ---
 

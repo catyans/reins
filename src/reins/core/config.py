@@ -74,6 +74,8 @@ class ReinsConfig:
     task_models: dict[str, list[str]] = field(default_factory=dict)
     prices: dict[str, dict[str, list[str]]] = field(default_factory=dict)
     token_counter: Any = None
+    control_url: str = "http://127.0.0.1:8795"
+    control_token_file: str | None = None
     dashboard: bool = False
     dashboard_port: int = 8765
     inactivity_seconds: float = 60
@@ -182,7 +184,13 @@ class ReinsConfig:
         config.policy_version = raw.get("policy_version", "baseline")
         config.task_models = raw.get("task_models", {})
         config.prices = raw.get("prices", {})
-        for key in ("dashboard", "dashboard_port", "inactivity_seconds"):
+        for key in (
+            "dashboard",
+            "dashboard_port",
+            "inactivity_seconds",
+            "control_url",
+            "control_token_file",
+        ):
             if key in raw:
                 setattr(config, key, raw[key])
         config.validate()

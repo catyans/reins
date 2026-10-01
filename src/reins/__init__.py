@@ -8,6 +8,10 @@ from reins.core.decorators import trace as _trace
 from . import trace as _trace_module
 
 __all__ = [
+    "workflow",
+    "bind_context",
+    "export_context",
+    "report_progress",
     "trace",
     "step",
     "wrap",
@@ -28,6 +32,7 @@ __all__ = [
 ]
 
 from reins.checkpoints import CheckpointStore, UnsettledAttempt
+from reins.control import bind_context, export_context, report_progress, workflow
 from reins.core.monitor import step
 from reins.core.outcomes import reconcile_cost, record_external_cost, record_outcome, record_retry
 from reins.policies import PolicyBundle, assess_holdout, learn_bundle

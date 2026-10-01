@@ -1,0 +1,66 @@
+{
+  "protocol": {
+    "frozen_at": 1790831375.430179,
+    "sha256": "380828fbdee8890c84b04087d89845b8b9baf8cb0febd6fdff70714876032306",
+    "cases": 12,
+    "repeats": 2,
+    "prices": {
+      "gemini-2.5-flash": [
+        "0.30",
+        "2.50",
+        "0.03"
+      ],
+      "gemini-2.5-flash-lite": [
+        "0.10",
+        "0.40",
+        "0.01"
+      ]
+    },
+    "pricing_source": "https://ai.google.dev/gemini-api/docs/pricing",
+    "price_checked": "2026-10-01",
+    "acceptance": "Exact equality on all three frozen source fields; no dropped cases",
+    "baseline": "Exact cache plus static budget, both Flash and Flash-Lite",
+    "runtime": "Same exact cache and Flash-Lite under shared enforcement",
+    "scope": "Public structured records: deterministic parsing can solve this for $0",
+    "billing": "Provider token usage times pinned list prices, not invoice debits",
+    "budget_per_arm": "1",
+    "no_retries": true,
+    "max_tokens": 256,
+    "thinking_budget": 0
+  },
+  "results": [
+    {
+      "arm": "static-cache-flash",
+      "accepted": 24,
+      "total": 24,
+      "api_calls": 12,
+      "usage_priced_cost": "0.0017136",
+      "wall_seconds": 10.002776916953735
+    },
+    {
+      "arm": "static-cache-lite",
+      "accepted": 24,
+      "total": 24,
+      "api_calls": 12,
+      "usage_priced_cost": "0.0003404",
+      "wall_seconds": 6.324478916008957
+    },
+    {
+      "arm": "runtime-cache-lite",
+      "accepted": 24,
+      "total": 24,
+      "api_calls": 12,
+      "usage_priced_cost": "0.0003404",
+      "wall_seconds": 7.879255167033989
+    }
+  ],
+  "runtime_events": {
+    "admitted": 12,
+    "settled": 12,
+    "reused": 12
+  },
+  "runtime_known_cost": "0.0003404",
+  "runtime_reserved_cost": "0",
+  "unique_records": 12,
+  "note": "Integration smoke study; static Lite matches runtime Lite cost."
+}

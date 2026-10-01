@@ -272,6 +272,8 @@ def configure(**kwargs: Any) -> None:
         "dashboard",
         "dashboard_port",
         "inactivity_seconds",
+        "control_url",
+        "control_token_file",
     }
     if set(kwargs) - allowed:
         raise TypeError(f"Unknown configuration options: {sorted(set(kwargs) - allowed)}")
