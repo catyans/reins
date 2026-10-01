@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import logging
-from typing import Any
 
 from reins.core.context import get_current_run
 from reins.core.decorators import _get_runtime
@@ -29,6 +28,9 @@ def _get_event_bus():
 
 def process_span(span: SpanData) -> SpanData:
     """Run span through all module pre-hooks and return the (possibly modified) span."""
+    span.metadata["adapter_observation"] = True
+    span.metadata["observe_only"] = True
+    span.metadata["mode"] = "observe"
     for module in _get_modules():
         try:
             span = module.on_span_start(span)
@@ -50,7 +52,7 @@ def finalize_span(span: SpanData) -> None:
 
     _get_event_bus().emit("core.span_end", span=span)
 
-    if run:
+    if run and not span.metadata.get("adapter_observation"):
         run.add_span_cost(span)
 
     try:

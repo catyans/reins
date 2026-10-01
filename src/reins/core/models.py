@@ -104,7 +104,7 @@ class SpanData:
     def from_llm_call(cls, provider: str, kwargs: dict[str, Any]) -> SpanData:
         model = kwargs.get("model", "unknown")
         estimated_in = _estimate_input_tokens(provider, kwargs)
-        estimated_out = kwargs.get("max_tokens", 1024)
+        estimated_out = kwargs.get("max_completion_tokens", kwargs.get("max_tokens", 1024))
         return cls(
             span_type="llm",
             provider=provider,
@@ -113,6 +113,15 @@ class SpanData:
             name=f"{provider}.chat.create",
             estimated_input_tokens=estimated_in,
             estimated_max_output_tokens=estimated_out,
+            metadata={
+                "output_bound_verified": (
+                    isinstance(estimated_out, int)
+                    and not isinstance(estimated_out, bool)
+                    and estimated_out > 0
+                    and ("max_tokens" in kwargs or "max_completion_tokens" in kwargs)
+                ),
+                "input_bound_verified": False,
+            },
         )
 
     @classmethod
@@ -131,11 +140,50 @@ class SpanData:
         self.duration_ms = (self.ended_at - self.started_at).total_seconds() * 1000
         self.tokens_in = tokens_in
         self.tokens_out = tokens_out
-        self.cost = get_price(self.provider, self.model, tokens_in, tokens_out)
+        from reins.core.pricing import UnknownPriceError
+
+        try:
+            self.cost = get_price(
+                self.provider, self.model, tokens_in, tokens_out, getattr(self, "_prices", None)
+            )
+            self.metadata["cost_status"] = "known"
+        except UnknownPriceError:
+            self.metadata["cost_status"] = "pending"
+
+    @staticmethod
+    def _special_usage(usage):
+        get = (
+            usage.get
+            if isinstance(usage, dict)
+            else lambda key, default=0: getattr(usage, key, default)
+        )
+        if get("cache_creation_input_tokens") or get("cache_read_input_tokens"):
+            return True
+        detail = get("prompt_tokens_details", None)
+        if detail:
+            return bool(
+                detail.get("cached_tokens", 0)
+                if isinstance(detail, dict)
+                else getattr(detail, "cached_tokens", 0)
+            )
+        return False
 
     def complete_from_anthropic(self, response: Any) -> None:
         usage = getattr(response, "usage", None)
         if usage:
+            required = (
+                ("input_tokens", "output_tokens")
+                if self.provider == "anthropic"
+                else ("prompt_tokens", "completion_tokens")
+            )
+            if not all(hasattr(usage, key) and getattr(usage, key) is not None for key in required):
+                self.metadata["cost_status"] = "pending"
+                self.ended_at = _utcnow()
+                return
+            if self._special_usage(usage):
+                self.metadata["cost_status"] = "pending"
+                self.ended_at = _utcnow()
+                return
             self.complete(
                 tokens_in=getattr(usage, "input_tokens", 0),
                 tokens_out=getattr(usage, "output_tokens", 0),
@@ -147,6 +195,19 @@ class SpanData:
     def complete_from_openai(self, response: Any) -> None:
         usage = getattr(response, "usage", None)
         if usage:
+            required = (
+                ("input_tokens", "output_tokens")
+                if self.provider == "anthropic"
+                else ("prompt_tokens", "completion_tokens")
+            )
+            if not all(hasattr(usage, key) and getattr(usage, key) is not None for key in required):
+                self.metadata["cost_status"] = "pending"
+                self.ended_at = _utcnow()
+                return
+            if self._special_usage(usage):
+                self.metadata["cost_status"] = "pending"
+                self.ended_at = _utcnow()
+                return
             self.complete(
                 tokens_in=getattr(usage, "prompt_tokens", 0),
                 tokens_out=getattr(usage, "completion_tokens", 0),
@@ -156,6 +217,18 @@ class SpanData:
             self.duration_ms = (self.ended_at - self.started_at).total_seconds() * 1000
 
     def complete_from_usage_dict(self, usage: dict[str, int]) -> None:
+        if self._special_usage(usage):
+            self.metadata["cost_status"] = "pending"
+            self.ended_at = _utcnow()
+            return
+        # Missing/incomplete usage cannot be interpreted as a zero-cost call.
+        if not (
+            (usage.get("input_tokens", usage.get("prompt_tokens")) is not None)
+            and (usage.get("output_tokens", usage.get("completion_tokens")) is not None)
+        ):
+            self.metadata["cost_status"] = "pending"
+            self.ended_at = _utcnow()
+            return
         self.complete(
             tokens_in=usage.get("input_tokens", usage.get("prompt_tokens", 0)),
             tokens_out=usage.get("output_tokens", usage.get("completion_tokens", 0)),
@@ -240,7 +313,7 @@ class RunData:
             float(self.total_cost),
             self.total_tokens_in,
             self.total_tokens_out,
-            float(self.budget_limit) if self.budget_limit else None,
+            float(self.budget_limit) if self.budget_limit is not None else None,
             self.degraded_count,
             json.dumps(self.metadata) if self.metadata else None,
         )

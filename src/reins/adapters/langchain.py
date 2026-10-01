@@ -18,7 +18,6 @@ Usage:
 from __future__ import annotations
 
 import logging
-from decimal import Decimal
 from typing import Any
 from uuid import UUID
 
@@ -159,6 +158,7 @@ class ReinsCallbackHandler:
         if span is None:
             return
         from reins.core.models import _utcnow
+
         span.ended_at = _utcnow()
         span.duration_ms = (span.ended_at - span.started_at).total_seconds() * 1000
         span.tool_status = "success"
@@ -214,6 +214,7 @@ class ReinsCallbackHandler:
         if span is None:
             return
         from reins.core.models import _utcnow
+
         span.ended_at = _utcnow()
         span.duration_ms = (span.ended_at - span.started_at).total_seconds() * 1000
         finalize_span(span)

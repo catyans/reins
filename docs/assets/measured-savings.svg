@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 680" role="img">
+<title>Measured savings on selected Gemini benchmarks</title>
+<rect width="1100" height="680" rx="20" fill="#f6f7f0"/>
+<g font-family="Arial, sans-serif" fill="#193b2d">
+<text x="48" y="65" font-size="32" font-weight="700">Less API spend. Every test record accepted.</text>
+<text x="48" y="100" font-size="17">Cost per accepted result · Named baseline = 100 · Lower is better</text>
+<text x="48" y="156" font-size="21" font-weight="700">Incremental data refresh</text>
+<text x="48" y="185" font-size="15">300/300 accepted · vs Gemini 2.5 Flash Lite</text>
+<rect x="475" y="139" width="420" height="18" rx="5" fill="#d4dccf"/>
+<rect x="475" y="168" width="117.453" height="23" rx="5" fill="#2f6547"/>
+<text x="925" y="161" font-size="32" font-weight="700">72.0%</text>
+<text x="925" y="185" font-size="14">lower API cost</text>
+<text x="475" y="214" font-size="13">Baseline 100 → Selected policy 28.0</text>
+<text x="48" y="298" font-size="21" font-weight="700">Research paper collection</text>
+<text x="48" y="327" font-size="15">300/300 accepted · vs Gemini 2.5 Flash</text>
+<rect x="475" y="281" width="420" height="18" rx="5" fill="#d4dccf"/>
+<rect x="475" y="310" width="153.377" height="23" rx="5" fill="#2f6547"/>
+<text x="925" y="303" font-size="32" font-weight="700">63.5%</text>
+<text x="925" y="327" font-size="14">lower API cost</text>
+<text x="475" y="356" font-size="13">Baseline 100 → Selected policy 36.5</text>
+<text x="48" y="440" font-size="21" font-weight="700">Project research</text>
+<text x="48" y="469" font-size="15">300/300 accepted · vs Gemini 2.5 Flash</text>
+<rect x="475" y="423" width="420" height="18" rx="5" fill="#d4dccf"/>
+<rect x="475" y="452" width="211.629" height="23" rx="5" fill="#2f6547"/>
+<text x="925" y="445" font-size="32" font-weight="700">49.6%</text>
+<text x="925" y="469" font-size="14">lower API cost</text>
+<text x="475" y="498" font-size="13">Baseline 100 → Selected policy 50.4</text>
+<text x="48" y="590" font-size="15">Real API calls on reformatted public metadata and controlled updates.</text>
+<text x="48" y="615" font-size="15">Selected examples; not customer production traffic. Failed attempts and fallbacks included.</text>
+<text x="48" y="640" font-size="15">Paper collection is offline (p95 79.04s). Complete comparisons and methods linked below.</text>
+</g></svg>

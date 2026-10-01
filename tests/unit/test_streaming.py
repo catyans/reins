@@ -1,8 +1,9 @@
 """Tests for streaming wrapper."""
 
+import asyncio
 from types import SimpleNamespace
 
-from reins.core.instrumentor import _StreamWrapper, _AsyncStreamWrapper
+from reins.core.instrumentor import _AsyncStreamWrapper, _StreamWrapper
 from reins.core.models import SpanData
 
 
@@ -62,8 +63,6 @@ def test_sync_stream_context_manager():
     assert len(fake.finalized) == 1
 
 
-import asyncio
-
 def test_async_stream_wrapper():
     """Async stream wrapper should yield all events and capture usage."""
 
@@ -84,7 +83,55 @@ def test_async_stream_wrapper():
             collected.append(event)
         return collected
 
-    collected = asyncio.get_event_loop().run_until_complete(run())
+    collected = asyncio.run(run())
     assert len(collected) == 2
     assert len(fake.finalized) == 1
     assert fake.finalized[0][0].tokens_in == 200
+
+
+def test_partial_anthropic_usage_does_not_settle():
+    span = SpanData(provider="anthropic", model="claude-sonnet-4")
+    wrapper = _StreamWrapper(
+        iter(
+            [
+                SimpleNamespace(
+                    type="message_start",
+                    message=SimpleNamespace(
+                        usage=SimpleNamespace(input_tokens=100, output_tokens=0)
+                    ),
+                )
+            ]
+        ),
+        span,
+        None,
+        FakeInstrumentor(),
+    )
+    list(wrapper)
+    assert span.metadata.get("cost_status") != "known"
+
+
+def test_close_early_finalizes_once_without_usage_claim():
+    fake = FakeInstrumentor()
+    span = SpanData(provider="anthropic", model="claude-sonnet-4")
+    wrapper = _StreamWrapper(iter([SimpleNamespace(type="text")]), span, None, fake)
+    next(wrapper)
+    wrapper.close()
+    wrapper.close()
+    assert len(fake.finalized) == 1
+    assert span.metadata.get("cost_status") != "known"
+
+
+def test_stream_failure_finalizes_pending():
+    def stream():
+        yield SimpleNamespace(type="text")
+        raise ConnectionError("cut off")
+
+    fake = FakeInstrumentor()
+    span = SpanData(provider="anthropic", model="claude-sonnet-4")
+    wrapper = _StreamWrapper(stream(), span, None, fake)
+    import pytest
+
+    with pytest.raises(ConnectionError):
+        list(wrapper)
+    assert len(fake.finalized) == 1 and span.status == "error"
+    assert span.metadata.get("cost_status") != "known"

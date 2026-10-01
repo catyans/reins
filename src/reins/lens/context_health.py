@@ -51,7 +51,6 @@ def compute_health_scores(spans: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
     enriched = []
     cumulative_tokens = 0
-    prev_tokens_out = 0
     output_ratios: list[float] = []
     token_history: list[int] = []
 
@@ -100,11 +99,7 @@ def compute_health_scores(spans: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 duplication_score = 0.6
 
         # Composite score (weighted average)
-        health = (
-            utilization_score * 0.5
-            + efficiency_score * 0.3
-            + duplication_score * 0.2
-        )
+        health = utilization_score * 0.5 + efficiency_score * 0.3 + duplication_score * 0.2
         health = max(0.0, min(1.0, health))
 
         enriched_span = dict(span)
@@ -114,8 +109,6 @@ def compute_health_scores(spans: list[dict[str, Any]]) -> list[dict[str, Any]]:
         enriched_span["_duplication_score"] = round(duplication_score, 3)
         enriched_span["_cumulative_tokens"] = cumulative_tokens
         enriched.append(enriched_span)
-
-        prev_tokens_out = tokens_out
 
     return enriched
 

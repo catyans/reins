@@ -29,7 +29,9 @@ class PulseModule(ReinsModule):
             flags = self._check_basic_guardrails(span)
             if flags:
                 span.safety_flags = flags
-                self._event_bus.emit(Events.GUARDRAIL_HIT, agent=span.metadata.get("agent_name"), flags=flags)
+                self._event_bus.emit(
+                    Events.GUARDRAIL_HIT, agent=span.metadata.get("agent_name"), flags=flags
+                )
 
     def _check_basic_guardrails(self, span: SpanData) -> list[str] | None:
         # Placeholder: actual guardrail implementation in Phase 3

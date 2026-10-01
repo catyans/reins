@@ -1,366 +1,319 @@
-<p align="center">
-  <h1 align="center">Reins</h1>
-  <p align="center"><img src="docs/assets/logo.png" alt="Reins Logo" width="120"/></p>
-  <p align="center"><strong>Take Control of Your AI Agents</strong></p>
-  <p align="center">
-    The runtime platform that makes AI agents debuggable, affordable, and reliable.<br/>
-    Existing tools show you what happened. Reins lets you <strong>control what happens next</strong>.
-  </p>
-  <p align="center">
-    <a href="#quick-start">Quick Start</a> &bull;
-    <a href="#features">Features</a> &bull;
-    <a href="#framework-support">Frameworks</a> &bull;
-    <a href="#documentation">Docs</a> &bull;
-    <a href="#why-reins">Why Reins</a>
-  </p>
-</p>
+# Reins
+
+<p><img src="docs/assets/reins-wordmark-v3.svg" alt="Reins" width="400"></p>
+
+**New local workflow:** [Public project update Agent](docs/PROJECT_AGENT.md) combines
+commit-pinned sources, incremental extraction, durable request recovery, and a
+read-only status page. Run the finite Gemini comparison locally; inspect quality
+and cost together before making a savings claim. No server deployment is required.
+
+**Meet the quality bar. Lower the cost of every accepted task.**
+
+Reins is a Python SDK for outcome-based Agent optimization, starting with data
+collection and structured extraction. Evaluate execution policies on the same
+tasks, exclude those that miss quality or latency constraints, and select the
+lowest recorded cost per accepted result. Trace execution and enforce budgets
+through the same runtime.
+
+**v0.2 is a local, single-writer pilot release.** Observation is the default.
+No savings or quality improvement is claimed until measured on your tasks.
+
+## Measured Gemini cases
+
+Selected completed benchmarks, synchronized with the public case page on September 30, 2026.
+
+<p><img src="docs/assets/measured-savings.svg" alt="Measured savings against named Gemini baselines" width="900"></p>
+
+| Workload | Accepted test records | Lower API cost per accepted result | Comparison baseline |
+|---|---:|---:|---|
+| Incremental data refresh | 300/300 | 72.0% | One-item Gemini 2.5 Flash Lite |
+| Research paper collection | 300/300 | 63.5% | One-item Gemini 2.5 Flash |
+| Project research | 300/300 | 49.6% | One-item Gemini 2.5 Flash |
+
+[Interactive cases](https://47.245.114.167:8443/cases.html) ·
+[Readable benchmark report](docs/assets/reins-savings-report.pdf) ·
+[Recorded comparison data](docs/assets/featured-cases.json)
+
+Real API calls on reformatted public metadata and controlled updates, selected
+retrospectively from completed experiments. Acceptance checks required reference
+fields; these are not customer production results. Savings include failed attempts
+and fallback calls and are relative to the named baseline. Deterministic parsing
+is also a baseline for these structured inputs. Paper collection is an offline
+workload (p95 79.04 seconds); the other two examples have p95 below 60 seconds.
+These results do not imply that every workflow benefits or that savings are exclusive
+to Reins. The report includes the full four-workload presentation, including invoices.
+
+The latest local raw-document project-update experiment is separate from these
+benchmarks and has not established production-quality savings. Local experimental
+SDK features are not part of this documentation-only update.
 
 ---
 
-```python
-pip install reins
+## Optimize a real task, not just a token bill
 
-from reins import trace
+- **Evaluate:** identical cases, versioned policies, explicit business acceptance.
+- **Select:** quality and latency gates before cost ranking; incomplete charges
+  and unmatched cases cannot produce a recommendation.
+- **Execute:** an explicit small-first / validate / fallback policy with budget
+  control and step-level visibility.
+- **Check:** separate validation and test experiments; test results never retune
+  the winner. Export a report before manually adopting a policy.
 
-@trace(budget="$0.50", on_exceed="degrade")
-async def my_agent(task: str):
-    response = await client.messages.create(model="claude-sonnet-4-20250514", ...)
-    return response
-    # When budget runs low → auto-switches to claude-haiku (not crash)
+The optimizer compares functions you supply. A validation-trained segment router
+can freeze a choice per input segment, with baseline fallback for sparse segments.
+It does not compress models or automatically deploy changes.
+
+```bash
+PYTHONPATH=src python examples/outcome_optimizer.py \
+  --database /tmp/reins-optimizer.duckdb --dashboard --port 8766
 ```
 
-**One decorator. Budget control + cost tracking + auto-degradation + trace recording.**
+Open **http://127.0.0.1:8766 → 策略优化**. No API keys required; all responses
+and prices are synthetic. The example includes validator and fallback fees,
+rejects a cheap low-quality candidate, and separately tests the selected policy.
+See [Optimization guide](docs/OPTIMIZATION.md) to connect real candidates,
+quality criteria and deployment configurations.
 
----
+For the product website preview, see [website/README.md](website/README.md).
 
-## Why Reins?
+## Data-agent execution and real Gemini experiments
 
-### Enterprise LLM Spending is Exploding — But Cost Controls Haven't Kept Up
+- **Deadline batching:** isolate tenants, task types, schemas and policies; include
+  queueing in latency and bound concurrent provider calls.
+- **Incremental checkpoints:** persist successful steps in SQLite, reuse unchanged
+  inputs, invalidate downstream steps by dependency revision, and require explicit
+  reconciliation before retrying interrupted paid work.
+- **Frozen policies:** learn only from validation inputs and outcomes. Holdout checks
+  block adoption when observed quality, latency or cost fails the configured gate.
+- **Recorded cases:** four English, read-only case studies show real Gemini calls,
+  reference-field acceptance, queue time, cost estimates and strong parser baselines.
 
-Enterprise LLM API spending has surged from **$1.8B** (2023 H2) to **$8.4B** (2025 H1) — a **4.7x increase** in 18 months. Menlo Ventures projects it will hit **$15B by 2026** if current velocity holds. Total enterprise GenAI investment reached **$37B in 2025**, tripling from $11.5B in 2024.
+See [Data Agent guide](docs/DATA_AGENTS.md),
+[measured results](output/benchmarks/data-agents-v1/RESULTS.md), and
+[the case replay](https://47.245.114.167:8443/cases.html).
+These are experiments on reformatted public metadata and constructed invoices,
+not production customer traffic or proof of superiority to managed AgentCore.
+Simple parsing is included deliberately: avoiding an unnecessary model call is
+useful, but is not an exclusive technology advantage.
 
-<p align="center">
-  <img src="docs/assets/llm_spend_growth.png" alt="Enterprise LLM API Spending Growth" width="700"/>
-</p>
+```bash
+PYTHONPATH=src python examples/incremental_data_agent.py
+python -m http.server 8793 --directory website
+# http://127.0.0.1:8793/cases.html — no API calls from the browser
+```
 
-Yet the tools to govern this spending are shockingly primitive:
+## Install
 
-| Capability | Available Today? |
+```bash
+pip install .                 # from this checkout
+pip install -e '.[dev,proxy]' # contributors
+```
+
+Python 3.10+. Model-provider SDKs are optional and installed separately. The public
+package registry may still contain an earlier release; this checkout is v0.2.
+
+## Observe a task
+
+```python
+from reins import configure, trace, record_outcome
+
+configure(storage_path="pilot.duckdb", mode="observe")
+
+@trace(agent_name="supplier_research", task_type="field_extraction",
+       policy_version="baseline", budget="$0.50")
+async def research_supplier(source):
+    result = await your_agent(source)  # instrumented SDK calls
+    record_outcome(success=validate_fields(result), score=field_score(result))
+    return result
+```
+
+The application defines quality. Completing a function or receiving HTTP 200 is
+not automatically a successful business outcome. Call `record_retry()` for actual
+application retries and `record_external_cost(amount, label="...")` for incurred
+tool/evaluation fees. External cost reporting is not a spending authorization.
+
+```bash
+reins compare --database pilot.duckdb --task-type field_extraction
+```
+
+Reports group tasks by dataset, task type, policy version, and operating mode.
+They include sample sizes, success rate, an approximate Wilson interval,
+known total cost, pending charges, cost per successful task, p95 duration, model
+switches, and caller-reported retries. Failed attempts are included in the cost
+numerator. Missing outcomes or pending charges suppress cost-per-success claims.
+
+## Try it without API keys
+
+```bash
+python examples/extraction_pilot.py --database /tmp/reins-demo.duckdb
+reins compare --database /tmp/reins-demo.duckdb
+```
+
+The demo uses **synthetic responses and prices**, runs the actual budget and
+recording paths, and compares a fixed strong model, a fixed small model, and a
+budget-triggered policy on identical extraction cases. It deliberately shows
+quality loss from naive switching. These are not real-model performance results.
+Use a fresh database for each independent demo.
+
+For your own agent, `reins.evaluation.evaluate_dataset(cases, agent, ...)` accepts
+an input/expected-fields fixture set and a sync or async function. It hashes the
+dataset, repeats cases, and records exact-field quality checks. See [Pilot guide](docs/PILOT.md).
+
+## Watch an agent run locally
+
+```python
+from reins import configure, trace, step, record_outcome
+
+configure(storage_path="pilot.duckdb", dashboard=True, dashboard_port=8765,
+          inactivity_seconds=60)
+
+@trace(agent_name="supplier_research", task_type="field_extraction")
+async def research(source):
+    async with step("获取网页", kind="retrieval"):
+        page = await fetch_page(source)  # your existing application function
+    async with step("提取字段"):
+        result = await your_agent(page)  # supported SDK calls are recorded automatically
+    record_outcome(success=validate_fields(result))
+    return result
+```
+
+Open **http://127.0.0.1:8765** while the Agent process is running. The read-only
+panel refreshes every two seconds and shows tasks, active business steps, parallel
+children, retries, errors, budget decisions and confirmed/pending costs. Click a
+run for its event timeline. The second page compares cost and quality by dataset.
+`step()` supports both `with` and `async with`; use a new context for each step.
+Without explicit steps, Reins shows captured model calls, not inferred business stages.
+
+A five-second runtime heartbeat indicates process liveness. After 15 seconds without
+a fresh heartbeat, unfinished tasks are shown as **unknown**, not failed. No activity
+for `inactivity_seconds` shows a separate warning; a slow model is not declared stuck.
+Heartbeats cannot prove that application code is making progress. Interrupted tasks
+retain reservations for billing reconciliation.
+
+The server shares the running SDK's database connection, binds only to loopback,
+and has no task-control endpoints. Configure before starting tasks. Keep the process
+alive to inspect the panel; shut down using `reins.core.decorators.shutdown()`.
+Port conflicts raise a clear startup error. Schema v3 adds event/instance tables
+transactionally; old traces remain available but have no historical step events.
+Do not add a second database writer or expose this local pilot UI to the network.
+
+Try the full UI without credentials:
+
+```bash
+python examples/dashboard_demo.py --database /tmp/reins-dashboard-demo.duckdb
+```
+
+This demo seeds three synthetic strategies, runs three parallel collection batches
+with an intentional source error/retry, then keeps the panel open. Stop with Ctrl+C.
+All demo tasks are labelled simulated; neither the prices nor quality are live-model
+measurements. Use a fresh database when you want an independent demonstration.
+
+## Enforce a budget deliberately
+
+`configure(mode="enforce", token_counter=..., prices=..., task_models=...)` enables
+strict admission on the supported SDK path. Requirements:
+
+- Pin exact model prices in USD per million input/output tokens. Built-in rates
+  are illustrative observation defaults, not a current billing guarantee.
+- Supply a trusted `token_counter(provider, model, request) -> int` that covers
+  the complete input, including system messages and tools. It is called again
+  for any proposed replacement model. A rough character estimate is insufficient.
+- Supply `max_tokens` or `max_completion_tokens`. Set provider SDK retries to zero
+  and trace application retries explicitly.
+- Explicitly approve an ordered `provider/model` list per task type. Replacement
+  is same-provider only and must fit **all** applicable budgets. Validate tool,
+  structured-output, and other model capabilities before approving that pair.
+- Only text, one completion per call, and ordinary input/output billing are
+  supported for strict admission. Explicit cache writes, hosted search tools,
+  and image/audio input are rejected. Cache-specific usage remains pending for
+  explicit billing reconciliation; it is not reported as free.
+
+Observation records the original call and what the policy would recommend. It
+never changes the model or rejects a call for budget pressure. Enforce checks
+per-run, ancestor-run, global daily/monthly and agent daily/monthly caps together.
+Periods are UTC admission periods. A zero budget is a real zero limit.
+`alert` does not authorize overspending in enforce mode. `pause` raises a typed
+exception; the application owns recovery/resume.
+
+Reservations are committed before dispatch and survive restart. Missing usage,
+timeouts, and incomplete streams retain reservations. After checking provider
+billing, use `reconcile_cost(span_id, actual_cost)` (including zero only when
+confirmed unbilled). A violated input bound raises an accounting alert and blocks
+further enforcement until acknowledged through reconciliation. Reins cannot undo
+charges already billed by a provider or govern calls that bypass the SDK.
+
+## Supported paths and limitations
+
+| Path | v0.2 behavior |
 |---|---|
-| Cost **tracking** (after the fact) | Widely available (Langfuse, LangSmith, Helicone) |
-| Hard budget **limits** (block when exceeded) | Partial (LiteLLM, Portkey) |
-| **Auto-degradation** (switch to cheaper model) | **No existing tool** |
-| **Circuit breakers** (halt runaway loops) | **No existing tool** |
-| **Per-agent** budget scoping | **No existing tool** |
+| Anthropic Messages `.create`, sync/async, `stream=True` | Trace, usage, observation and opt-in admission |
+| OpenAI Chat Completions `.create`, sync/async, `stream=True` | Same; streaming usage is requested explicitly |
+| Framework callbacks / OTel | Trace observation only; callbacks do not guarantee request mutation |
+| HTTP proxy | Experimental observation-only; not the first paid integration path |
+| `reins replay` | Inspect recorded steps; does not re-execute or repair tasks |
+| Lens context health | Token-based heuristic signals, not verified semantic root causes |
+| Pulse | Placeholder; not a production guardrail or regression-test service |
 
-<p align="center">
-  <img src="docs/assets/cost_governance_gap.png" alt="Cost Governance Gap" width="750"/>
-</p>
+The SDK uses process-wide instrumentation. Configure once before concurrent work;
+await task children before their parent finishes. Use one runtime/storage writer
+per database. Distributed shared budgets, OpenAI Responses, SDK `.stream()` helper
+APIs, background orphan tasks, and arbitrary model migration are not guaranteed.
+The ledger stores metadata and usage; this version does not persist full prompts.
 
-### Real Cost Overruns Are Already Happening
+## Migration from v0.1
 
-- **$47K LangChain Loop** (Nov 2025): Four agents in a research pipeline entered an infinite conversation loop for 11 days. The team assumed growing costs were "organic growth" — until the $47,000 bill arrived.
-- **$47K Retry Storm** (Feb 2026): A data enrichment agent misinterpreted an API error code, running 2.3 million API calls over a weekend. Only the external API's rate limiter slowed it down — not the team's own controls.
-- **Gartner (2025)**: Over **40% of agentic AI projects** will be canceled by 2027 due to escalating costs, unclear value, or inadequate risk controls.
+- Default operation is observe; opt into enforce explicitly after a baseline.
+- New durable request/account tables preserve historical runs and traces.
+  Old `budget_balances` are retained but are **not imported**: old agent balances
+  cannot safely be assigned to tasks. Initialize pilot limits deliberately.
+- Unknown prices and invalid configuration no longer silently become zero/unlimited.
+- `wrap(..., budget=...)` and unsupported `configure(budget=...)` now fail clearly;
+  put task budgets on `@trace` and period budgets in YAML.
+- No automatic static downgrade chain is used. Approved task models are required.
+- Python 3.10 is now the minimum, matching the CI matrix.
 
-### Agent Reliability is a Crisis
+## Position relative to other tools
 
-<p align="center">
-  <img src="docs/assets/reliability_crisis.png" alt="Agent Reliability Crisis" width="700"/>
-</p>
+LiteLLM has routing and budget controls; Portkey has conditional routing and budget
+limits; LangSmith has tracing and evaluation. Reins' pilot focuses on a small,
+local task-cost feedback loop and application-owned quality labels. That focus
+is a hypothesis to test with customers, not a claim of unique features.
 
-- Top SWE-bench Verified score: **79%** — but real-world performance overestimates by **up to 54%**
-- Agent success rates **decline exponentially** with task duration. Claude Sonnet's "half-life" is ~59 minutes
-- A survey of 306 practitioners found **reliability is the #1 barrier** to enterprise agent adoption
+[LiteLLM budgets](https://docs.litellm.ai/docs/proxy/provider_budget_routing) ·
+[Portkey routing](https://portkey.ai/docs/product/ai-gateway/conditional-routing) ·
+[LangSmith evaluation](https://www.langchain.com/langsmith/evaluation)
 
-### Who Needs Cost Governance?
-
-| Industry | AI Spend (2025) | Growth | Key Concern |
-|----------|----------------|--------|-------------|
-| **Healthcare** | ~$1.5B in vertical AI | 3.3x YoY | Compliance + cost predictability |
-| **Financial Services** | 23.7% of enterprise AI market | Steady | Risk controls + audit trails |
-| **Legal** | $650M market | Fast-growing | Per-case cost attribution |
-| **Customer Service** | Largest agent deployment sector | Rapid | Per-conversation cost caps |
-
-**86% of enterprises** plan to increase AI budgets in 2026 (Deloitte). The question isn't whether to spend — it's whether to spend *blindly*.
-
----
-
-## Quick Start
-
-### For Your Own Agents
+## Development and pilot material
 
 ```bash
-pip install reins
+pytest -q
+ruff check src tests
+ruff format --check src tests examples
 ```
 
-```python
-from reins import trace
-
-@trace(budget="$0.50", on_exceed="degrade")
-async def my_agent(task: str):
-    client = anthropic.AsyncAnthropic()
-    response = await client.messages.create(
-        model="claude-sonnet-4-20250514",
-        max_tokens=1024,
-        messages=[{"role": "user", "content": task}],
-    )
-    return response.content[0].text
-```
-
-When the budget runs low, Reins automatically switches `claude-sonnet` to `claude-haiku` — your agent keeps running, just cheaper.
-
-### For Claude Code
-
-```bash
-pip install reins[proxy]
-
-# Start local proxy with $5/day budget
-reins proxy --port 8082 --budget '$5/day' --on-exceed degrade
-
-# Point Claude Code at it
-export ANTHROPIC_BASE_URL=http://localhost:8082
-
-# Use Claude Code normally — Reins controls costs transparently
-claude "refactor this module"
-```
-
-### Check Your Costs
-
-```bash
-# Cost report
-reins report
-
-# Trace visualization
-reins trace list
-reins trace show <run_id>
-
-# Context health analysis
-reins health <run_id>
-
-# Step-by-step replay
-reins replay <run_id>
-```
-
----
-
-## Features
-
-### Modular Architecture — Use What You Need
-
-```bash
-pip install reins              # Core: auto-tracing + DuckDB storage
-pip install reins[budget]      # + Cost governance
-pip install reins[lens]        # + Debugging (replay, context health)
-pip install reins[pulse]       # + Reliability (guardrails, evaluation)
-pip install reins[all]         # Everything
-```
-
-### Core (Always Installed)
-
-- **Auto-instrumentation**: Monkey-patches Anthropic & OpenAI SDKs — zero code changes to capture all LLM calls
-- **DuckDB storage**: Embedded, zero-config. No Redis, no Postgres, no Docker
-- **SQL queries**: `reins query "SELECT * FROM spans WHERE cost > 0.1"`
-- **Streaming support**: Transparent interception of streaming responses
-
-### Budget Module
-
-- **Per-run budgets**: `@trace(budget="$0.50")` — hard cap per agent execution
-- **4 exceed strategies**: `degrade` (auto-switch model) / `pause` / `alert` / `reject`
-- **Model degradation chains**: `opus → sonnet → haiku`, `o3 → gpt-4o → gpt-4o-mini`
-- **Circuit breaker**: Auto-halts runaway agent loops (>30 calls/minute)
-- **Budget persistence**: Survives process restarts, daily/monthly auto-reset
-- **Cost anomaly detection**: Alerts when a run costs 3x the historical average
-- **YAML team budgets**: Organization → team → agent hierarchy
-
-```yaml
-# reins.yaml
-budgets:
-  daily: $10.00
-  agents:
-    research_agent: { per_run: $2.00, on_exceed: degrade }
-    code_agent: { per_run: $0.50, on_exceed: reject }
-```
-
-### Trace Module
-
-- **`reins trace list`**: Recent runs table with cost, status, degradation count
-- **`reins trace show`**: Colored terminal call tree (LLM + tool calls)
-- **`reins trace export --format otel`**: OTLP JSON export for Grafana/Datadog
-- **Cross-agent correlation**: Automatic trace_id propagation
-
-### Lens Module
-
-- **`reins replay`**: Interactive step-by-step agent replay (Enter/auto-play/quit)
-- **`reins health`**: Context health curve with ASCII chart + per-span breakdown
-- **Context Rot detection**: 3-metric composite score (utilization, efficiency, duplication)
-- **Root cause analysis**: Automatic causal chain for failures
-
-### Pulse Module (Phase 3)
-
-- Runtime evaluators (coherence, instruction following)
-- Guardrail engine (PII detection, SQL injection prevention)
-- Automatic regression test generation from failed runs
-
-### Proxy Mode
-
-- **Transparent reverse proxy** for Claude Code, aider, Cursor, or any tool that respects `ANTHROPIC_BASE_URL`
-- Full budget enforcement at the HTTP layer
-- Zero changes to the upstream tool
-
----
-
-## Framework Support
-
-Reins integrates with **10+ agent frameworks** through 4 adapters:
-
-| Adapter | Frameworks | Integration |
-|---------|-----------|-------------|
-| **`ReinsCallbackHandler`** | LangChain, LangGraph, LangFlow | `ChatAnthropic(callbacks=[handler])` |
-| **`ReinsTracingProcessor`** | OpenAI Agents SDK | `add_trace_processor(processor)` |
-| **`instrument_crew()`** | CrewAI | `instrument_crew(crew)` |
-| **`ReinsSpanExporter`** | Semantic Kernel, Pydantic AI, Haystack, Mastra | OTel SpanProcessor |
-
-### LangChain / LangGraph
-
-```python
-from reins.adapters.langchain import ReinsCallbackHandler
-
-handler = ReinsCallbackHandler(agent_name="my_langchain_agent")
-llm = ChatAnthropic(model="claude-sonnet-4-20250514", callbacks=[handler])
-chain = prompt | llm | parser
-result = chain.invoke({"input": "..."})
-```
-
-### OpenAI Agents SDK
-
-```python
-from reins.adapters.openai_agents import ReinsTracingProcessor
-from agents import Agent, Runner, add_trace_processor
-
-add_trace_processor(ReinsTracingProcessor())
-
-agent = Agent(name="assistant", model="gpt-4o")
-result = Runner.run_sync(agent, "Hello!")
-```
-
-### CrewAI
-
-```python
-from reins.adapters.crewai import instrument_crew
-from crewai import Crew, Agent, Task
-
-crew = Crew(agents=[...], tasks=[...])
-instrument_crew(crew)  # One line — instruments all agents and tasks
-result = crew.kickoff()
-```
-
-### Any OTel-Native Framework (Semantic Kernel, Pydantic AI, Haystack, Mastra)
-
-```python
-from reins.adapters.otel import ReinsSpanProcessor
-from opentelemetry.sdk.trace import TracerProvider
-
-provider = TracerProvider()
-provider.add_span_processor(ReinsSpanProcessor())
-# Now any OTel-instrumented framework is automatically traced by Reins
-```
-
----
-
-## How It Compares
-
-| | **Reins** | LiteLLM | Langfuse | Helicone | Portkey |
-|---|---|---|---|---|---|
-| **Architecture** | SDK + Proxy | Proxy only | SDK | Proxy | Proxy/SDK |
-| **Infrastructure** | Zero (embedded DuckDB) | Redis + Postgres | PostgreSQL | Cloud | Cloud |
-| **Budget enforcement** | Smart degradation | Hard reject (400) | None | Rate limit | Key limit |
-| **Auto model switch** | Yes | No | No | No | No |
-| **Circuit breaker** | Yes | No | No | No | No |
-| **Per-agent budgets** | Yes | Per-key | No | No | Partial |
-| **Agent replay** | Yes | No | No | No | No |
-| **Context health** | Yes | No | No | No | No |
-| **Framework adapters** | 10+ frameworks | N/A | 12+ | N/A | 5+ |
-| **Setup** | `pip install reins` | `docker-compose up` | `docker-compose up` | Cloud signup | Cloud signup |
-| **Open source** | BSL 1.1 (→ Apache 2030) | Enterprise paywall | MIT | MIT | Proprietary |
-
-**One-line difference**: LiteLLM is an API Gateway (needs infra, hard-rejects on exceed). Reins is an Agent Runtime (zero-infra, degrades gracefully).
-
----
-
-## Architecture
-
-<p align="center">
-  <img src="docs/assets/architecture.png" alt="Reins Architecture" width="700"/>
-</p>
-
-Modules communicate via an **event bus** — install only what you need, they auto-cooperate when co-installed. For example: Lens detects context rot → notifies Budget → Budget reduces remaining allocation.
-
----
-
-## Documentation
-
-- [Product Requirements (PRD)](docs/PRD.md) — What we build and why
-- [Technical Design](docs/DESIGN.md) — Architecture, data models, API design
-
----
-
-## Market Context
-
-| Metric | Value | Source |
-|--------|-------|--------|
-| Enterprise LLM API spend (2025 H1) | **$8.4B** | [Menlo Ventures](https://menlovc.com/perspective/2025-mid-year-llm-market-update/) |
-| YoY GenAI enterprise investment growth | **3.2x** ($11.5B → $37B) | [Menlo Ventures](https://menlovc.com/perspective/2025-the-state-of-generative-ai-in-the-enterprise/) |
-| Projected LLM API spend (2026) | **$15B+** | [Menlo Ventures](https://menlovc.com/perspective/2025-mid-year-llm-market-update/) |
-| Agentic AI projects to be canceled by 2027 | **>40%** | [Gartner](https://www.gartner.com) |
-| Agent reliability as #1 enterprise barrier | **72%** of practitioners | [Pan et al. (2025)](https://simmering.dev/blog/agent-benchmarks/) |
-| Enterprises increasing AI budget in 2026 | **86%** | [Deloitte State of AI 2026](https://www.deloitte.com/us/en/what-we-do/capabilities/applied-artificial-intelligence/content/state-of-ai-in-the-enterprise.html) |
-| Langfuse: SDK installs/month | **26M+** | [ClickHouse acquisition](https://langfuse.com/) |
-| LangChain valuation (Oct 2025) | **$1.25B** | [Series B](https://latenode.com/blog/ai-frameworks-technical-infrastructure/langchain-setup-tools-agents-memory/langchain-funding-valuation-2025-complete-financial-overview) |
-| Healthcare vertical AI spend (2025) | **$1.5B** (3.3x YoY) | [Menlo Ventures](https://menlovc.com/perspective/2025-the-state-of-generative-ai-in-the-enterprise/) |
-
----
-
-## Development
-
-```bash
-# Clone
-git clone https://github.com/catyans/reins.git
-cd reins
-
-# Install with dev deps
-pip install -e ".[dev,all]"
-
-# Run tests
-pytest tests/ -v
-
-# Generate charts
-python scripts/generate_charts.py
-```
-
-**99 tests** across unit and integration suites.
-
----
+[Integration guide](docs/GUIDE.md) · [Pilot and evaluation protocol](docs/PILOT.md) ·
+[Six-week customer development plan](docs/CUSTOMER_DISCOVERY.md)
 
 ## License
 
-[Business Source License 1.1](LICENSE) (BSL 1.1)
+Source available under [Business Source License 1.1](LICENSE) (SPDX `BUSL-1.1`).
+See the license for the noncompetitive-use grant and scheduled Apache conversion.
+This release does not change those license terms.
 
-- **Free for**: personal use, internal enterprise use, academic research, contributing back
-- **Not allowed**: building a competing commercial AI agent cost governance product/service
-- **Auto-converts to Apache 2.0** on April 4, 2030
+## Reduce repeated model work
 
-For commercial licensing inquiries: 237344440@qq.com
+For independent offline extraction jobs, evaluate microbatch sizes and compact
+output formats alongside model choice. `reins.batching.MicroBatchPolicy` preserves
+input/output correspondence, validates each result, and retries only invalid items.
+An optional source-driven transform can perform deterministic calculations before
+validation. The same tools must be applied to all comparison baselines.
 
----
+`select_configuration` applies quality, sample-size, settled-cost and optional
+batch-service latency gates. It selects on paired validation records; a separate
+audit checks the frozen configuration. See [Batching guide](docs/BATCHING.md).
 
-## Author
+Real-call benchmark protocols and complete retained rounds live in
+[benchmarks/README.md](benchmarks/README.md). Results on constructed documents are
+engineering evidence, not customer savings or proof of a proprietary model moat.
 
-**Yanshu Wang** ([@catyans](https://github.com/catyans)) — [https://catyans.github.io](https://catyans.github.io)
-
----
-
-<p align="center">
-  <strong>Reins: Take control of your AI agents.</strong><br/>
-  <code>pip install reins</code>
-</p>
+Measured example (real Gemini API, constructed invoices): the frozen compact-16 policy accepted 100/100 audit cases, with 50% lower list-price token cost and 7.53× sequential-job throughput than single-item Lite. Against compact-four batching, the gains were 11% and 2.03×, with higher p95 batch service time (5.79s vs 2.36s). [Experiment and limitations](website/benchmark-report.md).

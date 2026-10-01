@@ -4,11 +4,11 @@ build-backend = "hatchling.build"
 
 [project]
 name = "reins"
-version = "0.1.0"
-description = "Take control of your AI agents — debuggable, affordable, reliable."
+version = "0.2.0"
+description = "Quality-constrained policy selection and cost control for AI agent tasks."
 readme = "README.md"
-license = "BSL-1.1"
-requires-python = ">=3.9"
+license = "BUSL-1.1"
+requires-python = ">=3.10"
 authors = [
     { name = "Reins Team" },
 ]
@@ -42,6 +42,7 @@ openai-agents = [] # No extra deps — uses duck-typing
 crewai = []        # No extra deps — uses duck-typing
 otel = ["opentelemetry-api>=1.20", "opentelemetry-sdk>=1.20"]
 all = ["reins[budget]", "reins[trace]", "reins[lens]", "reins[pulse]"]
+sdk-test = ["anthropic==1.9.0", "openai==3.20.0"]
 dev = [
     "pytest>=8.0",
     "pytest-asyncio>=0.23",
@@ -59,9 +60,9 @@ lens = "reins.lens:LensModule"
 pulse = "reins.pulse:PulseModule"
 
 [project.urls]
-Homepage = "https://github.com/reins-ai/reins"
-Documentation = "https://reins.dev"
-Repository = "https://github.com/reins-ai/reins"
+Homepage = "https://github.com/catyans/reins"
+Documentation = "https://github.com/catyans/reins/tree/main/docs"
+Repository = "https://github.com/catyans/reins"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/reins"]
@@ -76,3 +77,7 @@ select = ["E", "F", "I", "W"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 asyncio_mode = "auto"
+
+[tool.ruff.lint.per-file-ignores]
+# Preserve the exact pre-registered benchmark fixture text.
+"benchmarks/google_workload.py" = ["E501"]

@@ -15,5 +15,18 @@ htmlcov/
 .reins/
 .env
 .venv/
+.venv-reflector/
+output/vendor/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
 venv/
 env/
+
+# Local measurements and operator credentials stay outside source control.
+.DS_Store
+output/
+tmp/
+.env.*
+*.pem
+*.key

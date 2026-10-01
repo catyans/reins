@@ -1,0 +1,1821 @@
+{
+  "schema_version": 1,
+  "updated_at": 1790746851.596639,
+  "kind": "historical_replay",
+  "state": "idle",
+  "progress": {
+    "total": 1200,
+    "completed": 1172,
+    "needs_review": 28
+  },
+  "metrics": {
+    "calls": 1379,
+    "estimated_api_cost_usd": 4.97062038,
+    "unsettled_calls": 9,
+    "inflight_calls": 0,
+    "reused_fields": 443
+  },
+  "activity": [],
+  "records": [
+    {
+      "project": "jaraco/keyring",
+      "version": "v25.7.0",
+      "phase": "unchanged",
+      "policy": "incremental",
+      "fields": {
+        "purpose": {
+          "value": "The Python keyring library provides an easy way to access the\nsystem keyring service from python. It can be used in any\napplication that needs safe password storage.",
+          "source": "readme",
+          "quote": "The Python keyring library provides an easy way to access the\nsystem keyring service from python. It can be used in any\napplication that needs safe password storage."
+        },
+        "install_command": {
+          "value": "pip install 'keyring[completion]'",
+          "source": "readme",
+          "quote": "Keyring provides tab completion if the ``completion`` extra is installed::\n\n    $ pip install 'keyring[completion]'"
+        },
+        "license": {
+          "value": null,
+          "source": null,
+          "quote": null
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 4,
+      "calls": 0,
+      "cost": 0,
+      "seconds": 0.008863541996106505,
+      "source_backed": true,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/jaraco/keyring/38c040133559682902f25fe96496756ee6849820/README.rst",
+          "hash": "a6a487d574258f1247f10dbff2e67726e3b00efa717c9695f30b73e73ece90ad"
+        }
+      },
+      "changed_fields": []
+    },
+    {
+      "project": "jaraco/keyring",
+      "version": "v25.7.0",
+      "phase": "unchanged",
+      "policy": "fixed-flash",
+      "fields": {
+        "purpose": {
+          "value": "The Python keyring library provides an easy way to access the\nsystem keyring service from python.",
+          "source": "readme",
+          "quote": "The Python keyring library provides an easy way to access the\nsystem keyring service from python."
+        },
+        "install_command": {
+          "value": null,
+          "source": null,
+          "quote": null
+        },
+        "license": {
+          "value": null,
+          "source": null,
+          "quote": null
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 0,
+      "calls": 1,
+      "cost": 0.0021194,
+      "seconds": 2.0907527500239667,
+      "source_backed": true,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/jaraco/keyring/38c040133559682902f25fe96496756ee6849820/README.rst",
+          "hash": "a6a487d574258f1247f10dbff2e67726e3b00efa717c9695f30b73e73ece90ad"
+        }
+      },
+      "changed_fields": [
+        "install_command",
+        "license"
+      ]
+    },
+    {
+      "project": "jaraco/keyring",
+      "version": "v25.7.0",
+      "phase": "unchanged",
+      "policy": "fixed-lite",
+      "fields": {
+        "purpose": {
+          "value": "The Python keyring library provides an easy way to access the\nsystem keyring service from python. It can be used in any\napplication that needs safe password storage.",
+          "source": "readme",
+          "quote": "The Python keyring library provides an easy way to access the\nsystem keyring service from python. It can be used in any\napplication that needs safe password storage."
+        },
+        "install_command": {
+          "value": "pip install 'keyring[completion]'",
+          "source": "readme",
+          "quote": "pip install 'keyring[completion]'"
+        },
+        "license": null,
+        "release_note": null
+      },
+      "reused": 0,
+      "calls": 1,
+      "cost": 0.0001834,
+      "seconds": 5.424618207995081,
+      "source_backed": false,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/jaraco/keyring/38c040133559682902f25fe96496756ee6849820/README.rst",
+          "hash": "a6a487d574258f1247f10dbff2e67726e3b00efa717c9695f30b73e73ece90ad"
+        }
+      },
+      "changed_fields": []
+    },
+    {
+      "project": "jaraco/keyring",
+      "version": "v25.7.0",
+      "phase": "update-2",
+      "policy": "fixed-lite",
+      "fields": {
+        "purpose": {
+          "value": "The Python keyring library provides an easy way to access the\nsystem keyring service from python. It can be used in any\napplication that needs safe password storage.",
+          "source": "readme",
+          "quote": "The Python keyring library provides an easy way to access the\nsystem keyring service from python. It can be used in any\napplication that needs safe password storage."
+        },
+        "install_command": {
+          "value": "pip install 'keyring[completion]'",
+          "source": "readme",
+          "quote": "pip install 'keyring[completion]'"
+        },
+        "license": null,
+        "release_note": null
+      },
+      "reused": 0,
+      "calls": 1,
+      "cost": 0.0006379,
+      "seconds": 5.204930540989153,
+      "source_backed": false,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/jaraco/keyring/38c040133559682902f25fe96496756ee6849820/README.rst",
+          "hash": "a6a487d574258f1247f10dbff2e67726e3b00efa717c9695f30b73e73ece90ad"
+        }
+      },
+      "changed_fields": [
+        "license"
+      ]
+    },
+    {
+      "project": "jaraco/keyring",
+      "version": "v25.7.0",
+      "phase": "update-2",
+      "policy": "incremental",
+      "fields": {
+        "purpose": {
+          "value": "The Python keyring library provides an easy way to access the\nsystem keyring service from python. It can be used in any\napplication that needs safe password storage.",
+          "source": "readme",
+          "quote": "The Python keyring library provides an easy way to access the\nsystem keyring service from python. It can be used in any\napplication that needs safe password storage."
+        },
+        "install_command": {
+          "value": "pip install 'keyring[completion]'",
+          "source": "readme",
+          "quote": "Keyring provides tab completion if the ``completion`` extra is installed::\n\n    $ pip install 'keyring[completion]'"
+        },
+        "license": {
+          "value": null,
+          "source": null,
+          "quote": null
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 1,
+      "calls": 4,
+      "cost": 0.005181,
+      "seconds": 49.69908000002033,
+      "source_backed": true,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/jaraco/keyring/38c040133559682902f25fe96496756ee6849820/README.rst",
+          "hash": "a6a487d574258f1247f10dbff2e67726e3b00efa717c9695f30b73e73ece90ad"
+        }
+      },
+      "changed_fields": [
+        "license"
+      ]
+    },
+    {
+      "project": "apache/airflow",
+      "version": "3.3.2",
+      "phase": "unchanged",
+      "policy": "incremental",
+      "fields": {
+        "purpose": {
+          "value": "a platform to programmatically author, schedule, and monitor workflows.",
+          "source": "readme",
+          "quote": "Apache Airflow (or simply Airflow) is a platform to programmatically author, schedule, and monitor workflows."
+        },
+        "install_command": {
+          "value": "pip install 'apache-airflow==3.3.2' \\\n --constraint \"https://raw.githubusercontent.com/apache/airflow/constraints-3.3.2/constraints-3.10.txt\"",
+          "source": "readme",
+          "quote": "```bash\npip install 'apache-airflow==3.3.2' \\\n --constraint \"https://raw.githubusercontent.com/apache/airflow/constraints-3.3.2/constraints-3.10.txt\"\n```"
+        },
+        "license": {
+          "value": "Apache-2.0",
+          "source": "license",
+          "quote": "Apache License"
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 4,
+      "calls": 0,
+      "cost": 0,
+      "seconds": 0.010734500014223158,
+      "source_backed": false,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/apache/airflow/aa19d2dbb9ed187ec01957a92848d9b005e9ba9d/README.md",
+          "hash": "2cb085caa00724c3a19cec1bdfd74d194e4ea5a85ce025381dd403573ff0d6da"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/apache/airflow/aa19d2dbb9ed187ec01957a92848d9b005e9ba9d/LICENSE",
+          "hash": "cb0d37346e7916e782a2904dc5b8c8cdb8424eac5effb91ac409329c883619d4"
+        }
+      },
+      "changed_fields": []
+    },
+    {
+      "project": "apache/airflow",
+      "version": "3.3.2",
+      "phase": "unchanged",
+      "policy": "cached-cascade",
+      "fields": {
+        "purpose": {
+          "value": "a platform to programmatically author, schedule, and monitor workflows.",
+          "source": "readme",
+          "quote": "Apache Airflow (or simply Airflow) is a platform to programmatically author, schedule, and monitor workflows."
+        },
+        "install_command": {
+          "value": "pip install 'apache-airflow==3.3.2' \\\n --constraint \"https://raw.githubusercontent.com/apache/airflow/constraints-3.3.2/constraints-3.10.txt\"",
+          "source": "readme",
+          "quote": "```bash\npip install 'apache-airflow==3.3.2' \\\n --constraint \"https://raw.githubusercontent.com/apache/airflow/constraints-3.3.2/constraints-3.10.txt\"\n```"
+        },
+        "license": {
+          "value": "Apache-2.0",
+          "source": "license",
+          "quote": "Apache License"
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 2,
+      "calls": 0,
+      "cost": 0,
+      "seconds": 0.014275666995672509,
+      "source_backed": false,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/apache/airflow/aa19d2dbb9ed187ec01957a92848d9b005e9ba9d/README.md",
+          "hash": "2cb085caa00724c3a19cec1bdfd74d194e4ea5a85ce025381dd403573ff0d6da"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/apache/airflow/aa19d2dbb9ed187ec01957a92848d9b005e9ba9d/LICENSE",
+          "hash": "cb0d37346e7916e782a2904dc5b8c8cdb8424eac5effb91ac409329c883619d4"
+        }
+      },
+      "changed_fields": []
+    },
+    {
+      "project": "apache/airflow",
+      "version": "3.3.2",
+      "phase": "unchanged",
+      "policy": "fixed-flash",
+      "fields": {
+        "purpose": {
+          "value": "is a platform to programmatically author, schedule, and monitor workflows.",
+          "source": "readme",
+          "quote": "Apache Airflow (or simply Airflow) is a platform to programmatically author, schedule, and monitor workflows."
+        },
+        "install_command": {
+          "value": "pip install 'apache-airflow==3.3.2' \\\n --constraint \"https://raw.githubusercontent.com/apache/airflow/constraints-3.3.2/constraints-3.10.txt\"",
+          "source": "readme",
+          "quote": "```bash\npip install 'apache-airflow==3.3.2' \\\n --constraint \"https://raw.githubusercontent.com/apache/airflow/constraints-3.3.2/constraints-3.10.txt\"\n```"
+        },
+        "license": {
+          "value": "Apache-2.0",
+          "source": "license",
+          "quote": "Apache License\n                        Version 2.0, January 2004"
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 0,
+      "calls": 1,
+      "cost": 0.0047789,
+      "seconds": 9.767733542015776,
+      "source_backed": false,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/apache/airflow/aa19d2dbb9ed187ec01957a92848d9b005e9ba9d/README.md",
+          "hash": "2cb085caa00724c3a19cec1bdfd74d194e4ea5a85ce025381dd403573ff0d6da"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/apache/airflow/aa19d2dbb9ed187ec01957a92848d9b005e9ba9d/LICENSE",
+          "hash": "cb0d37346e7916e782a2904dc5b8c8cdb8424eac5effb91ac409329c883619d4"
+        }
+      },
+      "changed_fields": []
+    },
+    {
+      "project": "pandas-dev/pandas",
+      "version": "v3.0.6",
+      "phase": "unchanged",
+      "policy": "fixed-flash",
+      "fields": {
+        "purpose": {
+          "value": "pandas is a Python package that provides fast, flexible, and expressive data structures designed to make working with \"relational\" or \"labeled\" data both easy and intuitive.",
+          "source": "readme",
+          "quote": "pandas is a Python package that provides fast, flexible, and expressive data structures designed to make working with \"relational\" or \"labeled\" data both easy and intuitive."
+        },
+        "install_command": {
+          "value": "pip install pandas",
+          "source": "readme",
+          "quote": "pip install pandas"
+        },
+        "license": {
+          "value": "BSD 3-Clause",
+          "source": "license",
+          "quote": "BSD 3-Clause License"
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 0,
+      "calls": 1,
+      "cost": 0.0017576,
+      "seconds": 10.026718209002865,
+      "source_backed": false,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/README.md",
+          "hash": "ca9cf77f319c4c6bab1cfa27e0bf0f7858258fff9e92dd8b7e43e54bea8eec7f"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/LICENSE",
+          "hash": "9850f6b5bdef7346503065807b878deb8058b976c5c329f4c4d23bf4796ce9ae"
+        }
+      },
+      "changed_fields": []
+    },
+    {
+      "project": "apache/airflow",
+      "version": "3.3.2",
+      "phase": "unchanged",
+      "policy": "fixed-lite",
+      "fields": {
+        "purpose": {
+          "value": "platform to programmatically author, schedule, and monitor workflows",
+          "source": "readme",
+          "quote": "[Apache Airflow](https://airflow.apache.org/docs/apache-airflow/stable/) (or simply Airflow) is a platform to programmatically author, schedule, and monitor workflows."
+        },
+        "install_command": {
+          "value": "pip install 'apache-airflow==3.3.2' \\\n --constraint \"https://raw.githubusercontent.com/apache/airflow/constraints-3.3.2/constraints-3.10.txt\"",
+          "source": "readme",
+          "quote": "```bash\npip install 'apache-airflow==3.3.2' \\\n --constraint \"https://raw.githubusercontent.com/apache/airflow/constraints-3.3.2/constraints-3.10.txt\"\n```"
+        },
+        "license": {
+          "value": "Apache License Version 2.0",
+          "source": "readme",
+          "quote": "Licensed to the Apache Software Foundation (ASF) under one\n or more contributor license agreements.  See the NOTICE file\n distributed with this work for additional information\n regarding copyright ownership.  The ASF licenses this file\n to you under the Apache License, Version 2.0 (the\n \"License\"); you may not use this file except in compliance\n with the License.  You may obtain a copy of the License at\n\n   http://www.apache.org/licenses/LICENSE-2.0"
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 0,
+      "calls": 1,
+      "cost": 0.00032234,
+      "seconds": 16.017566291993717,
+      "source_backed": true,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/apache/airflow/aa19d2dbb9ed187ec01957a92848d9b005e9ba9d/README.md",
+          "hash": "2cb085caa00724c3a19cec1bdfd74d194e4ea5a85ce025381dd403573ff0d6da"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/apache/airflow/aa19d2dbb9ed187ec01957a92848d9b005e9ba9d/LICENSE",
+          "hash": "cb0d37346e7916e782a2904dc5b8c8cdb8424eac5effb91ac409329c883619d4"
+        }
+      },
+      "changed_fields": []
+    },
+    {
+      "project": "pandas-dev/pandas",
+      "version": "v3.0.6",
+      "phase": "unchanged",
+      "policy": "fixed-lite",
+      "fields": {
+        "purpose": {
+          "value": "pandas is a Python package that provides fast, flexible, and expressive data\nstructures designed to make working with \"relational\" or \"labeled\" data both\neasy and intuitive. It aims to be the fundamental high-level building block for\ndoing practical, **real-world** data analysis in Python. Additionally, it has\nthe broader goal of becoming **the most powerful and flexible open-source data\nanalysis/manipulation tool available in any language**.",
+          "source": "readme",
+          "quote": "pandas is a Python package that provides fast, flexible, and expressive data\nstructures designed to make working with \"relational\" or \"labeled\" data both\neasy and intuitive. It aims to be the fundamental high-level building block for\ndoing practical, **real-world** data analysis in Python. Additionally, it has\nthe broader goal of becoming **the most powerful and flexible open-source data\nanalysis/manipulation tool available in any language**."
+        },
+        "install_command": {
+          "value": "pip install pandas",
+          "source": "readme",
+          "quote": "```sh\n# or PyPI\npip install pandas\n```"
+        },
+        "license": {
+          "value": "BSD 3-Clause",
+          "source": "readme",
+          "quote": "[BSD 3-Clause](LICENSE)"
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 0,
+      "calls": 1,
+      "cost": 0.00018998,
+      "seconds": 8.330615125014447,
+      "source_backed": false,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/README.md",
+          "hash": "ca9cf77f319c4c6bab1cfa27e0bf0f7858258fff9e92dd8b7e43e54bea8eec7f"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/LICENSE",
+          "hash": "9850f6b5bdef7346503065807b878deb8058b976c5c329f4c4d23bf4796ce9ae"
+        }
+      },
+      "changed_fields": []
+    },
+    {
+      "project": "pandas-dev/pandas",
+      "version": "v3.0.6",
+      "phase": "unchanged",
+      "policy": "incremental",
+      "fields": {
+        "purpose": {
+          "value": "pandas is a Python package that provides fast, flexible, and expressive data structures designed to make working with \"relational\" or \"labeled\" data both easy and intuitive. It aims to be the fundamental high-level building block for doing practical, real-world data analysis in Python.",
+          "source": "readme",
+          "quote": "**pandas** is a Python package that provides fast, flexible, and expressive data\nstructures designed to make working with \"relational\" or \"labeled\" data both\neasy and intuitive. It aims to be the fundamental high-level building block for\ndoing practical, **real-world** data analysis in Python."
+        },
+        "install_command": {
+          "value": "pip install pandas",
+          "source": "readme",
+          "quote": "pip install pandas\n```"
+        },
+        "license": {
+          "value": "BSD 3-Clause",
+          "source": "license",
+          "quote": "BSD 3-Clause License\n\nCopyright (c) 2008-2011, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team\nAll rights reserved.\n\nCopyright (c) 2011-2026, Open source contributors.\n\nRedistribution and use in source and binary forms, with or without\nmodification, are permitted provided that the following conditions are met:\n\n* Redistributions of source code must retain the above copyright notice, this\n  list of conditions and the following disclaimer.\n\n* Redistributions in binary form must reproduce the above copyright notice,\n  this list of conditions and the following disclaimer in the documentation\n  and/or other materials provided with the distribution.\n\n* Neither the name of the copyright holder nor the names of its\n  contributors may be used to endorse or promote products derived from\n  this software without specific prior written permission.\n\nTHIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"\nAND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE\nIMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE\nDISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE\nFOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL\nDAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR\nSERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER\nCAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,\nOR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE\nOF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 4,
+      "calls": 0,
+      "cost": 0,
+      "seconds": 0.009324833983555436,
+      "source_backed": false,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/README.md",
+          "hash": "ca9cf77f319c4c6bab1cfa27e0bf0f7858258fff9e92dd8b7e43e54bea8eec7f"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/LICENSE",
+          "hash": "9850f6b5bdef7346503065807b878deb8058b976c5c329f4c4d23bf4796ce9ae"
+        }
+      },
+      "changed_fields": []
+    },
+    {
+      "project": "pandas-dev/pandas",
+      "version": "v3.0.6",
+      "phase": "unchanged",
+      "policy": "cached-cascade",
+      "fields": {
+        "purpose": {
+          "value": "pandas is a Python package that provides fast, flexible, and expressive data structures designed to make working with \"relational\" or \"labeled\" data both easy and intuitive. It aims to be the fundamental high-level building block for doing practical, real-world data analysis in Python.",
+          "source": "readme",
+          "quote": "**pandas** is a Python package that provides fast, flexible, and expressive data\nstructures designed to make working with \"relational\" or \"labeled\" data both\neasy and intuitive. It aims to be the fundamental high-level building block for\ndoing practical, **real-world** data analysis in Python."
+        },
+        "install_command": {
+          "value": "pip install pandas",
+          "source": "readme",
+          "quote": "pip install pandas"
+        },
+        "license": {
+          "value": "BSD 3-Clause",
+          "source": "readme",
+          "quote": "License - BSD 3-Clause"
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 3,
+      "calls": 0,
+      "cost": 0,
+      "seconds": 0.010691291012335569,
+      "source_backed": false,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/README.md",
+          "hash": "ca9cf77f319c4c6bab1cfa27e0bf0f7858258fff9e92dd8b7e43e54bea8eec7f"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/LICENSE",
+          "hash": "9850f6b5bdef7346503065807b878deb8058b976c5c329f4c4d23bf4796ce9ae"
+        }
+      },
+      "changed_fields": []
+    },
+    {
+      "project": "pandas-dev/pandas",
+      "version": "v3.0.6",
+      "phase": "update-2",
+      "policy": "fixed-flash",
+      "fields": {
+        "purpose": {
+          "value": "pandas is a Python package that provides fast, flexible, and expressive data structures designed to make working with \"relational\" or \"labeled\" data both easy and intuitive.",
+          "source": "readme",
+          "quote": "pandas is a Python package that provides fast, flexible, and expressive data structures designed to make working with \"relational\" or \"labeled\" data both easy and intuitive."
+        },
+        "install_command": {
+          "value": "pip install pandas",
+          "source": "readme",
+          "quote": "pip install pandas"
+        },
+        "license": {
+          "value": "BSD 3-Clause",
+          "source": "license",
+          "quote": "BSD 3-Clause License"
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 0,
+      "calls": 1,
+      "cost": 0.0017576,
+      "seconds": 5.174195083003724,
+      "source_backed": false,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/README.md",
+          "hash": "ca9cf77f319c4c6bab1cfa27e0bf0f7858258fff9e92dd8b7e43e54bea8eec7f"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/LICENSE",
+          "hash": "9850f6b5bdef7346503065807b878deb8058b976c5c329f4c4d23bf4796ce9ae"
+        }
+      },
+      "changed_fields": [
+        "purpose"
+      ]
+    },
+    {
+      "project": "apache/airflow",
+      "version": "3.3.2",
+      "phase": "update-2",
+      "policy": "fixed-flash",
+      "fields": {
+        "purpose": {
+          "value": "is a platform to programmatically author, schedule, and monitor workflows.",
+          "source": "readme",
+          "quote": "Apache Airflow (or simply Airflow) is a platform to programmatically author, schedule, and monitor workflows."
+        },
+        "install_command": {
+          "value": "pip install 'apache-airflow==3.3.2' \\\n --constraint \"https://raw.githubusercontent.com/apache/airflow/constraints-3.3.2/constraints-3.10.txt\"",
+          "source": "readme",
+          "quote": "```bash\npip install 'apache-airflow==3.3.2' \\\n --constraint \"https://raw.githubusercontent.com/apache/airflow/constraints-3.3.2/constraints-3.10.txt\"\n```"
+        },
+        "license": {
+          "value": "Apache-2.0",
+          "source": "license",
+          "quote": "Apache License\n                        Version 2.0, January 2004"
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 0,
+      "calls": 1,
+      "cost": 0.0047789,
+      "seconds": 10.556322999997064,
+      "source_backed": false,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/apache/airflow/aa19d2dbb9ed187ec01957a92848d9b005e9ba9d/README.md",
+          "hash": "2cb085caa00724c3a19cec1bdfd74d194e4ea5a85ce025381dd403573ff0d6da"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/apache/airflow/aa19d2dbb9ed187ec01957a92848d9b005e9ba9d/LICENSE",
+          "hash": "cb0d37346e7916e782a2904dc5b8c8cdb8424eac5effb91ac409329c883619d4"
+        }
+      },
+      "changed_fields": [
+        "purpose",
+        "install_command"
+      ]
+    },
+    {
+      "project": "pandas-dev/pandas",
+      "version": "v3.0.6",
+      "phase": "update-2",
+      "policy": "fixed-lite",
+      "fields": {
+        "purpose": {
+          "value": "pandas is a Python package that provides fast, flexible, and expressive data\nstructures designed to make working with \"relational\" or \"labeled\" data both\neasy and intuitive. It aims to be the fundamental high-level building block for\ndoing practical, **real-world** data analysis in Python. Additionally, it has\nthe broader goal of becoming **the most powerful and flexible open-source data\nanalysis/manipulation tool available in any language**.",
+          "source": "readme",
+          "quote": "pandas is a Python package that provides fast, flexible, and expressive data\nstructures designed to make working with \"relational\" or \"labeled\" data both\neasy and intuitive. It aims to be the fundamental high-level building block for\ndoing practical, **real-world** data analysis in Python. Additionally, it has\nthe broader goal of becoming **the most powerful and flexible open-source data\nanalysis/manipulation tool available in any language**."
+        },
+        "install_command": {
+          "value": "pip install pandas",
+          "source": "readme",
+          "quote": "```sh\n# or PyPI\npip install pandas\n```"
+        },
+        "license": {
+          "value": "BSD 3-Clause",
+          "source": "readme",
+          "quote": "[BSD 3-Clause](LICENSE)"
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 0,
+      "calls": 1,
+      "cost": 0.0005516,
+      "seconds": 4.770471415977227,
+      "source_backed": false,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/README.md",
+          "hash": "ca9cf77f319c4c6bab1cfa27e0bf0f7858258fff9e92dd8b7e43e54bea8eec7f"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/LICENSE",
+          "hash": "9850f6b5bdef7346503065807b878deb8058b976c5c329f4c4d23bf4796ce9ae"
+        }
+      },
+      "changed_fields": [
+        "purpose",
+        "install_command",
+        "license"
+      ]
+    },
+    {
+      "project": "pandas-dev/pandas",
+      "version": "v3.0.6",
+      "phase": "update-2",
+      "policy": "incremental",
+      "fields": {
+        "purpose": {
+          "value": "pandas is a Python package that provides fast, flexible, and expressive data structures designed to make working with \"relational\" or \"labeled\" data both easy and intuitive. It aims to be the fundamental high-level building block for doing practical, real-world data analysis in Python.",
+          "source": "readme",
+          "quote": "**pandas** is a Python package that provides fast, flexible, and expressive data\nstructures designed to make working with \"relational\" or \"labeled\" data both\neasy and intuitive. It aims to be the fundamental high-level building block for\ndoing practical, **real-world** data analysis in Python."
+        },
+        "install_command": {
+          "value": "pip install pandas",
+          "source": "readme",
+          "quote": "pip install pandas\n```"
+        },
+        "license": {
+          "value": "BSD 3-Clause",
+          "source": "license",
+          "quote": "BSD 3-Clause License\n\nCopyright (c) 2008-2011, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team\nAll rights reserved.\n\nCopyright (c) 2011-2026, Open source contributors.\n\nRedistribution and use in source and binary forms, with or without\nmodification, are permitted provided that the following conditions are met:\n\n* Redistributions of source code must retain the above copyright notice, this\n  list of conditions and the following disclaimer.\n\n* Redistributions in binary form must reproduce the above copyright notice,\n  this list of conditions and the following disclaimer in the documentation\n  and/or other materials provided with the distribution.\n\n* Neither the name of the copyright holder nor the names of its\n  contributors may be used to endorse or promote products derived from\n  this software without specific prior written permission.\n\nTHIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"\nAND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE\nIMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE\nDISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE\nFOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL\nDAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR\nSERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER\nCAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,\nOR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE\nOF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 1,
+      "calls": 4,
+      "cost": 0.0023707,
+      "seconds": 28.79479358298704,
+      "source_backed": false,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/README.md",
+          "hash": "ca9cf77f319c4c6bab1cfa27e0bf0f7858258fff9e92dd8b7e43e54bea8eec7f"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/LICENSE",
+          "hash": "9850f6b5bdef7346503065807b878deb8058b976c5c329f4c4d23bf4796ce9ae"
+        }
+      },
+      "changed_fields": [
+        "purpose",
+        "license"
+      ]
+    },
+    {
+      "project": "apache/airflow",
+      "version": "3.3.2",
+      "phase": "update-2",
+      "policy": "fixed-lite",
+      "fields": {
+        "purpose": {
+          "value": "platform to programmatically author, schedule, and monitor workflows",
+          "source": "readme",
+          "quote": "[Apache Airflow](https://airflow.apache.org/docs/apache-airflow/stable/) (or simply Airflow) is a platform to programmatically author, schedule, and monitor workflows."
+        },
+        "install_command": {
+          "value": "pip install 'apache-airflow==3.3.2' \\\n --constraint \"https://raw.githubusercontent.com/apache/airflow/constraints-3.3.2/constraints-3.10.txt\"",
+          "source": "readme",
+          "quote": "```bash\npip install 'apache-airflow==3.3.2' \\\n --constraint \"https://raw.githubusercontent.com/apache/airflow/constraints-3.3.2/constraints-3.10.txt\"\n```"
+        },
+        "license": {
+          "value": "Apache License Version 2.0",
+          "source": "readme",
+          "quote": "Licensed to the Apache Software Foundation (ASF) under one\n or more contributor license agreements.  See the NOTICE file\n distributed with this work for additional information\n regarding copyright ownership.  The ASF licenses this file\n to you under the Apache License, Version 2.0 (the\n \"License\"); you may not use this file except in compliance\n with the License.  You may obtain a copy of the License at\n\n   http://www.apache.org/licenses/LICENSE-2.0"
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 0,
+      "calls": 1,
+      "cost": 0.0015134,
+      "seconds": 8.31104587498703,
+      "source_backed": true,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/apache/airflow/aa19d2dbb9ed187ec01957a92848d9b005e9ba9d/README.md",
+          "hash": "2cb085caa00724c3a19cec1bdfd74d194e4ea5a85ce025381dd403573ff0d6da"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/apache/airflow/aa19d2dbb9ed187ec01957a92848d9b005e9ba9d/LICENSE",
+          "hash": "cb0d37346e7916e782a2904dc5b8c8cdb8424eac5effb91ac409329c883619d4"
+        }
+      },
+      "changed_fields": [
+        "purpose",
+        "install_command"
+      ]
+    },
+    {
+      "project": "jaraco/keyring",
+      "version": "v25.4.1",
+      "phase": "update-1",
+      "policy": "fixed-flash",
+      "fields": {
+        "purpose": {
+          "value": "The Python keyring library provides an easy way to access the\nsystem keyring service from python.",
+          "source": "readme",
+          "quote": "The Python keyring library provides an easy way to access the\nsystem keyring service from python."
+        },
+        "install_command": {
+          "value": "pip install 'keyring[completion]'",
+          "source": "readme",
+          "quote": "pip install 'keyring[completion]'"
+        },
+        "license": {
+          "value": "MIT",
+          "source": "license",
+          "quote": "Permission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to\ndeal in the Software without restriction, including without limitation the\nrights to use, copy, modify, merge, publish, distribute, sublicense, and/or\nsell copies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in\nall copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING\nFROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS\nIN THE SOFTWARE."
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 0,
+      "calls": 1,
+      "cost": 0.0027437,
+      "seconds": 5.2225312079826836,
+      "source_backed": true,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/jaraco/keyring/24ec25d214b4ef462324d907af2bad1a78beb6d8/README.rst",
+          "hash": "366b07761b1f4c7325b72fdfdf3d253d20adf6e64cf1a665fd3fcc74262fabb3"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/jaraco/keyring/24ec25d214b4ef462324d907af2bad1a78beb6d8/LICENSE",
+          "hash": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741"
+        }
+      },
+      "changed_fields": [
+        "install_command",
+        "license",
+        "release_note"
+      ]
+    },
+    {
+      "project": "dbader/schedule",
+      "version": "1.2.2",
+      "phase": "unchanged",
+      "policy": "fixed-lite",
+      "fields": {
+        "purpose": {
+          "value": "Python job scheduling for humans. Run Python functions (or any other callable) periodically using a friendly syntax.",
+          "source": "readme",
+          "quote": "Python job scheduling for humans. Run Python functions (or any other callable) periodically using a friendly syntax."
+        },
+        "install_command": {
+          "value": "pip install schedule",
+          "source": "readme",
+          "quote": ".. code-block:: bash\n\n    $ pip install schedule"
+        },
+        "license": {
+          "value": "MIT",
+          "source": "readme",
+          "quote": "Distributed under the MIT license. See `LICENSE.txt <https://github.com/dbader/schedule/blob/master/LICENSE.txt>`_ for more information."
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 0,
+      "calls": 1,
+      "cost": 0.0002132,
+      "seconds": 4.127807042008499,
+      "source_backed": true,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/82a43db1b938d8fdf60103bd41f329e06c8d3651/README.rst",
+          "hash": "9ea359c58146bed4be272a92ef4761a0a9585e801c0a69da4ad1ecfa6854b770"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/82a43db1b938d8fdf60103bd41f329e06c8d3651/LICENSE.txt",
+          "hash": "30a8352c318ce1b645acde0299697342d4380ed2637d7ca18a8ad25661e3b41b"
+        }
+      },
+      "changed_fields": []
+    },
+    {
+      "project": "dbader/schedule",
+      "version": "1.2.2",
+      "phase": "unchanged",
+      "policy": "incremental",
+      "fields": {
+        "purpose": {
+          "value": "Python job scheduling for humans. Run Python functions (or any other callable) periodically using a friendly syntax.",
+          "source": "readme",
+          "quote": "Python job scheduling for humans. Run Python functions (or any other callable) periodically using a friendly syntax."
+        },
+        "install_command": {
+          "value": "pip install schedule",
+          "source": "readme",
+          "quote": "pip install schedule"
+        },
+        "license": {
+          "value": "MIT",
+          "source": "license",
+          "quote": "MIT License"
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 4,
+      "calls": 0,
+      "cost": 0,
+      "seconds": 0.007552666997071356,
+      "source_backed": true,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/82a43db1b938d8fdf60103bd41f329e06c8d3651/README.rst",
+          "hash": "9ea359c58146bed4be272a92ef4761a0a9585e801c0a69da4ad1ecfa6854b770"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/82a43db1b938d8fdf60103bd41f329e06c8d3651/LICENSE.txt",
+          "hash": "30a8352c318ce1b645acde0299697342d4380ed2637d7ca18a8ad25661e3b41b"
+        }
+      },
+      "changed_fields": []
+    },
+    {
+      "project": "dbader/schedule",
+      "version": "1.2.2",
+      "phase": "unchanged",
+      "policy": "cached-cascade",
+      "fields": {
+        "purpose": {
+          "value": "Python job scheduling for humans.",
+          "source": "readme",
+          "quote": "Python job scheduling for humans."
+        },
+        "install_command": {
+          "value": "pip install schedule",
+          "source": "readme",
+          "quote": "pip install schedule"
+        },
+        "license": {
+          "value": "MIT",
+          "source": "license",
+          "quote": "MIT License"
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 1,
+      "calls": 0,
+      "cost": 0,
+      "seconds": 0.009665499994298443,
+      "source_backed": true,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/82a43db1b938d8fdf60103bd41f329e06c8d3651/README.rst",
+          "hash": "9ea359c58146bed4be272a92ef4761a0a9585e801c0a69da4ad1ecfa6854b770"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/82a43db1b938d8fdf60103bd41f329e06c8d3651/LICENSE.txt",
+          "hash": "30a8352c318ce1b645acde0299697342d4380ed2637d7ca18a8ad25661e3b41b"
+        }
+      },
+      "changed_fields": []
+    },
+    {
+      "project": "dbader/schedule",
+      "version": "1.2.2",
+      "phase": "unchanged",
+      "policy": "fixed-flash",
+      "fields": {
+        "purpose": {
+          "value": "Python job scheduling for humans.",
+          "source": "readme",
+          "quote": "Python job scheduling for humans."
+        },
+        "install_command": {
+          "value": "pip install schedule",
+          "source": "readme",
+          "quote": "pip install schedule"
+        },
+        "license": {
+          "value": "MIT",
+          "source": "license",
+          "quote": "The MIT License (MIT)"
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 0,
+      "calls": 1,
+      "cost": 0.0007507,
+      "seconds": 4.123786375013879,
+      "source_backed": true,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/82a43db1b938d8fdf60103bd41f329e06c8d3651/README.rst",
+          "hash": "9ea359c58146bed4be272a92ef4761a0a9585e801c0a69da4ad1ecfa6854b770"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/82a43db1b938d8fdf60103bd41f329e06c8d3651/LICENSE.txt",
+          "hash": "30a8352c318ce1b645acde0299697342d4380ed2637d7ca18a8ad25661e3b41b"
+        }
+      },
+      "changed_fields": []
+    },
+    {
+      "project": "jaraco/keyring",
+      "version": "v25.4.1",
+      "phase": "update-1",
+      "policy": "fixed-lite",
+      "fields": {
+        "purpose": {
+          "value": "The Python keyring library provides an easy way to access the\nsystem keyring service from python. It can be used in any\napplication that needs safe password storage.",
+          "source": "readme",
+          "quote": "The Python keyring library provides an easy way to access the\nsystem keyring service from python. It can be used in any\napplication that needs safe password storage."
+        },
+        "install_command": {
+          "value": "pip install 'keyring[completion]'",
+          "source": "readme",
+          "quote": "pip install 'keyring[completion]'"
+        },
+        "license": {
+          "value": "MIT",
+          "source": "license",
+          "quote": "Permission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to\ndeal in the Software without restriction, including without limitation the\nrights to use, copy, modify, merge, publish, distribute, sublicense, and/or\nsell copies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in\nall copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING\nFROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS\nIN THE SOFTWARE."
+        },
+        "release_note": null
+      },
+      "reused": 0,
+      "calls": 1,
+      "cost": 0.000741,
+      "seconds": 6.544596624997212,
+      "source_backed": false,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/jaraco/keyring/24ec25d214b4ef462324d907af2bad1a78beb6d8/README.rst",
+          "hash": "366b07761b1f4c7325b72fdfdf3d253d20adf6e64cf1a665fd3fcc74262fabb3"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/jaraco/keyring/24ec25d214b4ef462324d907af2bad1a78beb6d8/LICENSE",
+          "hash": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741"
+        }
+      },
+      "changed_fields": [
+        "install_command",
+        "license",
+        "release_note"
+      ]
+    },
+    {
+      "project": "apache/airflow",
+      "version": "3.3.2",
+      "phase": "update-2",
+      "policy": "incremental",
+      "fields": {
+        "purpose": {
+          "value": "a platform to programmatically author, schedule, and monitor workflows.",
+          "source": "readme",
+          "quote": "Apache Airflow (or simply Airflow) is a platform to programmatically author, schedule, and monitor workflows."
+        },
+        "install_command": {
+          "value": "pip install 'apache-airflow==3.3.2' \\\n --constraint \"https://raw.githubusercontent.com/apache/airflow/constraints-3.3.2/constraints-3.10.txt\"",
+          "source": "readme",
+          "quote": "```bash\npip install 'apache-airflow==3.3.2' \\\n --constraint \"https://raw.githubusercontent.com/apache/airflow/constraints-3.3.2/constraints-3.10.txt\"\n```"
+        },
+        "license": {
+          "value": "Apache-2.0",
+          "source": "license",
+          "quote": "Apache License"
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 1,
+      "calls": 3,
+      "cost": 0.00350438,
+      "seconds": 23.84424299999955,
+      "source_backed": false,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/apache/airflow/aa19d2dbb9ed187ec01957a92848d9b005e9ba9d/README.md",
+          "hash": "2cb085caa00724c3a19cec1bdfd74d194e4ea5a85ce025381dd403573ff0d6da"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/apache/airflow/aa19d2dbb9ed187ec01957a92848d9b005e9ba9d/LICENSE",
+          "hash": "cb0d37346e7916e782a2904dc5b8c8cdb8424eac5effb91ac409329c883619d4"
+        }
+      },
+      "changed_fields": [
+        "install_command"
+      ]
+    },
+    {
+      "project": "dbader/schedule",
+      "version": "1.2.2",
+      "phase": "update-2",
+      "policy": "incremental",
+      "fields": {
+        "purpose": {
+          "value": "Python job scheduling for humans. Run Python functions (or any other callable) periodically using a friendly syntax.",
+          "source": "readme",
+          "quote": "Python job scheduling for humans. Run Python functions (or any other callable) periodically using a friendly syntax."
+        },
+        "install_command": {
+          "value": "pip install schedule",
+          "source": "readme",
+          "quote": "pip install schedule"
+        },
+        "license": {
+          "value": "MIT",
+          "source": "license",
+          "quote": "MIT License"
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 1,
+      "calls": 1,
+      "cost": 0.0001218,
+      "seconds": 2.411917416000506,
+      "source_backed": true,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/82a43db1b938d8fdf60103bd41f329e06c8d3651/README.rst",
+          "hash": "9ea359c58146bed4be272a92ef4761a0a9585e801c0a69da4ad1ecfa6854b770"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/82a43db1b938d8fdf60103bd41f329e06c8d3651/LICENSE.txt",
+          "hash": "30a8352c318ce1b645acde0299697342d4380ed2637d7ca18a8ad25661e3b41b"
+        }
+      },
+      "changed_fields": []
+    },
+    {
+      "project": "dbader/schedule",
+      "version": "1.2.2",
+      "phase": "update-2",
+      "policy": "cached-cascade",
+      "fields": {
+        "purpose": {
+          "value": "Python job scheduling for humans.",
+          "source": "readme",
+          "quote": "Python job scheduling for humans."
+        },
+        "install_command": {
+          "value": "pip install schedule",
+          "source": "readme",
+          "quote": "pip install schedule"
+        },
+        "license": {
+          "value": "MIT",
+          "source": "license",
+          "quote": "MIT License"
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 0,
+      "calls": 1,
+      "cost": 0.0001589,
+      "seconds": 4.643850833992474,
+      "source_backed": true,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/82a43db1b938d8fdf60103bd41f329e06c8d3651/README.rst",
+          "hash": "9ea359c58146bed4be272a92ef4761a0a9585e801c0a69da4ad1ecfa6854b770"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/82a43db1b938d8fdf60103bd41f329e06c8d3651/LICENSE.txt",
+          "hash": "30a8352c318ce1b645acde0299697342d4380ed2637d7ca18a8ad25661e3b41b"
+        }
+      },
+      "changed_fields": [
+        "purpose"
+      ]
+    },
+    {
+      "project": "jaraco/keyring",
+      "version": "v25.4.1",
+      "phase": "update-1",
+      "policy": "incremental",
+      "fields": {
+        "purpose": {
+          "value": "The Python keyring library provides an easy way to access the\nsystem keyring service from python. It can be used in any\napplication that needs safe password storage.",
+          "source": "readme",
+          "quote": "The Python keyring library provides an easy way to access the\nsystem keyring service from python. It can be used in any\napplication that needs safe password storage."
+        },
+        "install_command": {
+          "value": "pip install 'keyring[completion]'",
+          "source": "readme",
+          "quote": "Keyring provides tab completion if the ``completion`` extra is installed::\n\n    $ pip install 'keyring[completion]'"
+        },
+        "license": {
+          "value": "MIT",
+          "source": "license",
+          "quote": "Permission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to\ndeal in the Software without restriction, including without limitation the\nrights to use, copy, modify, merge, publish, distribute, sublicense, and/or\nsell copies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in\nall copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING\nFROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS\nIN THE SOFTWARE."
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 0,
+      "calls": 3,
+      "cost": 0.0018352,
+      "seconds": 15.637391541997204,
+      "source_backed": true,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/jaraco/keyring/24ec25d214b4ef462324d907af2bad1a78beb6d8/README.rst",
+          "hash": "366b07761b1f4c7325b72fdfdf3d253d20adf6e64cf1a665fd3fcc74262fabb3"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/jaraco/keyring/24ec25d214b4ef462324d907af2bad1a78beb6d8/LICENSE",
+          "hash": "86da0f01aeae46348a3c3d465195dc1ceccde79f79e87769a64b8da04b2a4741"
+        }
+      },
+      "changed_fields": [
+        "release_note"
+      ]
+    },
+    {
+      "project": "dbader/schedule",
+      "version": "1.2.2",
+      "phase": "update-2",
+      "policy": "fixed-flash",
+      "fields": {
+        "purpose": {
+          "value": "Python job scheduling for humans.",
+          "source": "readme",
+          "quote": "Python job scheduling for humans."
+        },
+        "install_command": {
+          "value": "pip install schedule",
+          "source": "readme",
+          "quote": "pip install schedule"
+        },
+        "license": {
+          "value": "MIT",
+          "source": "license",
+          "quote": "The MIT License (MIT)"
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 0,
+      "calls": 1,
+      "cost": 0.0007507,
+      "seconds": 3.959391082986258,
+      "source_backed": true,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/82a43db1b938d8fdf60103bd41f329e06c8d3651/README.rst",
+          "hash": "9ea359c58146bed4be272a92ef4761a0a9585e801c0a69da4ad1ecfa6854b770"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/82a43db1b938d8fdf60103bd41f329e06c8d3651/LICENSE.txt",
+          "hash": "30a8352c318ce1b645acde0299697342d4380ed2637d7ca18a8ad25661e3b41b"
+        }
+      },
+      "changed_fields": [
+        "install_command"
+      ]
+    },
+    {
+      "project": "dbader/schedule",
+      "version": "1.2.2",
+      "phase": "update-2",
+      "policy": "fixed-lite",
+      "fields": {
+        "purpose": {
+          "value": "Python job scheduling for humans. Run Python functions (or any other callable) periodically using a friendly syntax.",
+          "source": "readme",
+          "quote": "Python job scheduling for humans. Run Python functions (or any other callable) periodically using a friendly syntax."
+        },
+        "install_command": {
+          "value": "pip install schedule",
+          "source": "readme",
+          "quote": ".. code-block:: bash\n\n    $ pip install schedule"
+        },
+        "license": {
+          "value": "MIT",
+          "source": "readme",
+          "quote": "Distributed under the MIT license. See `LICENSE.txt <https://github.com/dbader/schedule/blob/master/LICENSE.txt>`_ for more information."
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 0,
+      "calls": 1,
+      "cost": 0.0002132,
+      "seconds": 3.255443915986689,
+      "source_backed": true,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/82a43db1b938d8fdf60103bd41f329e06c8d3651/README.rst",
+          "hash": "9ea359c58146bed4be272a92ef4761a0a9585e801c0a69da4ad1ecfa6854b770"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/82a43db1b938d8fdf60103bd41f329e06c8d3651/LICENSE.txt",
+          "hash": "30a8352c318ce1b645acde0299697342d4380ed2637d7ca18a8ad25661e3b41b"
+        }
+      },
+      "changed_fields": [
+        "install_command"
+      ]
+    },
+    {
+      "project": "pandas-dev/pandas",
+      "version": "v3.0.6",
+      "phase": "update-2",
+      "policy": "cached-cascade",
+      "fields": {
+        "purpose": {
+          "value": "pandas is a Python package that provides fast, flexible, and expressive data structures designed to make working with \"relational\" or \"labeled\" data both easy and intuitive. It aims to be the fundamental high-level building block for doing practical, real-world data analysis in Python.",
+          "source": "readme",
+          "quote": "**pandas** is a Python package that provides fast, flexible, and expressive data\nstructures designed to make working with \"relational\" or \"labeled\" data both\neasy and intuitive. It aims to be the fundamental high-level building block for\ndoing practical, **real-world** data analysis in Python."
+        },
+        "install_command": {
+          "value": "pip install pandas",
+          "source": "readme",
+          "quote": "pip install pandas"
+        },
+        "license": {
+          "value": "BSD 3-Clause",
+          "source": "readme",
+          "quote": "License - BSD 3-Clause"
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 0,
+      "calls": 2,
+      "cost": 0.0021378,
+      "seconds": 9.427215708012227,
+      "source_backed": false,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/README.md",
+          "hash": "ca9cf77f319c4c6bab1cfa27e0bf0f7858258fff9e92dd8b7e43e54bea8eec7f"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/2905718b126579d2cf0fe5bae05bd75facb67d77/LICENSE",
+          "hash": "9850f6b5bdef7346503065807b878deb8058b976c5c329f4c4d23bf4796ce9ae"
+        }
+      },
+      "changed_fields": [
+        "purpose",
+        "install_command",
+        "license"
+      ]
+    },
+    {
+      "project": "dbader/schedule",
+      "version": "1.1.0",
+      "phase": "update-1",
+      "policy": "incremental",
+      "fields": {
+        "purpose": {
+          "value": "Python job scheduling for humans. Run Python functions (or any other callable) periodically using a friendly syntax.",
+          "source": "readme",
+          "quote": "Python job scheduling for humans. Run Python functions (or any other callable) periodically using a friendly syntax."
+        },
+        "install_command": {
+          "value": "pip install schedule",
+          "source": "readme",
+          "quote": "pip install schedule"
+        },
+        "license": {
+          "value": "MIT",
+          "source": "license",
+          "quote": "MIT License"
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 1,
+      "calls": 1,
+      "cost": 0.0001314,
+      "seconds": 2.2496098339906894,
+      "source_backed": true,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/6eb0b5346b1ce35ece5050e65789fa6e44368175/README.rst",
+          "hash": "a38628dfb462007ca9336fcfa2823b84734e9bf14a6d2e78f20808f258eb1dcd"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/6eb0b5346b1ce35ece5050e65789fa6e44368175/LICENSE.txt",
+          "hash": "30a8352c318ce1b645acde0299697342d4380ed2637d7ca18a8ad25661e3b41b"
+        }
+      },
+      "changed_fields": [
+        "purpose"
+      ]
+    },
+    {
+      "project": "dbader/schedule",
+      "version": "1.1.0",
+      "phase": "update-1",
+      "policy": "cached-cascade",
+      "fields": {
+        "purpose": {
+          "value": "Python job scheduling for humans. Run Python functions (or any other callable) periodically using a friendly syntax.",
+          "source": "readme",
+          "quote": "Python job scheduling for humans. Run Python functions (or any other callable) periodically using a friendly syntax."
+        },
+        "install_command": {
+          "value": "pip install schedule",
+          "source": "readme",
+          "quote": "pip install schedule"
+        },
+        "license": {
+          "value": "MIT",
+          "source": "license",
+          "quote": "MIT License"
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 0,
+      "calls": 1,
+      "cost": 0.0001573,
+      "seconds": 2.34348220800166,
+      "source_backed": true,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/6eb0b5346b1ce35ece5050e65789fa6e44368175/README.rst",
+          "hash": "a38628dfb462007ca9336fcfa2823b84734e9bf14a6d2e78f20808f258eb1dcd"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/6eb0b5346b1ce35ece5050e65789fa6e44368175/LICENSE.txt",
+          "hash": "30a8352c318ce1b645acde0299697342d4380ed2637d7ca18a8ad25661e3b41b"
+        }
+      },
+      "changed_fields": [
+        "purpose"
+      ]
+    },
+    {
+      "project": "jaraco/keyring",
+      "version": "v23.14.0",
+      "phase": "initial",
+      "policy": "incremental",
+      "fields": {
+        "purpose": {
+          "value": "The Python keyring library provides an easy way to access the\nsystem keyring service from python. It can be used in any\napplication that needs safe password storage.",
+          "source": "readme",
+          "quote": "The Python keyring library provides an easy way to access the\nsystem keyring service from python. It can be used in any\napplication that needs safe password storage."
+        },
+        "install_command": {
+          "value": "pip install 'keyring[completion]'",
+          "source": "readme",
+          "quote": "Keyring provides tab completion if the ``completion`` extra is installed::\n\n    $ pip install 'keyring[completion]'"
+        },
+        "license": {
+          "value": "MIT",
+          "source": "license",
+          "quote": "Permission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to\ndeal in the Software without restriction, including without limitation the\nrights to use, copy, modify, merge, publish, distribute, sublicense, and/or\nsell copies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in\nall copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING\nFROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS\nIN THE SOFTWARE."
+        },
+        "release_note": {
+          "value": "* #623: On macOS, warn the user when ``keychain`` property is\n  indicated, as that value can't be honored (macOS API no longer\n  supports indicating the target keychain).",
+          "source": "changes",
+          "quote": "* #623: On macOS, warn the user when ``keychain`` property is\n  indicated, as that value can't be honored (macOS API no longer\n  supports indicating the target keychain)."
+        }
+      },
+      "reused": 0,
+      "calls": 5,
+      "cost": 0.0072747,
+      "seconds": 35.46525483398,
+      "source_backed": true,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/jaraco/keyring/bd0e0f2ed25f3dcb1bf54f5781188435d3ee082f/README.rst",
+          "hash": "9a2f07cde6181f83cb23af207b69178c97653c8fb1aedfc0e8b7a1d62d35ac8a"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/jaraco/keyring/bd0e0f2ed25f3dcb1bf54f5781188435d3ee082f/LICENSE",
+          "hash": "db3f0246b1f9278f15845b99fec478b8b506eb76487993722f8c6e254285faf8"
+        },
+        "changes": {
+          "url": "https://raw.githubusercontent.com/jaraco/keyring/bd0e0f2ed25f3dcb1bf54f5781188435d3ee082f/CHANGES.rst",
+          "hash": "e68f085db08a662c424c539de636bb8d3e4ddfc75037b4ca29e4f91e6dc98a8e"
+        }
+      },
+      "changed_fields": [
+        "purpose",
+        "install_command",
+        "license",
+        "release_note"
+      ]
+    },
+    {
+      "project": "dbader/schedule",
+      "version": "1.1.0",
+      "phase": "update-1",
+      "policy": "fixed-flash",
+      "fields": {
+        "purpose": {
+          "value": "Python job scheduling for humans.",
+          "source": "readme",
+          "quote": "Python job scheduling for humans."
+        },
+        "install_command": {
+          "value": "pip install schedule",
+          "source": "readme",
+          "quote": "$ pip install schedule"
+        },
+        "license": {
+          "value": "MIT",
+          "source": "license",
+          "quote": "The MIT License (MIT)"
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 0,
+      "calls": 1,
+      "cost": 0.0007231,
+      "seconds": 2.986422167014098,
+      "source_backed": true,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/6eb0b5346b1ce35ece5050e65789fa6e44368175/README.rst",
+          "hash": "a38628dfb462007ca9336fcfa2823b84734e9bf14a6d2e78f20808f258eb1dcd"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/6eb0b5346b1ce35ece5050e65789fa6e44368175/LICENSE.txt",
+          "hash": "30a8352c318ce1b645acde0299697342d4380ed2637d7ca18a8ad25661e3b41b"
+        }
+      },
+      "changed_fields": [
+        "purpose",
+        "install_command"
+      ]
+    },
+    {
+      "project": "apache/airflow",
+      "version": "3.3.2",
+      "phase": "update-2",
+      "policy": "cached-cascade",
+      "fields": {
+        "purpose": {
+          "value": "a platform to programmatically author, schedule, and monitor workflows.",
+          "source": "readme",
+          "quote": "Apache Airflow (or simply Airflow) is a platform to programmatically author, schedule, and monitor workflows."
+        },
+        "install_command": {
+          "value": "pip install 'apache-airflow==3.3.2' \\\n --constraint \"https://raw.githubusercontent.com/apache/airflow/constraints-3.3.2/constraints-3.10.txt\"",
+          "source": "readme",
+          "quote": "```bash\npip install 'apache-airflow==3.3.2' \\\n --constraint \"https://raw.githubusercontent.com/apache/airflow/constraints-3.3.2/constraints-3.10.txt\"\n```"
+        },
+        "license": {
+          "value": "Apache-2.0",
+          "source": "license",
+          "quote": "Apache License"
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 0,
+      "calls": 2,
+      "cost": 0.0075358000000000005,
+      "seconds": 24.22329449999961,
+      "source_backed": false,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/apache/airflow/aa19d2dbb9ed187ec01957a92848d9b005e9ba9d/README.md",
+          "hash": "2cb085caa00724c3a19cec1bdfd74d194e4ea5a85ce025381dd403573ff0d6da"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/apache/airflow/aa19d2dbb9ed187ec01957a92848d9b005e9ba9d/LICENSE",
+          "hash": "cb0d37346e7916e782a2904dc5b8c8cdb8424eac5effb91ac409329c883619d4"
+        }
+      },
+      "changed_fields": [
+        "install_command"
+      ]
+    },
+    {
+      "project": "dbader/schedule",
+      "version": "1.1.0",
+      "phase": "update-1",
+      "policy": "fixed-lite",
+      "fields": {
+        "purpose": {
+          "value": "Python job scheduling for humans. Run Python functions (or any other callable) periodically using a friendly syntax.",
+          "source": "readme",
+          "quote": "Python job scheduling for humans. Run Python functions (or any other callable) periodically using a friendly syntax."
+        },
+        "install_command": {
+          "value": "pip install schedule",
+          "source": "readme",
+          "quote": "$ pip install schedule"
+        },
+        "license": {
+          "value": "MIT",
+          "source": "readme",
+          "quote": "Distributed under the MIT license. See `LICENSE.txt <https://github.com/dbader/schedule/blob/master/LICENSE.txt>`_ for more information."
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 0,
+      "calls": 1,
+      "cost": 0.0001996,
+      "seconds": 2.54908249998698,
+      "source_backed": true,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/6eb0b5346b1ce35ece5050e65789fa6e44368175/README.rst",
+          "hash": "a38628dfb462007ca9336fcfa2823b84734e9bf14a6d2e78f20808f258eb1dcd"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/6eb0b5346b1ce35ece5050e65789fa6e44368175/LICENSE.txt",
+          "hash": "30a8352c318ce1b645acde0299697342d4380ed2637d7ca18a8ad25661e3b41b"
+        }
+      },
+      "changed_fields": [
+        "purpose",
+        "install_command",
+        "license",
+        "release_note"
+      ]
+    },
+    {
+      "project": "pandas-dev/pandas",
+      "version": "v2.3.1",
+      "phase": "update-1",
+      "policy": "cached-cascade",
+      "fields": {
+        "purpose": {
+          "value": "pandas is a Python package that provides fast, flexible, and expressive data structures designed to make working with \"relational\" or \"labeled\" data both easy and intuitive. It aims to be the fundamental high-level building block for doing practical, real world data analysis in Python.",
+          "source": "readme",
+          "quote": "pandas is a Python package that provides fast, flexible, and expressive data\nstructures designed to make working with \"relational\" or \"labeled\" data both\neasy and intuitive. It aims to be the fundamental high-level building block for\ndoing practical, **real world** data analysis in Python."
+        },
+        "install_command": {
+          "value": "pip install pandas",
+          "source": "readme",
+          "quote": "```sh\n# or PyPI\npip install pandas\n```"
+        },
+        "license": {
+          "value": "BSD 3-Clause",
+          "source": "readme",
+          "quote": "[BSD 3](LICENSE)"
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 0,
+      "calls": 2,
+      "cost": 0.0020587,
+      "seconds": 12.01934445797815,
+      "source_backed": false,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/c888af6d0bb674932007623c0867e1fbd4bdc2c6/README.md",
+          "hash": "64fb571ac2f0c3441bbc42aa11911f2a7c6da761b2ce6bc509de0f150267dc80"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/pandas-dev/pandas/c888af6d0bb674932007623c0867e1fbd4bdc2c6/LICENSE",
+          "hash": "533eb6d0b98e5be3ddd12dce97be35dd11282f5c47cdf8d08c81756fd5d70a26"
+        }
+      },
+      "changed_fields": [
+        "purpose",
+        "install_command"
+      ]
+    },
+    {
+      "project": "dbader/schedule",
+      "version": "0.4.1",
+      "phase": "initial",
+      "policy": "cached-cascade",
+      "fields": {
+        "purpose": {
+          "value": "Python job scheduling for humans.",
+          "source": "readme",
+          "quote": "Python job scheduling for humans."
+        },
+        "install_command": {
+          "value": "pip install schedule",
+          "source": "readme",
+          "quote": "pip install schedule"
+        },
+        "license": {
+          "value": "MIT",
+          "source": "license",
+          "quote": "MIT License"
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 0,
+      "calls": 1,
+      "cost": 0.0001191,
+      "seconds": 5.706596499978332,
+      "source_backed": true,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/0b7df5832eba167401604c895fb8cad6eb8c1722/README.rst",
+          "hash": "a80c701c82f8e6c83ae9624e58d77f4933f7559e99d1036f6c398dc6ef6d0775"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/0b7df5832eba167401604c895fb8cad6eb8c1722/LICENSE.txt",
+          "hash": "30a8352c318ce1b645acde0299697342d4380ed2637d7ca18a8ad25661e3b41b"
+        }
+      },
+      "changed_fields": [
+        "purpose",
+        "install_command",
+        "license",
+        "release_note"
+      ]
+    },
+    {
+      "project": "dbader/schedule",
+      "version": "0.4.1",
+      "phase": "initial",
+      "policy": "fixed-flash",
+      "fields": {
+        "purpose": {
+          "value": "An in-process scheduler for periodic jobs that uses the builder pattern for configuration. Schedule lets you run Python functions (or any other callable) periodically at pre-determined intervals using a simple, human-friendly syntax.",
+          "source": "readme",
+          "quote": "An in-process scheduler for periodic jobs that uses the builder pattern\nfor configuration. Schedule lets you run Python functions (or any other\ncallable) periodically at pre-determined intervals using a simple,\nhuman-friendly syntax."
+        },
+        "install_command": {
+          "value": "pip install schedule",
+          "source": "readme",
+          "quote": "pip install schedule"
+        },
+        "license": {
+          "value": "MIT",
+          "source": "license",
+          "quote": "The MIT License (MIT)"
+        },
+        "release_note": {
+          "value": null,
+          "source": null,
+          "quote": null
+        }
+      },
+      "reused": 0,
+      "calls": 1,
+      "cost": 0.0008984,
+      "seconds": 3.821848958992632,
+      "source_backed": false,
+      "sources": {
+        "readme": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/0b7df5832eba167401604c895fb8cad6eb8c1722/README.rst",
+          "hash": "a80c701c82f8e6c83ae9624e58d77f4933f7559e99d1036f6c398dc6ef6d0775"
+        },
+        "license": {
+          "url": "https://raw.githubusercontent.com/dbader/schedule/0b7df5832eba167401604c895fb8cad6eb8c1722/LICENSE.txt",
+          "hash": "30a8352c318ce1b645acde0299697342d4380ed2637d7ca18a8ad25661e3b41b"
+        }
+      },
+      "changed_fields": [
+        "purpose",
+        "install_command",
+        "license",
+        "release_note"
+      ]
+    }
+  ]
+}

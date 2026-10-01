@@ -1,0 +1,1526 @@
+{
+  "kind": "post-run diagnostic; no scores or policies changed",
+  "format_normalization": "Heuristic whitespace/Markdown stripping; code needs manual review",
+  "counts": {
+    "parser": {
+      "completed": 240,
+      "literal_source_failures": 240,
+      "format_normalization_candidates": 0
+    },
+    "fixed-lite": {
+      "completed": 239,
+      "literal_source_failures": 159,
+      "format_normalization_candidates": 31
+    },
+    "fixed-flash": {
+      "completed": 239,
+      "literal_source_failures": 87,
+      "format_normalization_candidates": 61
+    },
+    "cached-cascade": {
+      "completed": 230,
+      "literal_source_failures": 53,
+      "format_normalization_candidates": 41
+    },
+    "incremental": {
+      "completed": 224,
+      "literal_source_failures": 66,
+      "format_normalization_candidates": 59
+    }
+  },
+  "format_review_examples": [
+    {
+      "project": "Delgan/loguru",
+      "policy": "fixed-lite",
+      "phase": "initial",
+      "id": "13b6a7ae944e8ba4d121b791"
+    },
+    {
+      "project": "Delgan/loguru",
+      "policy": "fixed-flash",
+      "phase": "initial",
+      "id": "1ab13423450bf9723ccb13de"
+    },
+    {
+      "project": "Delgan/loguru",
+      "policy": "cached-cascade",
+      "phase": "initial",
+      "id": "ae167377b1ff3afb37807b3e"
+    },
+    {
+      "project": "Delgan/loguru",
+      "policy": "incremental",
+      "phase": "initial",
+      "id": "5eb2e386b61923ee357a970b"
+    },
+    {
+      "project": "Delgan/loguru",
+      "policy": "fixed-flash",
+      "phase": "update-1",
+      "id": "1d0033c165d2e3b1872bddcb"
+    },
+    {
+      "project": "Delgan/loguru",
+      "policy": "cached-cascade",
+      "phase": "update-1",
+      "id": "ba832b876b51f36559f86b56"
+    },
+    {
+      "project": "Delgan/loguru",
+      "policy": "incremental",
+      "phase": "update-1",
+      "id": "07c1ae00a2283426356926bb"
+    },
+    {
+      "project": "Delgan/loguru",
+      "policy": "fixed-flash",
+      "phase": "update-2",
+      "id": "cd7f282f6c377d04d6ac6766"
+    },
+    {
+      "project": "Delgan/loguru",
+      "policy": "cached-cascade",
+      "phase": "update-2",
+      "id": "ca02832a1d8e0f1ee9643f2a"
+    },
+    {
+      "project": "Delgan/loguru",
+      "policy": "incremental",
+      "phase": "update-2",
+      "id": "e68fef978caa1547a329d6bf"
+    },
+    {
+      "project": "Delgan/loguru",
+      "policy": "fixed-flash",
+      "phase": "unchanged",
+      "id": "103cb4e7af0b407f7b7e188b"
+    },
+    {
+      "project": "Delgan/loguru",
+      "policy": "cached-cascade",
+      "phase": "unchanged",
+      "id": "6d715ba8ed74a83858c5adec"
+    },
+    {
+      "project": "Delgan/loguru",
+      "policy": "incremental",
+      "phase": "unchanged",
+      "id": "56a05e1a1632f4f8649421b8"
+    },
+    {
+      "project": "Textualize/textual",
+      "policy": "fixed-lite",
+      "phase": "initial",
+      "id": "7eb513a3a56917fa4c4d198b"
+    },
+    {
+      "project": "plotly/dash",
+      "policy": "fixed-flash",
+      "phase": "initial",
+      "id": "a40af63fe58ee8a51617304b"
+    },
+    {
+      "project": "python-attrs/cattrs",
+      "policy": "fixed-flash",
+      "phase": "update-1",
+      "id": "b87df245a642e53f25cb1299"
+    },
+    {
+      "project": "python-attrs/cattrs",
+      "policy": "incremental",
+      "phase": "update-1",
+      "id": "0262e493f5f4d398f995ecf6"
+    },
+    {
+      "project": "python-attrs/cattrs",
+      "policy": "incremental",
+      "phase": "update-2",
+      "id": "5ad3e9e24a560744fcbcc136"
+    },
+    {
+      "project": "python-attrs/cattrs",
+      "policy": "incremental",
+      "phase": "unchanged",
+      "id": "07720a979d6106f934dcd843"
+    },
+    {
+      "project": "holoviz/panel",
+      "policy": "fixed-lite",
+      "phase": "initial",
+      "id": "ce9e3ed8657768f34ed7c0f7"
+    },
+    {
+      "project": "holoviz/panel",
+      "policy": "fixed-flash",
+      "phase": "initial",
+      "id": "26ab996ce6fb09cb0d55b627"
+    },
+    {
+      "project": "holoviz/panel",
+      "policy": "fixed-flash",
+      "phase": "update-1",
+      "id": "ab71db49cd2344cb777b072b"
+    },
+    {
+      "project": "holoviz/panel",
+      "policy": "fixed-flash",
+      "phase": "update-2",
+      "id": "9f8e1c160b3bedb43d1a5ab8"
+    },
+    {
+      "project": "holoviz/panel",
+      "policy": "fixed-flash",
+      "phase": "unchanged",
+      "id": "bd158d21d8c832525acbbd91"
+    },
+    {
+      "project": "agronholm/anyio",
+      "policy": "fixed-lite",
+      "phase": "update-1",
+      "id": "bc160f70696e3737d76d0ea0"
+    },
+    {
+      "project": "agronholm/anyio",
+      "policy": "fixed-lite",
+      "phase": "update-2",
+      "id": "9ef9b722f420de3fdd9552ea"
+    },
+    {
+      "project": "agronholm/anyio",
+      "policy": "fixed-lite",
+      "phase": "unchanged",
+      "id": "edc2299cfd2dd550439c61f7"
+    },
+    {
+      "project": "yt-dlp/yt-dlp",
+      "policy": "fixed-flash",
+      "phase": "initial",
+      "id": "27b37caf3633336051b5ecf9"
+    },
+    {
+      "project": "yt-dlp/yt-dlp",
+      "policy": "cached-cascade",
+      "phase": "update-1",
+      "id": "e0cbdcc0933aea95ee106bfa"
+    },
+    {
+      "project": "pypa/pip",
+      "policy": "fixed-flash",
+      "phase": "initial",
+      "id": "2e16189b0d789f1185efa502"
+    },
+    {
+      "project": "pypa/pip",
+      "policy": "fixed-flash",
+      "phase": "update-1",
+      "id": "f9b88519333847ec27b6ca3c"
+    },
+    {
+      "project": "pypa/pip",
+      "policy": "fixed-flash",
+      "phase": "update-2",
+      "id": "95ca4751932740cbb545d84b"
+    },
+    {
+      "project": "pypa/pip",
+      "policy": "fixed-flash",
+      "phase": "unchanged",
+      "id": "28d1803742c6dedd4db3af5c"
+    },
+    {
+      "project": "bentoml/BentoML",
+      "policy": "incremental",
+      "phase": "update-1",
+      "id": "9e236eb8b4f93f92c603a5cf"
+    },
+    {
+      "project": "bentoml/BentoML",
+      "policy": "incremental",
+      "phase": "update-2",
+      "id": "a7be2a42b6b996d9fecac31e"
+    },
+    {
+      "project": "bentoml/BentoML",
+      "policy": "incremental",
+      "phase": "unchanged",
+      "id": "5a52b5342d3088e2fb165c45"
+    },
+    {
+      "project": "openai/openai-python",
+      "policy": "fixed-flash",
+      "phase": "initial",
+      "id": "fbbe96601e423630e501b3a9"
+    },
+    {
+      "project": "openai/openai-python",
+      "policy": "cached-cascade",
+      "phase": "initial",
+      "id": "1c2eff1fd9e93bca52740ad4"
+    },
+    {
+      "project": "openai/openai-python",
+      "policy": "incremental",
+      "phase": "initial",
+      "id": "4fbba07f0ed22c4cb36c360a"
+    },
+    {
+      "project": "openai/openai-python",
+      "policy": "incremental",
+      "phase": "update-1",
+      "id": "79b961e7cf2136330b4f2e68"
+    },
+    {
+      "project": "openai/openai-python",
+      "policy": "fixed-flash",
+      "phase": "update-2",
+      "id": "f14dbf3392ad7c3482e84e18"
+    },
+    {
+      "project": "openai/openai-python",
+      "policy": "incremental",
+      "phase": "update-2",
+      "id": "67989ac6f9c37a04222f95a3"
+    },
+    {
+      "project": "openai/openai-python",
+      "policy": "fixed-flash",
+      "phase": "unchanged",
+      "id": "250d44302015f3fd42a58854"
+    },
+    {
+      "project": "openai/openai-python",
+      "policy": "incremental",
+      "phase": "unchanged",
+      "id": "5a17bfb17b7861c18afd3d9f"
+    },
+    {
+      "project": "python-attrs/attrs",
+      "policy": "fixed-lite",
+      "phase": "initial",
+      "id": "d7a9564430d17459cfc83642"
+    },
+    {
+      "project": "python-attrs/attrs",
+      "policy": "cached-cascade",
+      "phase": "initial",
+      "id": "7e3ad55a24a95e824059edaa"
+    },
+    {
+      "project": "python-attrs/attrs",
+      "policy": "incremental",
+      "phase": "initial",
+      "id": "09e9d1b53d72730e47d11a50"
+    },
+    {
+      "project": "python-attrs/attrs",
+      "policy": "incremental",
+      "phase": "update-1",
+      "id": "b8cfc704884826c257f9e1ed"
+    },
+    {
+      "project": "python-attrs/attrs",
+      "policy": "fixed-flash",
+      "phase": "update-2",
+      "id": "fd2bc484ab3a2c55524a86f6"
+    },
+    {
+      "project": "python-attrs/attrs",
+      "policy": "incremental",
+      "phase": "update-2",
+      "id": "e69fb869adbf709c6f2d0f4f"
+    },
+    {
+      "project": "python-attrs/attrs",
+      "policy": "fixed-flash",
+      "phase": "unchanged",
+      "id": "b9ef833f7dd60b44918b1696"
+    },
+    {
+      "project": "python-attrs/attrs",
+      "policy": "incremental",
+      "phase": "unchanged",
+      "id": "5baeb817e91670d9799f7107"
+    },
+    {
+      "project": "encode/httpx",
+      "policy": "fixed-lite",
+      "phase": "initial",
+      "id": "79b0ef66f79731b3f49d3e9d"
+    },
+    {
+      "project": "falconry/falcon",
+      "policy": "cached-cascade",
+      "phase": "initial",
+      "id": "8c0f6903dbe66a5a52366413"
+    },
+    {
+      "project": "falconry/falcon",
+      "policy": "incremental",
+      "phase": "initial",
+      "id": "2890184db8670fedc9f66c33"
+    },
+    {
+      "project": "falconry/falcon",
+      "policy": "incremental",
+      "phase": "update-1",
+      "id": "3e324d7e403c417c5a4d853f"
+    },
+    {
+      "project": "python-trio/trio",
+      "policy": "fixed-lite",
+      "phase": "initial",
+      "id": "e430ed797128b81e9b6c4d9f"
+    },
+    {
+      "project": "python-trio/trio",
+      "policy": "fixed-flash",
+      "phase": "initial",
+      "id": "220e6b6e903baa9079b1a7dd"
+    },
+    {
+      "project": "python-trio/trio",
+      "policy": "cached-cascade",
+      "phase": "initial",
+      "id": "da3009bd36a3b8d1af59c365"
+    },
+    {
+      "project": "python-trio/trio",
+      "policy": "fixed-lite",
+      "phase": "update-1",
+      "id": "f2d24214c1c5777181fea821"
+    },
+    {
+      "project": "python-trio/trio",
+      "policy": "fixed-flash",
+      "phase": "update-1",
+      "id": "88805a0889c0ad3293832c54"
+    },
+    {
+      "project": "python-trio/trio",
+      "policy": "incremental",
+      "phase": "update-1",
+      "id": "2ce949a39827f2b16024949c"
+    },
+    {
+      "project": "python-trio/trio",
+      "policy": "fixed-lite",
+      "phase": "update-2",
+      "id": "e8d812bd78ccc7e3567c8190"
+    },
+    {
+      "project": "python-trio/trio",
+      "policy": "cached-cascade",
+      "phase": "update-2",
+      "id": "74b5cf780e5cbc2d3d3254b0"
+    },
+    {
+      "project": "python-trio/trio",
+      "policy": "incremental",
+      "phase": "update-2",
+      "id": "ed5953db7820f51d6371dc47"
+    },
+    {
+      "project": "python-trio/trio",
+      "policy": "fixed-lite",
+      "phase": "unchanged",
+      "id": "ea47d9c98514120e2cf0f9d8"
+    },
+    {
+      "project": "python-trio/trio",
+      "policy": "fixed-flash",
+      "phase": "unchanged",
+      "id": "f99c3f004c28ac6dc34f4230"
+    },
+    {
+      "project": "python-trio/trio",
+      "policy": "cached-cascade",
+      "phase": "unchanged",
+      "id": "98af6fedc5b1e9f4e9d1cef6"
+    },
+    {
+      "project": "python-trio/trio",
+      "policy": "incremental",
+      "phase": "unchanged",
+      "id": "65997f5a0eb786d5818a1b53"
+    },
+    {
+      "project": "marshmallow-code/marshmallow",
+      "policy": "fixed-flash",
+      "phase": "initial",
+      "id": "eeffa68f67dd1b0fa98b0914"
+    },
+    {
+      "project": "marshmallow-code/marshmallow",
+      "policy": "cached-cascade",
+      "phase": "initial",
+      "id": "fdc37906f7be6c760076fc9c"
+    },
+    {
+      "project": "marshmallow-code/marshmallow",
+      "policy": "incremental",
+      "phase": "initial",
+      "id": "6c1a3bc505c70fc6f112ddbf"
+    },
+    {
+      "project": "marshmallow-code/marshmallow",
+      "policy": "fixed-flash",
+      "phase": "update-1",
+      "id": "9b8b50e777fda03177ec343b"
+    },
+    {
+      "project": "marshmallow-code/marshmallow",
+      "policy": "cached-cascade",
+      "phase": "update-1",
+      "id": "0ab5f9d56fb096dfce35707c"
+    },
+    {
+      "project": "marshmallow-code/marshmallow",
+      "policy": "incremental",
+      "phase": "update-1",
+      "id": "cd82f17851c3691a522ac4eb"
+    },
+    {
+      "project": "marshmallow-code/marshmallow",
+      "policy": "fixed-lite",
+      "phase": "update-2",
+      "id": "c3fbe3d6092396a08fd72e4c"
+    },
+    {
+      "project": "marshmallow-code/marshmallow",
+      "policy": "fixed-flash",
+      "phase": "update-2",
+      "id": "8d9759e943251cb71de8c7d1"
+    },
+    {
+      "project": "marshmallow-code/marshmallow",
+      "policy": "cached-cascade",
+      "phase": "update-2",
+      "id": "8c7ce77914a5ec1e03085de6"
+    },
+    {
+      "project": "marshmallow-code/marshmallow",
+      "policy": "incremental",
+      "phase": "update-2",
+      "id": "c02b994182b0bbc2bb815b86"
+    },
+    {
+      "project": "marshmallow-code/marshmallow",
+      "policy": "fixed-lite",
+      "phase": "unchanged",
+      "id": "70f0f9af5939333c1e305888"
+    },
+    {
+      "project": "marshmallow-code/marshmallow",
+      "policy": "fixed-flash",
+      "phase": "unchanged",
+      "id": "b3b9d43a6909b3525ee05e2a"
+    },
+    {
+      "project": "marshmallow-code/marshmallow",
+      "policy": "cached-cascade",
+      "phase": "unchanged",
+      "id": "80f210778e39157c32cb45cb"
+    },
+    {
+      "project": "marshmallow-code/marshmallow",
+      "policy": "incremental",
+      "phase": "unchanged",
+      "id": "fdeeb2b39828e73316d608f3"
+    },
+    {
+      "project": "altair-viz/altair",
+      "policy": "cached-cascade",
+      "phase": "initial",
+      "id": "10efe36a195758e5928f4dd4"
+    },
+    {
+      "project": "altair-viz/altair",
+      "policy": "incremental",
+      "phase": "initial",
+      "id": "d535358a2cc783980846fa24"
+    },
+    {
+      "project": "altair-viz/altair",
+      "policy": "fixed-flash",
+      "phase": "update-1",
+      "id": "ddfa94fe638e6176acbbde9f"
+    },
+    {
+      "project": "altair-viz/altair",
+      "policy": "cached-cascade",
+      "phase": "update-1",
+      "id": "eab99dc23c3582e1e104cf3b"
+    },
+    {
+      "project": "altair-viz/altair",
+      "policy": "incremental",
+      "phase": "update-1",
+      "id": "89c6af33205534566b10c20d"
+    },
+    {
+      "project": "altair-viz/altair",
+      "policy": "cached-cascade",
+      "phase": "update-2",
+      "id": "9d270d64b055eb70359d5e79"
+    },
+    {
+      "project": "altair-viz/altair",
+      "policy": "incremental",
+      "phase": "update-2",
+      "id": "2a28e648fe6cd325a1bbafff"
+    },
+    {
+      "project": "altair-viz/altair",
+      "policy": "cached-cascade",
+      "phase": "unchanged",
+      "id": "045227f7eecc56e397b4d9c7"
+    },
+    {
+      "project": "altair-viz/altair",
+      "policy": "incremental",
+      "phase": "unchanged",
+      "id": "6ae492c3386b98307e920ace"
+    },
+    {
+      "project": "hynek/structlog",
+      "policy": "fixed-flash",
+      "phase": "initial",
+      "id": "58911234a7797ecdcde409c0"
+    },
+    {
+      "project": "hynek/structlog",
+      "policy": "incremental",
+      "phase": "update-1",
+      "id": "b1bb4a515e721270b3e57edb"
+    },
+    {
+      "project": "python/black",
+      "policy": "cached-cascade",
+      "phase": "update-1",
+      "id": "92de23c19244341023e1a5bf"
+    },
+    {
+      "project": "bokeh/bokeh",
+      "policy": "fixed-lite",
+      "phase": "initial",
+      "id": "dc19b5cf0265526ce60df9ae"
+    },
+    {
+      "project": "bokeh/bokeh",
+      "policy": "fixed-flash",
+      "phase": "initial",
+      "id": "547e6cc448a2e8026f4aae14"
+    },
+    {
+      "project": "bokeh/bokeh",
+      "policy": "cached-cascade",
+      "phase": "update-1",
+      "id": "3d2a6d971a681d1df0d93af3"
+    },
+    {
+      "project": "bokeh/bokeh",
+      "policy": "incremental",
+      "phase": "update-1",
+      "id": "7611c39ca3cc9eccdfaddfd6"
+    },
+    {
+      "project": "bokeh/bokeh",
+      "policy": "fixed-lite",
+      "phase": "update-2",
+      "id": "d239d34ea226526bbee495dc"
+    },
+    {
+      "project": "bokeh/bokeh",
+      "policy": "cached-cascade",
+      "phase": "update-2",
+      "id": "1d5ea17d30eede6506b2e6d7"
+    },
+    {
+      "project": "bokeh/bokeh",
+      "policy": "incremental",
+      "phase": "update-2",
+      "id": "dd3ffa8850f8824f12d6c7c5"
+    },
+    {
+      "project": "bokeh/bokeh",
+      "policy": "fixed-lite",
+      "phase": "unchanged",
+      "id": "525151bb2bdba06f4fc79c05"
+    },
+    {
+      "project": "bokeh/bokeh",
+      "policy": "cached-cascade",
+      "phase": "unchanged",
+      "id": "3ba0404bc90a865b0307af99"
+    },
+    {
+      "project": "bokeh/bokeh",
+      "policy": "incremental",
+      "phase": "unchanged",
+      "id": "be5f6c14e38ce243d104ed86"
+    },
+    {
+      "project": "pallets/click",
+      "policy": "incremental",
+      "phase": "initial",
+      "id": "b4587b1c4952c96bc92fd720"
+    },
+    {
+      "project": "voila-dashboards/voila",
+      "policy": "incremental",
+      "phase": "initial",
+      "id": "84dc473ffeddc59fb08e9ec0"
+    },
+    {
+      "project": "anthropics/anthropic-sdk-python",
+      "policy": "fixed-flash",
+      "phase": "initial",
+      "id": "adb014001c5de5732a2ff1ee"
+    },
+    {
+      "project": "anthropics/anthropic-sdk-python",
+      "policy": "fixed-flash",
+      "phase": "update-1",
+      "id": "f0ef45e45d31b822aade9115"
+    },
+    {
+      "project": "anthropics/anthropic-sdk-python",
+      "policy": "incremental",
+      "phase": "update-2",
+      "id": "28be45d3c2cc272d4d5f2a7a"
+    },
+    {
+      "project": "anthropics/anthropic-sdk-python",
+      "policy": "incremental",
+      "phase": "unchanged",
+      "id": "3bc57bf8241499b9d518d987"
+    },
+    {
+      "project": "langchain-ai/langchain",
+      "policy": "fixed-lite",
+      "phase": "initial",
+      "id": "8487077baf2298c77c9c9140"
+    },
+    {
+      "project": "langchain-ai/langchain",
+      "policy": "fixed-flash",
+      "phase": "initial",
+      "id": "2d27da8fc7c06d583ed8616e"
+    },
+    {
+      "project": "langchain-ai/langchain",
+      "policy": "cached-cascade",
+      "phase": "initial",
+      "id": "49fe800e4f532ff0438da0cf"
+    },
+    {
+      "project": "langchain-ai/langchain",
+      "policy": "incremental",
+      "phase": "initial",
+      "id": "c5ce13360ae412a4210c9d71"
+    },
+    {
+      "project": "langchain-ai/langchain",
+      "policy": "fixed-lite",
+      "phase": "update-1",
+      "id": "d74b1d7e47cdf095fa31028f"
+    },
+    {
+      "project": "langchain-ai/langchain",
+      "policy": "fixed-flash",
+      "phase": "update-1",
+      "id": "cae85e10e83794904b70703b"
+    },
+    {
+      "project": "langchain-ai/langchain",
+      "policy": "cached-cascade",
+      "phase": "update-1",
+      "id": "331dd911fab4ac4eff01b5eb"
+    },
+    {
+      "project": "langchain-ai/langchain",
+      "policy": "incremental",
+      "phase": "update-1",
+      "id": "24511089b10187e00d57dd0a"
+    },
+    {
+      "project": "langchain-ai/langchain",
+      "policy": "fixed-flash",
+      "phase": "update-2",
+      "id": "dd6e8c85f21ef93463b926de"
+    },
+    {
+      "project": "langchain-ai/langchain",
+      "policy": "cached-cascade",
+      "phase": "update-2",
+      "id": "9c47c8d6412e6698d66898db"
+    },
+    {
+      "project": "langchain-ai/langchain",
+      "policy": "incremental",
+      "phase": "update-2",
+      "id": "7f8679981fcaae75cc21b948"
+    },
+    {
+      "project": "langchain-ai/langchain",
+      "policy": "fixed-flash",
+      "phase": "unchanged",
+      "id": "c8b74c76f83cd12da29952ee"
+    },
+    {
+      "project": "langchain-ai/langchain",
+      "policy": "cached-cascade",
+      "phase": "unchanged",
+      "id": "c31f8cc1486ab20d41262f02"
+    },
+    {
+      "project": "langchain-ai/langchain",
+      "policy": "incremental",
+      "phase": "unchanged",
+      "id": "efa7cf39bc8467a2aed5957d"
+    },
+    {
+      "project": "mkdocs/mkdocs",
+      "policy": "fixed-lite",
+      "phase": "update-1",
+      "id": "99b69a6539e59d23148ab147"
+    },
+    {
+      "project": "mkdocs/mkdocs",
+      "policy": "incremental",
+      "phase": "update-1",
+      "id": "8dd669cb1945a71b8a6a8e4e"
+    },
+    {
+      "project": "mkdocs/mkdocs",
+      "policy": "incremental",
+      "phase": "update-2",
+      "id": "1378311dbdc3563c30e67ade"
+    },
+    {
+      "project": "mkdocs/mkdocs",
+      "policy": "incremental",
+      "phase": "unchanged",
+      "id": "7bed09ab4b078bd17c7bc5ad"
+    },
+    {
+      "project": "microsoft/autogen",
+      "policy": "fixed-flash",
+      "phase": "update-1",
+      "id": "eb75030f7f6b175faff4df64"
+    },
+    {
+      "project": "microsoft/autogen",
+      "policy": "cached-cascade",
+      "phase": "update-1",
+      "id": "162fc461e11793d3dab108ea"
+    },
+    {
+      "project": "microsoft/autogen",
+      "policy": "incremental",
+      "phase": "update-1",
+      "id": "81b2e89fc7a64f3e3f21ff68"
+    },
+    {
+      "project": "microsoft/autogen",
+      "policy": "fixed-flash",
+      "phase": "update-2",
+      "id": "21498b2629e97a7149bff688"
+    },
+    {
+      "project": "microsoft/autogen",
+      "policy": "cached-cascade",
+      "phase": "update-2",
+      "id": "68bfef6ee15ff02ae9bb3d12"
+    },
+    {
+      "project": "microsoft/autogen",
+      "policy": "incremental",
+      "phase": "update-2",
+      "id": "8ed8e9b0258314fc4eb3b231"
+    },
+    {
+      "project": "microsoft/autogen",
+      "policy": "fixed-flash",
+      "phase": "unchanged",
+      "id": "2136d8ac923f4a757bd1370c"
+    },
+    {
+      "project": "microsoft/autogen",
+      "policy": "cached-cascade",
+      "phase": "unchanged",
+      "id": "98ef0b5e14368940f59605b5"
+    },
+    {
+      "project": "microsoft/autogen",
+      "policy": "incremental",
+      "phase": "unchanged",
+      "id": "9eb4a78a57d1c92260661fe5"
+    },
+    {
+      "project": "django/django",
+      "policy": "fixed-flash",
+      "phase": "initial",
+      "id": "cac544d4971c035df1e28ae5"
+    },
+    {
+      "project": "django/django",
+      "policy": "fixed-flash",
+      "phase": "update-1",
+      "id": "6e619c2ef9663ec321899394"
+    },
+    {
+      "project": "django/django",
+      "policy": "fixed-flash",
+      "phase": "update-2",
+      "id": "379b602cbc0ef978ab0d92a6"
+    },
+    {
+      "project": "django/django",
+      "policy": "fixed-flash",
+      "phase": "unchanged",
+      "id": "76cfb6d6b447abd7a2d5081e"
+    },
+    {
+      "project": "unionai-oss/pandera",
+      "policy": "fixed-flash",
+      "phase": "initial",
+      "id": "5d9a864a5f1ffe5e00202c7c"
+    },
+    {
+      "project": "unionai-oss/pandera",
+      "policy": "incremental",
+      "phase": "initial",
+      "id": "804bd797df9592a2eb494ea8"
+    },
+    {
+      "project": "unionai-oss/pandera",
+      "policy": "fixed-flash",
+      "phase": "update-1",
+      "id": "506e084991a1b09ae539c736"
+    },
+    {
+      "project": "unionai-oss/pandera",
+      "policy": "cached-cascade",
+      "phase": "update-1",
+      "id": "463e5bec02d8fa5e4175e490"
+    },
+    {
+      "project": "unionai-oss/pandera",
+      "policy": "fixed-flash",
+      "phase": "update-2",
+      "id": "a31021014070b06f7194c4d0"
+    },
+    {
+      "project": "unionai-oss/pandera",
+      "policy": "incremental",
+      "phase": "update-2",
+      "id": "63ce57bb7adc6bf24bd2c36d"
+    },
+    {
+      "project": "unionai-oss/pandera",
+      "policy": "fixed-flash",
+      "phase": "unchanged",
+      "id": "85156352814a8ef9f2185caa"
+    },
+    {
+      "project": "unionai-oss/pandera",
+      "policy": "incremental",
+      "phase": "unchanged",
+      "id": "45a9aa85d1afcee331cf79ba"
+    },
+    {
+      "project": "celery/celery",
+      "policy": "fixed-lite",
+      "phase": "initial",
+      "id": "69a8586c630280bba9e31842"
+    },
+    {
+      "project": "mlflow/mlflow",
+      "policy": "cached-cascade",
+      "phase": "update-1",
+      "id": "dc7beab57cfa92710d06031b"
+    },
+    {
+      "project": "mlflow/mlflow",
+      "policy": "fixed-flash",
+      "phase": "update-2",
+      "id": "38d2bcfe529522bed9c54033"
+    },
+    {
+      "project": "psf/requests",
+      "policy": "fixed-lite",
+      "phase": "initial",
+      "id": "933100763af0ffae522fac56"
+    },
+    {
+      "project": "psf/requests",
+      "policy": "fixed-flash",
+      "phase": "initial",
+      "id": "b4e6cddf187498ac2d0802ce"
+    },
+    {
+      "project": "psf/requests",
+      "policy": "fixed-lite",
+      "phase": "update-1",
+      "id": "c20e71980c33ab1cf2bdfa9e"
+    },
+    {
+      "project": "psf/requests",
+      "policy": "fixed-lite",
+      "phase": "update-2",
+      "id": "38a2e17a836602b9abcbe7da"
+    },
+    {
+      "project": "psf/requests",
+      "policy": "fixed-flash",
+      "phase": "update-2",
+      "id": "1ba64a0860580e5a6a99accf"
+    },
+    {
+      "project": "psf/requests",
+      "policy": "fixed-lite",
+      "phase": "unchanged",
+      "id": "18a64893399d6c63a19eb361"
+    },
+    {
+      "project": "psf/requests",
+      "policy": "fixed-flash",
+      "phase": "unchanged",
+      "id": "5bc260073d32bd990308bf0a"
+    },
+    {
+      "project": "scipy/scipy",
+      "policy": "fixed-lite",
+      "phase": "update-1",
+      "id": "c5badb5fa238ae0e97c19c99"
+    },
+    {
+      "project": "scrapy/scrapy",
+      "policy": "fixed-flash",
+      "phase": "initial",
+      "id": "9fc617608c0d159bb01d5ff8"
+    },
+    {
+      "project": "scrapy/scrapy",
+      "policy": "cached-cascade",
+      "phase": "initial",
+      "id": "5a31c042199f2de521cfa638"
+    },
+    {
+      "project": "apache/airflow",
+      "policy": "fixed-lite",
+      "phase": "initial",
+      "id": "bac68332f5a14e2f04a24c13"
+    },
+    {
+      "project": "apache/airflow",
+      "policy": "fixed-flash",
+      "phase": "initial",
+      "id": "b01eed0f18dbe14bbb30a67e"
+    },
+    {
+      "project": "apache/airflow",
+      "policy": "cached-cascade",
+      "phase": "initial",
+      "id": "26f42a57cb80439293d90f4f"
+    },
+    {
+      "project": "apache/airflow",
+      "policy": "fixed-lite",
+      "phase": "update-1",
+      "id": "998da7adfffa2771be42ad39"
+    },
+    {
+      "project": "apache/airflow",
+      "policy": "fixed-flash",
+      "phase": "update-1",
+      "id": "15d5d0a29b7084100faf5615"
+    },
+    {
+      "project": "apache/airflow",
+      "policy": "cached-cascade",
+      "phase": "update-1",
+      "id": "39cc8a1464153256104e929d"
+    },
+    {
+      "project": "apache/airflow",
+      "policy": "incremental",
+      "phase": "update-1",
+      "id": "5b7e46845a4f2eceb845a12a"
+    },
+    {
+      "project": "apache/airflow",
+      "policy": "fixed-flash",
+      "phase": "update-2",
+      "id": "1c368b76beb784243e83a8cb"
+    },
+    {
+      "project": "apache/airflow",
+      "policy": "cached-cascade",
+      "phase": "update-2",
+      "id": "493f1191907b1a77866a919c"
+    },
+    {
+      "project": "apache/airflow",
+      "policy": "incremental",
+      "phase": "update-2",
+      "id": "f235ab1506b23c2f8f0e19cc"
+    },
+    {
+      "project": "apache/airflow",
+      "policy": "fixed-flash",
+      "phase": "unchanged",
+      "id": "b4885d7fd799b5105ae9a7b0"
+    },
+    {
+      "project": "apache/airflow",
+      "policy": "cached-cascade",
+      "phase": "unchanged",
+      "id": "ab54442ee575996a999117ba"
+    },
+    {
+      "project": "apache/airflow",
+      "policy": "incremental",
+      "phase": "unchanged",
+      "id": "2f7b99e5103a4e87befdad96"
+    },
+    {
+      "project": "pandas-dev/pandas",
+      "policy": "fixed-flash",
+      "phase": "initial",
+      "id": "ab131d8b8dd4ca8c0d53e7f8"
+    },
+    {
+      "project": "pandas-dev/pandas",
+      "policy": "cached-cascade",
+      "phase": "initial",
+      "id": "533e5bff7057920387d90ebc"
+    },
+    {
+      "project": "pandas-dev/pandas",
+      "policy": "incremental",
+      "phase": "initial",
+      "id": "05417076c00f1669b7e47a95"
+    },
+    {
+      "project": "pandas-dev/pandas",
+      "policy": "fixed-lite",
+      "phase": "update-1",
+      "id": "a5c9012d7dd6d39a395efab1"
+    },
+    {
+      "project": "pandas-dev/pandas",
+      "policy": "fixed-flash",
+      "phase": "update-1",
+      "id": "c092d8c225915273be376f48"
+    },
+    {
+      "project": "pandas-dev/pandas",
+      "policy": "cached-cascade",
+      "phase": "update-1",
+      "id": "aa32715e4d4aec5313667946"
+    },
+    {
+      "project": "pandas-dev/pandas",
+      "policy": "incremental",
+      "phase": "update-1",
+      "id": "03d21b801e78964b8205205b"
+    },
+    {
+      "project": "pandas-dev/pandas",
+      "policy": "fixed-lite",
+      "phase": "update-2",
+      "id": "ecf5a4c75c40e23822501e35"
+    },
+    {
+      "project": "pandas-dev/pandas",
+      "policy": "fixed-flash",
+      "phase": "update-2",
+      "id": "375506b6d8c4be1fd211cb65"
+    },
+    {
+      "project": "pandas-dev/pandas",
+      "policy": "cached-cascade",
+      "phase": "update-2",
+      "id": "2c0c18bc3cdd7bd2f6726691"
+    },
+    {
+      "project": "pandas-dev/pandas",
+      "policy": "incremental",
+      "phase": "update-2",
+      "id": "ffaf2d3ce67049baab427b24"
+    },
+    {
+      "project": "pandas-dev/pandas",
+      "policy": "fixed-lite",
+      "phase": "unchanged",
+      "id": "ea8ee78543675976c5c9c78c"
+    },
+    {
+      "project": "pandas-dev/pandas",
+      "policy": "fixed-flash",
+      "phase": "unchanged",
+      "id": "12c31497bb2d2eabf6242347"
+    },
+    {
+      "project": "pandas-dev/pandas",
+      "policy": "cached-cascade",
+      "phase": "unchanged",
+      "id": "9aeaaac632ab20ac68067303"
+    },
+    {
+      "project": "pandas-dev/pandas",
+      "policy": "incremental",
+      "phase": "unchanged",
+      "id": "98116555086706800dcfb1dd"
+    },
+    {
+      "project": "dbader/schedule",
+      "policy": "fixed-flash",
+      "phase": "initial",
+      "id": "1363ef56bb7e7be0c5b07d2e"
+    }
+  ],
+  "identical_answer_groups": 262,
+  "groups_with_judge_disagreement": 12,
+  "judge_disagreement_examples": [
+    [
+      {
+        "id": "cb660906ce72f20d705da581",
+        "project": "Delgan/loguru",
+        "policy": "fixed-lite",
+        "phase": "update-2",
+        "field_scores": {
+          "purpose": false,
+          "install_command": true,
+          "license": false,
+          "release_note": true
+        }
+      },
+      {
+        "id": "52af83efbd1564e53aa3f9ac",
+        "project": "Delgan/loguru",
+        "policy": "fixed-lite",
+        "phase": "unchanged",
+        "field_scores": {
+          "purpose": true,
+          "install_command": true,
+          "license": true,
+          "release_note": true
+        }
+      }
+    ],
+    [
+      {
+        "id": "eb1cd3136f96ced5ddf9d3d6",
+        "project": "Textualize/textual",
+        "policy": "incremental",
+        "phase": "update-2",
+        "field_scores": {
+          "purpose": true,
+          "install_command": true,
+          "license": true,
+          "release_note": true
+        }
+      },
+      {
+        "id": "d8dc0cddf4949f7f38decd3d",
+        "project": "Textualize/textual",
+        "policy": "incremental",
+        "phase": "unchanged",
+        "field_scores": {
+          "purpose": true,
+          "install_command": true,
+          "license": true,
+          "release_note": false
+        }
+      }
+    ],
+    [
+      {
+        "id": "b3bb2ae1e029f6f12c744f4c",
+        "project": "holoviz/panel",
+        "policy": "fixed-lite",
+        "phase": "update-2",
+        "field_scores": {
+          "purpose": true,
+          "install_command": false,
+          "license": true,
+          "release_note": false
+        }
+      },
+      {
+        "id": "33224fcae2915662b5b07204",
+        "project": "holoviz/panel",
+        "policy": "fixed-lite",
+        "phase": "unchanged",
+        "field_scores": {
+          "purpose": true,
+          "install_command": true,
+          "license": true,
+          "release_note": true
+        }
+      }
+    ],
+    [
+      {
+        "id": "d181062b9e0fa187a39b172e",
+        "project": "yt-dlp/yt-dlp",
+        "policy": "fixed-lite",
+        "phase": "update-2",
+        "field_scores": {
+          "purpose": false,
+          "install_command": false,
+          "license": true,
+          "release_note": false
+        }
+      },
+      {
+        "id": "ddecb591511c682b100ca16c",
+        "project": "yt-dlp/yt-dlp",
+        "policy": "fixed-lite",
+        "phase": "unchanged",
+        "field_scores": {
+          "purpose": true,
+          "install_command": false,
+          "license": true,
+          "release_note": false
+        }
+      }
+    ],
+    [
+      {
+        "id": "3046e7a7106657745261037d",
+        "project": "aio-libs/aiohttp",
+        "policy": "parser",
+        "phase": "update-2",
+        "field_scores": {
+          "purpose": false,
+          "install_command": false,
+          "license": true,
+          "release_note": false
+        }
+      },
+      {
+        "id": "9457395c2f0fb1ce4ffe9549",
+        "project": "aio-libs/aiohttp",
+        "policy": "parser",
+        "phase": "unchanged",
+        "field_scores": {
+          "purpose": false,
+          "install_command": true,
+          "license": true,
+          "release_note": false
+        }
+      }
+    ],
+    [
+      {
+        "id": "8684d5a0c820910f174f0b4d",
+        "project": "aio-libs/aiohttp",
+        "policy": "fixed-lite",
+        "phase": "update-2",
+        "field_scores": {
+          "purpose": false,
+          "install_command": false,
+          "license": false,
+          "release_note": false
+        }
+      },
+      {
+        "id": "dbab67f0513e4a9cb4dbef34",
+        "project": "aio-libs/aiohttp",
+        "policy": "fixed-lite",
+        "phase": "unchanged",
+        "field_scores": {
+          "purpose": false,
+          "install_command": true,
+          "license": false,
+          "release_note": false
+        }
+      }
+    ],
+    [
+      {
+        "id": "025de64ce6d20863458e6125",
+        "project": "aio-libs/aiohttp",
+        "policy": "fixed-flash",
+        "phase": "update-2",
+        "field_scores": {
+          "purpose": true,
+          "install_command": false,
+          "license": true,
+          "release_note": true
+        }
+      },
+      {
+        "id": "03e3aa5f87139b28683b9cf5",
+        "project": "aio-libs/aiohttp",
+        "policy": "fixed-flash",
+        "phase": "unchanged",
+        "field_scores": {
+          "purpose": true,
+          "install_command": true,
+          "license": true,
+          "release_note": true
+        }
+      }
+    ],
+    [
+      {
+        "id": "19ceec8ae1605e7083898bcf",
+        "project": "aio-libs/aiohttp",
+        "policy": "cached-cascade",
+        "phase": "update-2",
+        "field_scores": {
+          "purpose": true,
+          "install_command": false,
+          "license": true,
+          "release_note": true
+        }
+      },
+      {
+        "id": "885ad015f39dcc30c9634637",
+        "project": "aio-libs/aiohttp",
+        "policy": "cached-cascade",
+        "phase": "unchanged",
+        "field_scores": {
+          "purpose": true,
+          "install_command": true,
+          "license": true,
+          "release_note": true
+        }
+      }
+    ],
+    [
+      {
+        "id": "23493ae6e2b765955fe70aa0",
+        "project": "aio-libs/aiohttp",
+        "policy": "incremental",
+        "phase": "update-2",
+        "field_scores": {
+          "purpose": true,
+          "install_command": false,
+          "license": true,
+          "release_note": true
+        }
+      },
+      {
+        "id": "a6aeb4a023576bd097340b3d",
+        "project": "aio-libs/aiohttp",
+        "policy": "incremental",
+        "phase": "unchanged",
+        "field_scores": {
+          "purpose": true,
+          "install_command": true,
+          "license": true,
+          "release_note": true
+        }
+      }
+    ],
+    [
+      {
+        "id": "d2319b38fd227846cceca1ca",
+        "project": "django/django",
+        "policy": "fixed-lite",
+        "phase": "update-2",
+        "field_scores": {
+          "purpose": true,
+          "install_command": true,
+          "license": false,
+          "release_note": true
+        }
+      },
+      {
+        "id": "ed80cb16abeaebdb7d345829",
+        "project": "django/django",
+        "policy": "fixed-lite",
+        "phase": "unchanged",
+        "field_scores": {
+          "purpose": true,
+          "install_command": true,
+          "license": true,
+          "release_note": true
+        }
+      }
+    ],
+    [
+      {
+        "id": "6d3c9bf8c7cf60efc2d24084",
+        "project": "python-poetry/poetry",
+        "policy": "fixed-flash",
+        "phase": "update-2",
+        "field_scores": {
+          "purpose": true,
+          "install_command": false,
+          "license": true,
+          "release_note": true
+        }
+      },
+      {
+        "id": "ba42ec9e3f1c38c581568deb",
+        "project": "python-poetry/poetry",
+        "policy": "cached-cascade",
+        "phase": "update-2",
+        "field_scores": {
+          "purpose": true,
+          "install_command": false,
+          "license": true,
+          "release_note": true
+        }
+      },
+      {
+        "id": "deb6175939ce98893e4c69ef",
+        "project": "python-poetry/poetry",
+        "policy": "fixed-flash",
+        "phase": "unchanged",
+        "field_scores": {
+          "purpose": true,
+          "install_command": true,
+          "license": true,
+          "release_note": true
+        }
+      },
+      {
+        "id": "7240428cf4ca84f764321778",
+        "project": "python-poetry/poetry",
+        "policy": "cached-cascade",
+        "phase": "unchanged",
+        "field_scores": {
+          "purpose": true,
+          "install_command": true,
+          "license": true,
+          "release_note": true
+        }
+      }
+    ],
+    [
+      {
+        "id": "cdca0a5f6e9347d99c238bbc",
+        "project": "mlflow/mlflow",
+        "policy": "incremental",
+        "phase": "update-2",
+        "field_scores": {
+          "purpose": false,
+          "install_command": true,
+          "license": true,
+          "release_note": false
+        }
+      },
+      {
+        "id": "d4372b2556690706f7624a57",
+        "project": "mlflow/mlflow",
+        "policy": "incremental",
+        "phase": "unchanged",
+        "field_scores": {
+          "purpose": true,
+          "install_command": true,
+          "license": true,
+          "release_note": true
+        }
+      }
+    ]
+  ],
+  "caveat": "Formatting candidates need semantic review; these are not new accepted outcomes"
+}

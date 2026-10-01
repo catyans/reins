@@ -83,7 +83,13 @@ def test_render_call_tree():
 
 
 def test_render_call_tree_empty():
-    run = {"run_id": "abc", "agent_name": "test", "status": "completed", "total_cost": 0, "degraded_count": 0}
+    run = {
+        "run_id": "abc",
+        "agent_name": "test",
+        "status": "completed",
+        "total_cost": 0,
+        "degraded_count": 0,
+    }
     result = render_call_tree(run, [])
     assert "No spans" in result
 

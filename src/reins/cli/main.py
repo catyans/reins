@@ -24,6 +24,7 @@ def _get_storage() -> Storage:
 def _sanitize_identifier(value: str) -> str:
     """Sanitize a value for safe use in SQL (alphanumeric + underscore + hyphen only)."""
     import re
+
     return re.sub(r"[^a-zA-Z0-9_\-.]", "", value)
 
 
@@ -32,6 +33,75 @@ def _sanitize_identifier(value: str) -> str:
 def cli() -> None:
     """Reins: Take control of your AI agents."""
     pass
+
+
+@cli.command("compare")
+@click.option("--task-type", default=None)
+@click.option("--database", type=click.Path(), default=None)
+def compare(task_type, database):
+    """Compare task quality and total cost across policy versions (JSON)."""
+    from reins.core.outcomes import compare_tasks
+
+    storage = Storage(database) if database else _get_storage()
+    try:
+        click.echo(json.dumps(compare_tasks(storage, task_type), indent=2))
+    finally:
+        storage.close()
+
+
+@cli.command("optimize")
+@click.option("--database", type=click.Path(exists=True), required=True)
+@click.option("--experiment", required=True, help="ID returned by evaluate_experiment")
+@click.option("--min-success-rate", type=click.FloatRange(0, 1), default=None)
+@click.option("--max-quality-drop", type=click.FloatRange(0, 1), default=None)
+@click.option("--min-cases", type=click.IntRange(min=1), default=None)
+@click.option("--max-p95-ms", type=click.FloatRange(min=0, min_open=True), default=None)
+@click.option("--output", type=click.Path(), default=None)
+def optimize(
+    database, experiment, min_success_rate, max_quality_drop, min_cases, max_p95_ms, output
+):
+    """Compare paired policies under quality/latency constraints; never deploys."""
+    from reins.optimization import Constraints, list_experiments, recommend
+
+    storage = Storage(database)
+    try:
+        manifest = next(
+            (e for e in list_experiments(storage) if e["experiment_id"] == experiment), None
+        )
+        if manifest is None:
+            raise click.ClickException("Unknown experiment")
+        values = dict(manifest["constraints"])
+        overrides = dict(
+            min_success_rate=min_success_rate,
+            max_quality_drop=max_quality_drop,
+            min_cases=min_cases,
+            max_p95_ms=max_p95_ms,
+        )
+        values.update({k: v for k, v in overrides.items() if v is not None})
+        report = recommend(storage, experiment, constraints=Constraints(**values))
+        body = json.dumps(report, indent=2, ensure_ascii=False)
+        if output:
+            from pathlib import Path
+
+            Path(output).write_text(body + "\n", encoding="utf-8")
+        click.echo(body)
+    except ValueError as exc:
+        raise click.ClickException(str(exc)) from exc
+    finally:
+        storage.close()
+
+
+@cli.command("experiments")
+@click.option("--database", type=click.Path(exists=True), required=True)
+def experiments(database):
+    """List recorded optimization experiments."""
+    from reins.optimization import list_experiments
+
+    storage = Storage(database)
+    try:
+        click.echo(json.dumps(list_experiments(storage), indent=2, ensure_ascii=False))
+    finally:
+        storage.close()
 
 
 @cli.command()
@@ -117,7 +187,9 @@ def query(sql: str) -> None:
 @click.option("--port", default=8082, help="Proxy port")
 @click.option("--host", default="localhost", help="Proxy host")
 @click.option("--budget", default=None, help="Budget limit (e.g., '$5/day')")
-@click.option("--on-exceed", default="alert", type=click.Choice(["degrade", "pause", "alert", "reject"]))
+@click.option(
+    "--on-exceed", default="alert", type=click.Choice(["degrade", "pause", "alert", "reject"])
+)
 def proxy(port: int, host: str, budget: str | None, on_exceed: str) -> None:
     """Start the local transparent proxy server."""
     try:
@@ -130,6 +202,7 @@ def proxy(port: int, host: str, budget: str | None, on_exceed: str) -> None:
 
     app = create_proxy_app(budget=budget, on_exceed=on_exceed)
 
+    click.echo("EXPERIMENTAL: proxy observes spending; it does not enforce a hard cap.")
     click.echo(f"Starting Reins proxy at http://{host}:{port}")
     click.echo(f"Budget: {budget or 'unlimited'}  |  On exceed: {on_exceed}")
     click.echo()
@@ -141,6 +214,7 @@ def proxy(port: int, host: str, budget: str | None, on_exceed: str) -> None:
 
 
 # ─── Trace commands ──────────────────────────────────────────────────────────
+
 
 @cli.group()
 def trace() -> None:
@@ -162,7 +236,8 @@ def trace_list(limit: int, agent: str | None) -> None:
         agent_filter = "WHERE r.agent_name = ?"
         params.append(_sanitize_identifier(agent))
 
-    rows = storage.query(f"""
+    rows = storage.query(
+        f"""
         SELECT
             r.run_id, r.agent_name, r.status, r.total_cost,
             r.degraded_count, r.started_at,
@@ -174,7 +249,9 @@ def trace_list(limit: int, agent: str | None) -> None:
                  r.degraded_count, r.started_at
         ORDER BY r.started_at DESC
         LIMIT {int(limit)}
-    """, params or None)
+    """,
+        params or None,
+    )
     click.echo(render_run_list(rows))
 
 
@@ -234,6 +311,7 @@ def trace_export(fmt: str, run_id: str | None, output: str | None) -> None:
         data = json.dumps(spans, indent=2, default=str)
     elif fmt == "otel":
         from reins.trace.exporter import spans_to_otlp_json
+
         data = spans_to_otlp_json(spans)
 
     if output:
@@ -245,6 +323,7 @@ def trace_export(fmt: str, run_id: str | None, output: str | None) -> None:
 
 
 # ─── Lens commands ───────────────────────────────────────────────────────────
+
 
 @cli.command()
 @click.argument("run_id")
@@ -282,6 +361,7 @@ def health(run_id: str) -> None:
 
 # ─── Config ──────────────────────────────────────────────────────────────────
 
+
 @cli.command()
 def config() -> None:
     """Show current configuration."""
@@ -301,7 +381,13 @@ def config() -> None:
 def version() -> None:
     """Show version information."""
     from reins import __version__
+
     click.echo(f"reins {__version__}")
+
+
+from reins.projects.cli import projects  # noqa: E402
+
+cli.add_command(projects)
 
 
 def main() -> None:

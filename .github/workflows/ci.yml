@@ -22,7 +22,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
-        run: pip install -e ".[dev,all]"
+        run: pip install -e ".[dev,all,proxy,sdk-test]"
 
       - name: Lint
         run: ruff check src/ tests/
@@ -39,4 +39,4 @@ jobs:
           python-version: "3.12"
       - run: pip install ruff
       - run: ruff check src/ tests/
-      - run: ruff format --check src/ tests/
+      - run: ruff format --check src/ tests/ examples/

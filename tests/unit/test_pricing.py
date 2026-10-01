@@ -2,7 +2,9 @@
 
 from decimal import Decimal
 
-from reins.core.pricing import get_price
+import pytest
+
+from reins.core.pricing import UnknownPriceError, get_price
 
 
 def test_anthropic_sonnet_pricing():
@@ -29,14 +31,14 @@ def test_openai_gpt4o_pricing():
     assert cost == expected.quantize(Decimal("0.000001"))
 
 
-def test_unknown_model_returns_zero():
-    cost = get_price("anthropic", "unknown-model", 1000, 500)
-    assert cost == Decimal("0")
+def test_unknown_model_requires_explicit_price():
+    with pytest.raises(UnknownPriceError):
+        get_price("anthropic", "unknown-model", 1000, 500)
 
 
-def test_unknown_provider_returns_zero():
-    cost = get_price("unknown-provider", "model", 1000, 500)
-    assert cost == Decimal("0")
+def test_unknown_provider_requires_explicit_price():
+    with pytest.raises(UnknownPriceError):
+        get_price("unknown-provider", "model", 1000, 500)
 
 
 def test_zero_tokens():

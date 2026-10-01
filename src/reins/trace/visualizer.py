@@ -115,7 +115,10 @@ def render_call_tree(run: dict[str, Any], spans: list[dict[str, Any]]) -> str:
     # Header
     lines.append("")
     lines.append(f"  {_BOLD}Run: {run.get('run_id', '')[:10]}{_RESET}")
-    lines.append(f"  Agent: {agent}  |  Status: {_status_color(status)}{status}{_RESET}  |  Cost: {total_cost}")
+    lines.append(
+        f"  Agent: {agent}  |  Status: {_status_color(status)}{status}{_RESET}"
+        f"  |  Cost: {total_cost}"
+    )
     if degraded:
         lines.append(f"  {_YELLOW}⚠ {degraded} call(s) were auto-degraded{_RESET}")
     lines.append(f"  {'─' * 80}")
@@ -250,7 +253,7 @@ def render_span_detail(span: dict[str, Any]) -> str:
     ]
 
     for label, value in fields:
-        if value is not None and value != "" and value != False:
+        if value not in (None, "", False):
             lines.append(f"  {label:<20} {value}")
 
     lines.append("")

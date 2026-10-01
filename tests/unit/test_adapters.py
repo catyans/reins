@@ -3,14 +3,8 @@
 from __future__ import annotations
 
 import uuid
-from decimal import Decimal
 from types import SimpleNamespace
 from unittest.mock import MagicMock, patch
-
-import pytest
-
-from reins.core.models import SpanData
-
 
 # === LangChain Adapter Tests ===
 
@@ -20,6 +14,7 @@ class TestLangChainAdapter:
 
     def _make_handler(self):
         from reins.adapters.langchain import ReinsCallbackHandler
+
         return ReinsCallbackHandler(agent_name="test_lc")
 
     def _mock_runtime(self, storage):
@@ -114,9 +109,15 @@ class TestLangChainAdapter:
     def test_provider_detection(self):
         from reins.adapters.langchain import _guess_provider
 
-        assert _guess_provider({"id": ["langchain", "ChatAnthropic"]}, "claude-sonnet-4") == "anthropic"
+        assert (
+            _guess_provider({"id": ["langchain", "ChatAnthropic"]}, "claude-sonnet-4")
+            == "anthropic"
+        )
         assert _guess_provider({"id": ["langchain", "ChatOpenAI"]}, "gpt-4o") == "openai"
-        assert _guess_provider({"id": ["langchain", "ChatGoogleGenerativeAI"]}, "gemini-2.5-pro") == "google"
+        assert (
+            _guess_provider({"id": ["langchain", "ChatGoogleGenerativeAI"]}, "gemini-2.5-pro")
+            == "google"
+        )
         assert _guess_provider({"id": []}, "unknown-model") == "unknown"
 
 
@@ -128,6 +129,7 @@ class TestOpenAIAgentsAdapter:
 
     def _make_processor(self):
         from reins.adapters.openai_agents import ReinsTracingProcessor
+
         return ReinsTracingProcessor(agent_name="test_oai")
 
     def _mock_runtime(self, storage):
@@ -284,6 +286,7 @@ class TestOTelAdapter:
 
     def _make_exporter(self):
         from reins.adapters.otel import ReinsSpanExporter
+
         return ReinsSpanExporter(agent_name="test_otel")
 
     def _mock_runtime(self, storage):
@@ -308,7 +311,7 @@ class TestOTelAdapter:
             "context": SimpleNamespace(span_id=12345, trace_id=67890),
             "parent": None,
             "start_time": 1000000000,  # 1 second in nanoseconds
-            "end_time": 2000000000,    # 2 seconds
+            "end_time": 2000000000,  # 2 seconds
             "status": SimpleNamespace(status_code=1, description=""),  # OK
         }
         defaults.update(overrides)
@@ -352,7 +355,7 @@ class TestOTelAdapter:
         )
 
         with self._mock_runtime(storage):
-            result = exporter.export([otel_span])
+            exporter.export([otel_span])
 
         rows = storage.query("SELECT * FROM spans")
         assert rows[0]["status"] == "error"

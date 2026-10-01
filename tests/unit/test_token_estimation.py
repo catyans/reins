@@ -42,9 +42,12 @@ def test_estimate_multi_turn():
 def test_estimate_content_blocks():
     kwargs = {
         "messages": [
-            {"role": "user", "content": [
-                {"type": "text", "text": "a" * 800},
-            ]},
+            {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": "a" * 800},
+                ],
+            },
         ]
     }
     est = _estimate_input_tokens("anthropic", kwargs)

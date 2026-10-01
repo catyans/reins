@@ -69,6 +69,48 @@ class ReinsConfig:
     storage: str = "duckdb"
     storage_path: str | None = None
     retention_days: int = 30
+    mode: str = "observe"
+    policy_version: str = "baseline"
+    task_models: dict[str, list[str]] = field(default_factory=dict)
+    prices: dict[str, dict[str, list[str]]] = field(default_factory=dict)
+    token_counter: Any = None
+    dashboard: bool = False
+    dashboard_port: int = 8765
+    inactivity_seconds: float = 60
+
+    def validate(self) -> None:
+        import math
+
+        if type(self.dashboard) is not bool:
+            raise ValueError("dashboard must be boolean")
+        if type(self.dashboard_port) is not int or not 0 <= self.dashboard_port <= 65535:
+            raise ValueError("dashboard_port must be between 0 and 65535")
+        if (
+            not isinstance(self.inactivity_seconds, (int, float))
+            or not math.isfinite(self.inactivity_seconds)
+            or self.inactivity_seconds <= 0
+        ):
+            raise ValueError("inactivity_seconds must be positive and finite")
+        if self.mode not in {"observe", "enforce"}:
+            raise ValueError("mode must be observe or enforce")
+        for cfg in [self.budget, *self.budget.agents.values()]:
+            if cfg.on_exceed not in {"alert", "reject", "pause", "degrade"}:
+                raise ValueError("Invalid on_exceed strategy")
+            for key in ("per_run", "daily", "monthly"):
+                value = getattr(cfg, key, None)
+                if value is not None and (not value.is_finite() or value < 0):
+                    raise ValueError("Budgets must be finite and nonnegative")
+        for task, models in self.task_models.items():
+            if not isinstance(task, str) or not isinstance(models, list) or not models:
+                raise ValueError("task_models maps task types to ordered provider/model lists")
+            if len(set(models)) != len(models) or any("/" not in m for m in models):
+                raise ValueError("Models must be unique provider/model identifiers")
+        for models in self.prices.values():
+            for price in models.values():
+                if len(price) != 2 or any(
+                    not Decimal(str(x)).is_finite() or Decimal(str(x)) < 0 for x in price
+                ):
+                    raise ValueError("prices requires nonnegative input/output USD per million")
 
     def get_agent_budget(self, agent_name: str) -> AgentBudgetConfig | None:
         cfg = self.budget.agents.get(agent_name)
@@ -136,6 +178,14 @@ class ReinsConfig:
         config.storage_path = raw.get("storage_path")
         config.retention_days = raw.get("retention_days", 30)
 
+        config.mode = raw.get("mode", "observe")
+        config.policy_version = raw.get("policy_version", "baseline")
+        config.task_models = raw.get("task_models", {})
+        config.prices = raw.get("prices", {})
+        for key in ("dashboard", "dashboard_port", "inactivity_seconds"):
+            if key in raw:
+                setattr(config, key, raw[key])
+        config.validate()
         return config
 
 
@@ -143,16 +193,12 @@ def _parse_money(value: Any) -> Decimal | None:
     """Parse money strings like '$5.00', '$5/day', '5.00'."""
     if value is None:
         return None
-    if isinstance(value, (int, float)):
-        return Decimal(str(value))
-    if isinstance(value, Decimal):
-        return value
-    s = str(value).strip()
-    # Remove $ prefix and /period suffix
-    s = re.sub(r"^\$", "", s)
+    s = re.sub(r"^\$", "", str(value).strip())
     s = re.sub(r"/(day|month|run|hour)$", "", s, flags=re.IGNORECASE)
-    s = s.strip()
     try:
-        return Decimal(s)
-    except Exception:
-        return None
+        result = Decimal(s.strip())
+    except Exception as exc:
+        raise ValueError(f"Invalid budget: {value!r}") from exc
+    if not result.is_finite() or result < 0:
+        raise ValueError("Budget must be finite and nonnegative")
+    return result

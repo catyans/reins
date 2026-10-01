@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Watch Reins update public project records, reuse completed work, and measure quality and API cost.">
+  <title>Reins — Every update, less repeated work</title>
+  <link rel="stylesheet" href="projects.css">
+  <script defer src="projects.js"></script>
+</head>
+<body>
+<header><a class="brand" href="index.html"><img class="brand-wordmark" src="reins-wordmark-v3.svg" alt="Reins" width="140" height="35"></a><nav><a href="#run">Live run</a><a href="#results">Measured results</a><a href="cases.html">More cases ↗</a></nav><span class="pill">READ-ONLY</span></header>
+<main>
+  <section class="hero">
+    <p class="eyebrow">PUBLIC PROJECT UPDATE AGENT</p>
+    <h1>Every update.<br><span>Less repeated work.</span></h1>
+    <p class="lede">Read project documents. Refresh the facts that need attention. Keep completed work when a task resumes.</p>
+    <div class="hero-bottom"><a class="button" href="#run">Follow the workflow ↓</a><p>Real Gemini calls · Commit-pinned public sources<br>Historical release replay · No paid visitor actions</p></div>
+  </section>
+  <section id="run">
+    <div class="section-heading"><div><p class="eyebrow">EXECUTION, MADE VISIBLE</p><h2>See what is happening.</h2></div><div class="connection"><span id="dot"></span><span id="connection">Waiting for a run</span></div></div>
+    <div class="metrics" id="metrics">
+      <article><p>Tasks completed</p><strong id="completed">—</strong><small id="total">A finite local experiment</small></article>
+      <article><p>Fields reused</p><strong id="reused">—</strong><small>Previously completed results</small></article>
+      <article><p>Model calls</p><strong id="calls">—</strong><small>Recorded provider requests</small></article>
+      <article><p>Estimated API cost</p><strong id="cost">—</strong><small>Usage × text token prices</small></article>
+    </div>
+    <div class="workflow" aria-label="Project update workflow"><span>1. Load snapshot</span><i>→</i><span>2. Detect changes</span><i>→</i><span>3. Extract</span><i>→</i><span>4. Validate</span><i>→</i><span>5. Save</span></div>
+    <div class="run-grid"><article class="panel"><h3>Current work</h3><div id="activity" aria-live="polite"><p class="muted">The local runner will publish its status here.</p></div><p class="footnote" id="updated">No recorded heartbeat yet.</p></article><article class="panel"><h3>What Reins does</h3><ol class="explain"><li><strong>Check the source version.</strong><p>New content invalidates dependent results. Unchanged sources keep their completed work.</p></li><li><strong>Spend only where useful.</strong><p>Parse clear facts directly. Use a model for interpretation; repair unsupported fields with more context.</p></li><li><strong>Resume with a record.</strong><p>Completed requests are saved. Uncertain requests remain held rather than silently repeated.</p></li></ol></article></div>
+  </section>
+  <section id="results">
+    <div class="section-heading"><div><p class="eyebrow">QUALITY AND COST, TOGETHER</p><h2 id="result-title">Measure the complete workflow.</h2></div><a class="text-link" id="pdf-link" href="reins-project-update-report.pdf" hidden>Download readable report ↗</a></div>
+    <p class="lede smaller" id="result-intro">The comparison includes first collection, two real release changes, and an unchanged recheck. Results appear when the evaluation finishes.</p>
+    <div id="charts" class="panel"><p class="muted">The experiment is still collecting results.</p></div>
+    <div id="phases" class="phase-grid"></div>
+    <p class="footnote">Quality: source support plus a separate Gemini Flash semantic evaluator, not human review. Timing covers processing frozen source snapshots; it excludes original network collection. Costs are usage-based API estimates, not invoice debits.</p>
+  </section>
+  <section>
+    <div class="section-heading"><div><p class="eyebrow">THE DELIVERABLE</p><h2>Facts you can trace back.</h2></div><select id="record-filter" aria-label="Select strategy"><option value="incremental">Reins incremental</option><option value="cached-cascade">Parser + model + cache</option><option value="fixed-lite">Flash Lite full refresh</option><option value="fixed-flash">Flash full refresh</option><option value="parser">Deterministic extraction</option></select></div>
+    <div id="records" class="records"><p class="muted">Completed project records will appear here.</p></div>
+  </section>
+  <details class="panel methodology"><summary>Experiment details and raw data</summary><p>60 public projects, with three distinct release snapshots each. Projects from the same organization stay in one split. Configuration selection uses validation projects before the held-out test. Repeated versions are not independent projects.</p><p>This is a small historical-replay pilot. It does not establish production-wide savings or statistical quality equivalence. Recovery fault injection is reported separately from real release changes.</p><p id="research-cost"></p><a href="project-results.json">Download raw comparison JSON</a> · <a href="project-status.json">Read sanitized run status</a></details>
+</main>
+<footer><a class="brand" href="index.html"><img class="brand-wordmark" src="reins-wordmark-v3.svg" alt="Reins" width="140" height="35"></a><p>Make every completed task count.</p><span>Recorded experiment · Read-only case study</span></footer>
+</body></html>

@@ -67,7 +67,9 @@ def _build_attributes(span: dict[str, Any]) -> list[dict]:
 
     def _add(key: str, value: Any, vtype: str = "stringValue") -> None:
         if value is not None and value != "" and value != 0:
-            attrs.append({"key": key, "value": {vtype: str(value) if vtype == "stringValue" else value}})
+            attrs.append(
+                {"key": key, "value": {vtype: str(value) if vtype == "stringValue" else value}}
+            )
 
     # GenAI semantic conventions
     _add("gen_ai.system", span.get("provider"))
@@ -114,7 +116,7 @@ def _iso_to_nanos(iso_str: str) -> int:
     if not iso_str:
         return 0
     try:
-        from datetime import datetime, timezone
+        from datetime import datetime
 
         # Handle various ISO formats
         iso_str = iso_str.replace("Z", "+00:00")
