@@ -1,3 +1,11 @@
+> ARCHIVED v0.1 design: descriptions below are historical intentions, not the v0.2 support contract. See README.md, GUIDE.md and PILOT.md for implemented behavior.
+
+Current product direction: quality-constrained optimization for repeatable Agent
+workloads, starting with data extraction. The implemented experiment, policy
+selection and explicit fallback workflow is documented in [OPTIMIZATION.md](OPTIMIZATION.md).
+Tracing and budget control below remain its execution foundation. Learned routing,
+model compression and hardware configuration search are future integrations.
+
 # Reins — 技术设计文档
 
 > **版本：** v0.1 | **日期：** 2026-04-03 | **状态：** Draft

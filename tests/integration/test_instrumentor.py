@@ -82,7 +82,7 @@ def test_patched_create_records_span(instrumented_env):
 
     run = RunData(agent_name="test_agent")
     storage.insert_run(run)
-    _token = set_current_run(run)
+    set_current_run(run)
 
     try:
         msg_instance = anthropic._messages_instance
@@ -138,7 +138,7 @@ def test_error_in_sdk_still_records(instrumented_env):
     storage = instrumented_env["storage"]
 
     # Make create raise
-    _original = (
+    (
         anthropic.resources.Messages.create.__wrapped__
         if hasattr(anthropic.resources.Messages.create, "__wrapped__")
         else None
@@ -154,7 +154,7 @@ def test_error_in_sdk_still_records(instrumented_env):
     # We can't easily make the mock raise through the patch,
     # but we can verify the span recording works in normal flow
     msg_instance = anthropic._messages_instance
-    _response = anthropic.resources.Messages.create(
+    anthropic.resources.Messages.create(
         msg_instance,
         model="claude-sonnet-4",
         messages=[{"role": "user", "content": "Hi"}],

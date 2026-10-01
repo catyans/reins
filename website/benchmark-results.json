@@ -1,0 +1,85 @@
+{
+  "selected": "compact-batch-16",
+  "audit_cases": 100,
+  "comparisons": {
+    "single-lite": {
+      "cost_reduction": 0.5000920217171252,
+      "job_throughput_multiplier": 7.5322250268158415,
+      "acceptance_difference": 0.0
+    },
+    "verbose-batch-4": {
+      "cost_reduction": 0.45838214807230737,
+      "job_throughput_multiplier": 2.6613083385108416,
+      "acceptance_difference": 0.010000000000000009
+    },
+    "compact-batch-4": {
+      "cost_reduction": 0.1098883093476064,
+      "job_throughput_multiplier": 2.0294708610702683,
+      "acceptance_difference": 0.0
+    }
+  },
+  "estimated_total_usd": 0.0265535,
+  "calls": 221,
+  "cost_audit_matches": true,
+  "provider_errors": 0,
+  "additional_baseline": "Compact batch 4, post-hoc stress comparison; no reselection",
+  "audit": [
+    {
+      "policy": "single-lite",
+      "cases": 100,
+      "accepted": 100,
+      "rate": 1.0,
+      "total_cost": 0.0065202,
+      "cost_complete": true,
+      "cost_per_accepted": 6.5202e-05,
+      "api_calls": 100,
+      "elapsed_seconds": 172.83357208399684,
+      "documents_per_second": 0.5785912933130848,
+      "p95_wait_seconds": 2.484092208003858,
+      "fallback_items": 0
+    },
+    {
+      "policy": "verbose-batch-4",
+      "cases": 100,
+      "accepted": 99,
+      "rate": 0.99,
+      "total_cost": 0.0059579,
+      "cost_complete": true,
+      "cost_per_accepted": 6.018080808080808e-05,
+      "api_calls": 28,
+      "elapsed_seconds": 61.06607608299237,
+      "documents_per_second": 1.6375704223093384,
+      "p95_wait_seconds": 3.3249646250042133,
+      "fallback_items": 3
+    },
+    {
+      "policy": "compact-batch-16",
+      "cases": 100,
+      "accepted": 100,
+      "rate": 1.0,
+      "total_cost": 0.0032595000000000002,
+      "cost_complete": true,
+      "cost_per_accepted": 3.2595e-05,
+      "api_calls": 9,
+      "elapsed_seconds": 22.94588537499658,
+      "documents_per_second": 4.358079819790563,
+      "p95_wait_seconds": 5.7916587080108,
+      "fallback_items": 2
+    },
+    {
+      "policy": "compact-batch-4",
+      "cases": 100,
+      "accepted": 100,
+      "rate": 1.0,
+      "total_cost": 0.0036619,
+      "cost_complete": true,
+      "cost_per_accepted": 3.6619e-05,
+      "api_calls": 25,
+      "elapsed_seconds": 46.56800575001398,
+      "documents_per_second": 2.147397089255212,
+      "p95_wait_seconds": 2.3605962499859743,
+      "fallback_items": 0
+    }
+  ],
+  "scope": "Real Gemini API calls on constructed invoices. Same calculator for all policies. No customer ROI claim."
+}

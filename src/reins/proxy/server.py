@@ -81,7 +81,7 @@ class ReinsProxy:
         upstream_url = f"{ANTHROPIC_UPSTREAM}/v1/messages"
 
         if is_stream:
-            return await self._forward_stream(upstream_url, body, headers, span)
+            return await self._forward_stream(request, upstream_url, body, headers, span)
         else:
             return await self._forward_json(upstream_url, body, headers, span)
 
@@ -108,66 +108,46 @@ class ReinsProxy:
                     content_type="application/json",
                 )
 
-    async def _forward_stream(
-        self, url: str, body: dict, headers: dict, span: SpanData
-    ) -> web.StreamResponse:
-        """Forward SSE streaming request, accumulate usage at the end."""
-        response = web.StreamResponse(
-            status=200,
-            headers={
-                "Content-Type": "text/event-stream",
-                "Cache-Control": "no-cache",
-            },
-        )
-        await response.prepare(request=None)  # type: ignore[arg-type]
-
-        usage: dict[str, int] = {}
-
-        async with ClientSession() as session:
-            async with session.post(url, json=body, headers=headers) as resp:
-                # For streaming, we need to set up the response first
-                response = web.StreamResponse(
-                    status=resp.status,
-                    headers={
-                        "Content-Type": resp.headers.get("Content-Type", "text/event-stream"),
-                    },
-                )
-                # Note: response.prepare needs the actual request object
-                # This is handled by aiohttp when returning from the handler
-
-                chunks = []
-                async for chunk in resp.content.iter_any():
-                    chunks.append(chunk)
-                    # Try to extract usage from message_delta events
-                    self._extract_usage_from_chunk(chunk, usage)
-
-        span.complete_from_usage_dict(usage)
-        self._finalize_span(span)
-
-        # For simplicity in MVP, buffer the full stream and return
-        # (true streaming pass-through is Phase 2)
-        full_body = b"".join(chunks)
-        return web.Response(
-            body=full_body,
-            status=200,
-            content_type="text/event-stream",
-        )
-
-    def _extract_usage_from_chunk(self, chunk: bytes, usage: dict[str, int]) -> None:
-        """Extract usage info from SSE chunks."""
+    async def _forward_stream(self, request, url, body, headers, span):
+        """Experimental observation-only SSE relay; incomplete usage stays pending."""
+        buffer = b""
+        usage = {}
+        complete = False
         try:
-            text = chunk.decode("utf-8")
-            for line in text.split("\n"):
-                if line.startswith("data: "):
-                    data = json.loads(line[6:])
-                    if "usage" in data:
-                        u = data["usage"]
-                        usage["input_tokens"] = u.get("input_tokens", usage.get("input_tokens", 0))
-                        usage["output_tokens"] = u.get(
-                            "output_tokens", usage.get("output_tokens", 0)
-                        )
-        except Exception:
-            pass
+            async with ClientSession() as session:
+                async with session.post(url, json=body, headers=headers) as resp:
+                    response = web.StreamResponse(
+                        status=resp.status,
+                        headers={
+                            "Content-Type": resp.headers.get("Content-Type", "text/event-stream")
+                        },
+                    )
+                    await response.prepare(request)
+                    async for chunk in resp.content.iter_any():
+                        await response.write(chunk)
+                        buffer += chunk
+                        while b"\n" in buffer:
+                            line, buffer = buffer.split(b"\n", 1)
+                            if not line.startswith(b"data:"):
+                                continue
+                            try:
+                                event = json.loads(line[5:].strip())
+                                if event.get("type") == "message_start":
+                                    usage.update(event.get("message", {}).get("usage", {}))
+                                if event.get("type") == "message_delta":
+                                    usage.update(event.get("usage", {}))
+                                    complete = True
+                            except (ValueError, UnicodeDecodeError):
+                                continue
+                    if complete:
+                        span.complete_from_usage_dict(usage)
+                    await response.write_eof()
+                    return response
+        except BaseException as exc:
+            span.mark_error(exc)
+            raise
+        finally:
+            self._finalize_span(span)
 
     async def _handle_anthropic_passthrough(self, request: web.Request) -> web.Response:
         """Pass through non-messages requests."""
@@ -220,6 +200,17 @@ def create_proxy_app(
     from reins.core.loader import load_modules
 
     config = ReinsConfig.load(config_path)
+    if config.mode == "enforce":
+        raise ValueError("Proxy is observation-only in v0.2; use the traced SDK for enforcement")
+    if budget:
+        from reins.core.config import _parse_money
+
+        if budget.endswith("/month"):
+            config.budget.monthly = _parse_money(budget)
+        elif budget.endswith("/day"):
+            config.budget.daily = _parse_money(budget)
+        else:
+            raise ValueError("Proxy observation budget requires /day or /month")
     event_bus = EventBus()
     storage = Storage(config.storage_path)
     modules = load_modules(event_bus, storage, config)

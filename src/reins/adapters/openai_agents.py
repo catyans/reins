@@ -73,8 +73,8 @@ class ReinsTracingProcessor:
             elif hasattr(span_data, "from_agent"):
                 span_type = "custom"
                 name = (
-                    f"handoff.{getattr(span_data, 'from_agent', '')}"
-                    f"→{getattr(span_data, 'to_agent', '')}"
+                    f"handoff.{getattr(span_data, 'from_agent', '')}→"
+                    f"{getattr(span_data, 'to_agent', '')}"
                 )
 
         reins_span = SpanData(
@@ -131,7 +131,7 @@ class ReinsTracingProcessor:
             reins_span.duration_ms = (
                 reins_span.ended_at - reins_span.started_at
             ).total_seconds() * 1000
-            _output = getattr(span_data, "output", None)
+            getattr(span_data, "output", None)
             reins_span.tool_status = "error" if getattr(span_data, "error", None) else "success"
             if getattr(span_data, "error", None):
                 reins_span.tool_error = str(span_data.error)

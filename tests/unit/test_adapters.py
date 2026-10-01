@@ -355,7 +355,7 @@ class TestOTelAdapter:
         )
 
         with self._mock_runtime(storage):
-            _result = exporter.export([otel_span])
+            exporter.export([otel_span])
 
         rows = storage.query("SELECT * FROM spans")
         assert rows[0]["status"] == "error"

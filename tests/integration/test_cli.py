@@ -49,7 +49,7 @@ def test_cli_version():
     runner = CliRunner()
     result = runner.invoke(cli, ["version"])
     assert result.exit_code == 0
-    assert "0.1.0" in result.output
+    assert "0.2.0" in result.output
 
 
 def test_cli_report_empty(tmp_path):
@@ -107,7 +107,7 @@ def test_cli_trace_list(tmp_path, monkeypatch):
 def test_cli_trace_show(tmp_path, monkeypatch):
     """Test reins trace show with seeded data."""
     storage = Storage(tmp_path / "test.duckdb")
-    _run_id = _seed_data(storage)
+    _seed_data(storage)
 
     import reins.cli.main as cli_module
 

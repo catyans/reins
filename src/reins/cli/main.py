@@ -7,6 +7,7 @@ import sys
 
 import click
 
+from reins.control.cli import control
 from reins.core.config import ReinsConfig
 from reins.core.storage import Storage
 
@@ -33,6 +34,75 @@ def _sanitize_identifier(value: str) -> str:
 def cli() -> None:
     """Reins: Take control of your AI agents."""
     pass
+
+
+@cli.command("compare")
+@click.option("--task-type", default=None)
+@click.option("--database", type=click.Path(), default=None)
+def compare(task_type, database):
+    """Compare task quality and total cost across policy versions (JSON)."""
+    from reins.core.outcomes import compare_tasks
+
+    storage = Storage(database) if database else _get_storage()
+    try:
+        click.echo(json.dumps(compare_tasks(storage, task_type), indent=2))
+    finally:
+        storage.close()
+
+
+@cli.command("optimize")
+@click.option("--database", type=click.Path(exists=True), required=True)
+@click.option("--experiment", required=True, help="ID returned by evaluate_experiment")
+@click.option("--min-success-rate", type=click.FloatRange(0, 1), default=None)
+@click.option("--max-quality-drop", type=click.FloatRange(0, 1), default=None)
+@click.option("--min-cases", type=click.IntRange(min=1), default=None)
+@click.option("--max-p95-ms", type=click.FloatRange(min=0, min_open=True), default=None)
+@click.option("--output", type=click.Path(), default=None)
+def optimize(
+    database, experiment, min_success_rate, max_quality_drop, min_cases, max_p95_ms, output
+):
+    """Compare paired policies under quality/latency constraints; never deploys."""
+    from reins.optimization import Constraints, list_experiments, recommend
+
+    storage = Storage(database)
+    try:
+        manifest = next(
+            (e for e in list_experiments(storage) if e["experiment_id"] == experiment), None
+        )
+        if manifest is None:
+            raise click.ClickException("Unknown experiment")
+        values = dict(manifest["constraints"])
+        overrides = dict(
+            min_success_rate=min_success_rate,
+            max_quality_drop=max_quality_drop,
+            min_cases=min_cases,
+            max_p95_ms=max_p95_ms,
+        )
+        values.update({k: v for k, v in overrides.items() if v is not None})
+        report = recommend(storage, experiment, constraints=Constraints(**values))
+        body = json.dumps(report, indent=2, ensure_ascii=False)
+        if output:
+            from pathlib import Path
+
+            Path(output).write_text(body + "\n", encoding="utf-8")
+        click.echo(body)
+    except ValueError as exc:
+        raise click.ClickException(str(exc)) from exc
+    finally:
+        storage.close()
+
+
+@cli.command("experiments")
+@click.option("--database", type=click.Path(exists=True), required=True)
+def experiments(database):
+    """List recorded optimization experiments."""
+    from reins.optimization import list_experiments
+
+    storage = Storage(database)
+    try:
+        click.echo(json.dumps(list_experiments(storage), indent=2, ensure_ascii=False))
+    finally:
+        storage.close()
 
 
 @cli.command()
@@ -133,6 +203,7 @@ def proxy(port: int, host: str, budget: str | None, on_exceed: str) -> None:
 
     app = create_proxy_app(budget=budget, on_exceed=on_exceed)
 
+    click.echo("EXPERIMENTAL: proxy observes spending; it does not enforce a hard cap.")
     click.echo(f"Starting Reins proxy at http://{host}:{port}")
     click.echo(f"Budget: {budget or 'unlimited'}  |  On exceed: {on_exceed}")
     click.echo()
@@ -315,9 +386,16 @@ def version() -> None:
     click.echo(f"reins {__version__}")
 
 
+from reins.projects.cli import projects  # noqa: E402
+
+cli.add_command(projects)
+
+
 def main() -> None:
     cli()
 
+
+cli.add_command(control)
 
 if __name__ == "__main__":
     main()

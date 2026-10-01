@@ -51,7 +51,6 @@ def compute_health_scores(spans: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
     enriched = []
     cumulative_tokens = 0
-    _prev_tokens_out = 0
     output_ratios: list[float] = []
     token_history: list[int] = []
 
@@ -110,8 +109,6 @@ def compute_health_scores(spans: list[dict[str, Any]]) -> list[dict[str, Any]]:
         enriched_span["_duplication_score"] = round(duplication_score, 3)
         enriched_span["_cumulative_tokens"] = cumulative_tokens
         enriched.append(enriched_span)
-
-        _prev_tokens_out = tokens_out
 
     return enriched
 

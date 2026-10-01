@@ -19,3 +19,7 @@ def get_current_run() -> RunData | None:
 
 def set_current_run(run: RunData | None) -> contextvars.Token:
     return _current_run.set(run)
+
+
+def reset_current_run(token) -> None:
+    _current_run.reset(token)

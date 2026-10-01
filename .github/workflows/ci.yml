@@ -22,7 +22,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Install dependencies
-        run: pip install -e ".[dev,all,proxy]"
+        run: pip install -e ".[dev,all,proxy,sdk-test]"
 
       - name: Lint
         run: ruff check src/ tests/
@@ -39,8 +39,9 @@ jobs:
           python-version: "3.12"
       - run: pip install "ruff==0.16.9"
       - run: ruff check src/ tests/
-      - run: ruff format --check src/ tests/
-      - name: Verify README chart matches recorded data
+      - run: ruff format --check src/ tests/ examples/
+
+      - name: Verify measured chart
         run: |
           python scripts/render_measured_savings.py
           git diff --exit-code -- docs/assets/measured-savings.svg

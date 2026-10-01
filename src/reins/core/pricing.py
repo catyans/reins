@@ -29,7 +29,8 @@ PRICING: dict[str, dict[str, tuple[Decimal, Decimal]]] = {
     },
     "google": {
         "gemini-2.5-pro": (Decimal("1.25"), Decimal("10.0")),
-        "gemini-2.5-flash": (Decimal("0.15"), Decimal("0.60")),
+        "gemini-2.5-flash": (Decimal("0.30"), Decimal("2.50")),
+        "gemini-2.5-flash-lite": (Decimal("0.10"), Decimal("0.40")),
         "gemini-2.0-flash": (Decimal("0.10"), Decimal("0.40")),
     },
 }
@@ -37,20 +38,31 @@ PRICING: dict[str, dict[str, tuple[Decimal, Decimal]]] = {
 _M = Decimal("1000000")
 
 
-def get_price(provider: str, model: str, tokens_in: int, tokens_out: int) -> Decimal:
-    """Calculate cost for a single LLM call."""
-    prices = PRICING.get(provider, {}).get(model)
-    if prices is None:
-        # Try fuzzy match: strip date suffixes
-        for known_model, p in PRICING.get(provider, {}).items():
-            if model.startswith(known_model) or known_model.startswith(model):
-                prices = p
-                break
-    if prices is None:
-        return Decimal("0")  # Unknown model — fail-open
-    input_cost = prices[0] * tokens_in / _M
-    output_cost = prices[1] * tokens_out / _M
-    return (input_cost + output_cost).quantize(Decimal("0.000001"))
+class UnknownPriceError(ValueError):
+    """An unpriced model must never be silently counted as free."""
+
+
+def get_rates(provider, model, overrides=None):
+    custom = (overrides or {}).get(provider, {}).get(model)
+    rates = (
+        tuple(Decimal(str(x)) for x in custom)
+        if custom is not None
+        else PRICING.get(provider, {}).get(model)
+    )
+    if rates is None:
+        raise UnknownPriceError(
+            f"No exact price for {provider}/{model}; configure prices explicitly"
+        )
+    return rates
+
+
+def get_price(
+    provider: str, model: str, tokens_in: int, tokens_out: int, overrides=None
+) -> Decimal:
+    if tokens_in < 0 or tokens_out < 0:
+        raise ValueError("Token counts must be nonnegative")
+    incoming, outgoing = get_rates(provider, model, overrides)
+    return ((incoming * tokens_in + outgoing * tokens_out) / _M).quantize(Decimal("0.000000000001"))
 
 
 def get_model_cost_tier(provider: str, model: str) -> Decimal:
