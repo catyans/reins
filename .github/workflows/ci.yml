@@ -37,6 +37,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install ruff
+      - run: pip install "ruff==0.16.9"
       - run: ruff check src/ tests/
       - run: ruff format --check src/ tests/ examples/
+
+      - name: Verify measured chart
+        run: |
+          python scripts/render_measured_savings.py
+          git diff --exit-code -- docs/assets/measured-savings.svg

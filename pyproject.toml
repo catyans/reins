@@ -7,7 +7,7 @@ name = "reins"
 version = "0.2.0"
 description = "Quality-constrained policy selection and cost control for AI agent tasks."
 readme = "README.md"
-license = "BUSL-1.1"
+license = { file = "LICENSE" }
 requires-python = ">=3.10"
 authors = [
     { name = "Reins Team" },
@@ -47,7 +47,7 @@ dev = [
     "pytest>=8.0",
     "pytest-asyncio>=0.23",
     "pytest-cov>=5.0",
-    "ruff>=0.4",
+    "ruff==0.16.9",
 ]
 
 [project.scripts]
