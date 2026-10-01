@@ -1,4 +1,4 @@
-let credential="",timer;
+let credential="",timer,selection=location.hash.slice(1);
 const el=(tag,text)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;return n};
 async function refresh(){
  try{
@@ -6,7 +6,7 @@ async function refresh(){
  if(!response.ok)throw Error("Unable to connect. Check the local credential and service.");
  const data=await response.json(),root=document.querySelector("#workflows");const opened=new Set([...root.querySelectorAll("details[open]")].map(d=>d.dataset.key));root.replaceChildren();
  document.querySelector("#message").textContent="Connected · "+data.workflows.length+" workflows · "+data.unmatched_bill_lines+" unmatched invoice revisions";
- const filter=document.querySelector("#filter"),selected=filter.value||location.hash.slice(1);
+ const filter=document.querySelector("#filter"),selected=selection;
  filter.replaceChildren();const all=el("option","All workflows");all.value="";filter.append(all);
  for(const w of data.workflows){const option=el("option",w.workflow_id);option.value=w.workflow_id;filter.append(option)}
  filter.value=selected;
@@ -28,4 +28,4 @@ async function refresh(){
 }
 document.querySelector("#connect").addEventListener("submit",e=>{e.preventDefault();credential=document.querySelector("#token").value;document.querySelector("#token").value="";clearInterval(timer);refresh();timer=setInterval(refresh,3000)});
 
-document.querySelector("#filter").addEventListener("change",refresh);
+document.querySelector("#filter").addEventListener("change",()=>{selection=document.querySelector("#filter").value;refresh()});
