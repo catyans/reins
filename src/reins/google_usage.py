@@ -28,6 +28,7 @@ class GoogleTextPrices:
 def estimate_google_text_cost(usage: dict, prices: GoogleTextPrices) -> Decimal:
     if not isinstance(usage, dict):
         raise IncompleteGoogleUsage("Missing usage")
+    usage = normalize_google_usage(usage)
     incoming = usage.get("prompt_tokens")
     outgoing = usage.get("completion_tokens")
     details = usage.get("prompt_tokens_details") or {}
@@ -43,9 +44,46 @@ def estimate_google_text_cost(usage: dict, prices: GoogleTextPrices) -> Decimal:
         raise IncompleteGoogleUsage("Non-text/cache-write billing is outside this estimator")
     if output_details.get("audio_tokens"):
         raise IncompleteGoogleUsage("Non-text output billing is outside this estimator")
+    reasoning = output_details.get("reasoning_tokens", 0)
+    if type(reasoning) is not int or not 0 <= reasoning <= outgoing:
+        raise IncompleteGoogleUsage("Invalid reasoning token count")
     # Completion total already includes reasoning tokens; do not add them twice.
     return (
         (incoming - cached) * prices.input_per_million
         + cached * prices.cached_input_per_million
         + outgoing * prices.output_per_million
     ) / Decimal(1000000)
+
+
+def normalize_google_usage(usage: dict) -> dict:
+    """Normalize native generateContent metadata without double-counting thoughts.
+
+    Unknown/missing input or output totals are rejected; never estimate a zero bill.
+    """
+    if not isinstance(usage, dict):
+        raise IncompleteGoogleUsage("Missing usage")
+    if "prompt_tokens" in usage or "completion_tokens" in usage:
+        return usage
+    incoming = usage.get("promptTokenCount")
+    candidates = usage.get("candidatesTokenCount")
+    thoughts = usage.get("thoughtsTokenCount", 0)
+    cached = usage.get("cachedContentTokenCount", 0)
+    if any(type(n) is not int or n < 0 for n in (incoming, candidates, thoughts, cached)):
+        raise IncompleteGoogleUsage("Missing or invalid native token counts")
+    return {
+        "prompt_tokens": incoming,
+        "completion_tokens": candidates + thoughts,
+        "prompt_tokens_details": {"cached_tokens": cached},
+        "completion_tokens_details": {"reasoning_tokens": thoughts},
+    }
+
+
+def google_text_prices(model: str, price_book: dict) -> GoogleTextPrices:
+    """Explicit pinned price book. Only strip the documented resource prefix.
+
+    Preview/date suffixes are not guessed: register each priced model explicitly.
+    """
+    canonical = model.removeprefix("models/").removeprefix("google/")
+    if canonical not in price_book:
+        raise IncompleteGoogleUsage("Unknown model price; register an explicit rate")
+    return GoogleTextPrices(*(Decimal(str(v)) for v in price_book[canonical]))

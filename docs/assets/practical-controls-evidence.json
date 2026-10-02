@@ -1,0 +1,5040 @@
+{
+  "date": "2026-10-02",
+  "actual_provider_calls": 454,
+  "call_cap": 500,
+  "automated_tests": 258,
+  "initial_protocol": {
+    "frozen_at": 1790918101.420722,
+    "cases_sha256": "5048371b2c3ccfbf573466082cf291bf37c074e4898c85f6dd26f2b0012b28b6",
+    "cases": 100,
+    "arms": [
+      [
+        "existing-flash",
+        "flash"
+      ],
+      [
+        "static-lite",
+        "lite"
+      ],
+      [
+        "controlled-lite",
+        "lite"
+      ]
+    ],
+    "max_provider_calls": 500,
+    "acceptance": "Exact equality on all three frozen fields",
+    "context": "Same public source and prompt for all arms; ordinary static baseline uses same Lite model",
+    "retries": 0,
+    "concurrency": 4,
+    "model_max_tokens": 4096,
+    "thinking_budget": 0,
+    "faults": "First 4 frozen cases, 5 identical requests each. Compare static and repeat-limit=3. Separate from normal traffic.",
+    "rates": {
+      "flash": [
+        ".30",
+        "2.50",
+        ".03"
+      ],
+      "lite": [
+        ".10",
+        ".40",
+        ".01"
+      ]
+    },
+    "pricing_source": "https://ai.google.dev/gemini-api/docs/pricing",
+    "pricing_checked": "2026-10-02",
+    "interpretation": "Usage-priced estimates, not provider invoice. Public structured records can also be parsed without an LLM. Fault incidence is constructed, not measured in production."
+  },
+  "initial_summary": [
+    {
+      "arm": "existing-flash",
+      "cases": 100,
+      "accepted": 0,
+      "known_cost": "0.0139185",
+      "unresolved": 0,
+      "cost_per_accepted": null,
+      "p95_case_cost": "0.0001624",
+      "median_ms": 1163.4063124947716,
+      "p95_ms": 1604.03733397834,
+      "partial_results": 0,
+      "human_interventions": 0
+    },
+    {
+      "arm": "static-lite",
+      "cases": 100,
+      "accepted": 0,
+      "known_cost": "0.0028801",
+      "unresolved": 0,
+      "cost_per_accepted": null,
+      "p95_case_cost": "0.0000354",
+      "median_ms": 883.0834370164666,
+      "p95_ms": 1379.6607499825768,
+      "partial_results": 0,
+      "human_interventions": 0
+    },
+    {
+      "arm": "controlled-lite",
+      "cases": 100,
+      "accepted": 100,
+      "known_cost": "0.0028801",
+      "unresolved": 0,
+      "cost_per_accepted": "0.000028801",
+      "p95_case_cost": "0.0000354",
+      "median_ms": 957.2076664771885,
+      "p95_ms": 1524.4324579834938,
+      "partial_results": 0,
+      "human_interventions": 0
+    }
+  ],
+  "initial_results": [
+    {
+      "arm": "static-lite",
+      "case_id": "requests",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.4e-05",
+      "held": "0",
+      "latency_ms": 1349.0834580152296
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "requests",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001175",
+      "held": "0",
+      "latency_ms": 1362.4083750182763
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "httpx",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001388",
+      "held": "0",
+      "latency_ms": 1349.0023330086842
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "requests",
+      "accepted": true,
+      "error": null,
+      "cost": "2.4e-05",
+      "held": "0",
+      "latency_ms": 1367.2326250234619
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "aiohttp",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "4.29e-05",
+      "held": "0",
+      "latency_ms": 689.2305839573964
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "httpx",
+      "accepted": true,
+      "error": null,
+      "cost": "2.98e-05",
+      "held": "0",
+      "latency_ms": 751.9422500045039
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "aiohttp",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001794",
+      "held": "0",
+      "latency_ms": 983.1475829705596
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "httpx",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.98e-05",
+      "held": "0",
+      "latency_ms": 1067.8816670551896
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "aiohttp",
+      "accepted": true,
+      "error": null,
+      "cost": "4.29e-05",
+      "held": "0",
+      "latency_ms": 733.6645839968696
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "urllib3",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001542",
+      "held": "0",
+      "latency_ms": 944.9599999934435
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "urllib3",
+      "accepted": true,
+      "error": null,
+      "cost": "3.45e-05",
+      "held": "0",
+      "latency_ms": 762.5380409881473
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "certifi",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001376",
+      "held": "0",
+      "latency_ms": 1068.2755410089158
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "certifi",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.69e-05",
+      "held": "0",
+      "latency_ms": 835.6474579777569
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "certifi",
+      "accepted": true,
+      "error": null,
+      "cost": "2.69e-05",
+      "held": "0",
+      "latency_ms": 766.2984580383636
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "urllib3",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.45e-05",
+      "held": "0",
+      "latency_ms": 1643.118207983207
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "charset-normalizer",
+      "accepted": true,
+      "error": null,
+      "cost": "3.29e-05",
+      "held": "0",
+      "latency_ms": 750.6940420134924
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "charset-normalizer",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.29e-05",
+      "held": "0",
+      "latency_ms": 913.9892080565915
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "idna",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001236",
+      "held": "0",
+      "latency_ms": 1344.3592080147937
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "idna",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.81e-05",
+      "held": "0",
+      "latency_ms": 711.3815419725142
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "charset-normalizer",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001494",
+      "held": "0",
+      "latency_ms": 1582.3478329693899
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "idna",
+      "accepted": true,
+      "error": null,
+      "cost": "2.81e-05",
+      "held": "0",
+      "latency_ms": 777.0547500113025
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "anyio",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.82e-05",
+      "held": "0",
+      "latency_ms": 720.277292013634
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "anyio",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001461",
+      "held": "0",
+      "latency_ms": 947.0540840411559
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "anyio",
+      "accepted": true,
+      "error": null,
+      "cost": "2.82e-05",
+      "held": "0",
+      "latency_ms": 869.4385830312967
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "sniffio",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001361",
+      "held": "0",
+      "latency_ms": 1261.5910000167787
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "sniffio",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.53e-05",
+      "held": "0",
+      "latency_ms": 943.9887080225162
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "sniffio",
+      "accepted": true,
+      "error": null,
+      "cost": "2.53e-05",
+      "held": "0",
+      "latency_ms": 910.9624580014497
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "h11",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001227",
+      "held": "0",
+      "latency_ms": 1081.6006250097416
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "h11",
+      "accepted": true,
+      "error": null,
+      "cost": "2.65e-05",
+      "held": "0",
+      "latency_ms": 761.8219580035657
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "h11",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.65e-05",
+      "held": "0",
+      "latency_ms": 1007.9384999698959
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "fastapi",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001444",
+      "held": "0",
+      "latency_ms": 1015.0900830049068
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "fastapi",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.33e-05",
+      "held": "0",
+      "latency_ms": 860.192000051029
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "starlette",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.06e-05",
+      "held": "0",
+      "latency_ms": 720.9857910056598
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "starlette",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001412",
+      "held": "0",
+      "latency_ms": 1111.335624998901
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "fastapi",
+      "accepted": true,
+      "error": null,
+      "cost": "3.33e-05",
+      "held": "0",
+      "latency_ms": 1157.1505829924718
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "starlette",
+      "accepted": true,
+      "error": null,
+      "cost": "3.06e-05",
+      "held": "0",
+      "latency_ms": 1040.8346659969538
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "uvicorn",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.58e-05",
+      "held": "0",
+      "latency_ms": 738.7496670125984
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "uvicorn",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001314",
+      "held": "0",
+      "latency_ms": 1043.3737499988638
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "uvicorn",
+      "accepted": true,
+      "error": null,
+      "cost": "2.58e-05",
+      "held": "0",
+      "latency_ms": 1094.9029170442373
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "flask",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.58e-05",
+      "held": "0",
+      "latency_ms": 749.5670829666778
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "flask",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001275",
+      "held": "0",
+      "latency_ms": 1386.7907090461813
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "flask",
+      "accepted": true,
+      "error": null,
+      "cost": "2.58e-05",
+      "held": "0",
+      "latency_ms": 744.9226659955457
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "django",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.05e-05",
+      "held": "0",
+      "latency_ms": 690.7791669946164
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "django",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001432",
+      "held": "0",
+      "latency_ms": 1225.5598749616183
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "django",
+      "accepted": true,
+      "error": null,
+      "cost": "3.05e-05",
+      "held": "0",
+      "latency_ms": 783.038416004274
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "tornado",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.63e-05",
+      "held": "0",
+      "latency_ms": 773.4476249897853
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "tornado",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.000127",
+      "held": "0",
+      "latency_ms": 1556.5370000549592
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "tornado",
+      "accepted": true,
+      "error": null,
+      "cost": "2.63e-05",
+      "held": "0",
+      "latency_ms": 1080.4393750149757
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "sanic",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.69e-05",
+      "held": "0",
+      "latency_ms": 732.4067919980735
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "sanic",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001327",
+      "held": "0",
+      "latency_ms": 1508.2543329917826
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "sanic",
+      "accepted": true,
+      "error": null,
+      "cost": "2.69e-05",
+      "held": "0",
+      "latency_ms": 1072.6199579657987
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "bottle",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "1.98e-05",
+      "held": "0",
+      "latency_ms": 710.7856250368059
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "bottle",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001031",
+      "held": "0",
+      "latency_ms": 1260.463415994309
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "bottle",
+      "accepted": true,
+      "error": null,
+      "cost": "1.98e-05",
+      "held": "0",
+      "latency_ms": 712.8892079927027
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "falcon",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.02e-05",
+      "held": "0",
+      "latency_ms": 688.9465840067714
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "pyramid",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001476",
+      "held": "0",
+      "latency_ms": 904.9557090038434
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "falcon",
+      "accepted": true,
+      "error": null,
+      "cost": "3.02e-05",
+      "held": "0",
+      "latency_ms": 989.1981669934466
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "falcon",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001482",
+      "held": "0",
+      "latency_ms": 1483.78504201537
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "pyramid",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.24e-05",
+      "held": "0",
+      "latency_ms": 795.8055000053719
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "pyramid",
+      "accepted": true,
+      "error": null,
+      "cost": "3.24e-05",
+      "held": "0",
+      "latency_ms": 753.5676250117831
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "pydantic",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.000147",
+      "held": "0",
+      "latency_ms": 1260.4120829491876
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "pydantic",
+      "accepted": true,
+      "error": null,
+      "cost": "3.21e-05",
+      "held": "0",
+      "latency_ms": 1160.6597080244683
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "attrs",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001384",
+      "held": "0",
+      "latency_ms": 1012.7877500490285
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "pydantic",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.21e-05",
+      "held": "0",
+      "latency_ms": 1550.254124973435
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "attrs",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.26e-05",
+      "held": "0",
+      "latency_ms": 747.4537919624709
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "attrs",
+      "accepted": true,
+      "error": null,
+      "cost": "3.26e-05",
+      "held": "0",
+      "latency_ms": 801.1167499935254
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "marshmallow",
+      "accepted": true,
+      "error": null,
+      "cost": "3.54e-05",
+      "held": "0",
+      "latency_ms": 783.5957500501536
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "marshmallow",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001556",
+      "held": "0",
+      "latency_ms": 1107.4508749879897
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "marshmallow",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.54e-05",
+      "held": "0",
+      "latency_ms": 1123.0916670174338
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "jsonschema",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001768",
+      "held": "0",
+      "latency_ms": 1041.1702080164105
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "jsonschema",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.8e-05",
+      "held": "0",
+      "latency_ms": 763.4143749601208
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "jsonschema",
+      "accepted": true,
+      "error": null,
+      "cost": "3.8e-05",
+      "held": "0",
+      "latency_ms": 784.0768339810893
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "cattrs",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.83e-05",
+      "held": "0",
+      "latency_ms": 793.3913749875501
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "cattrs",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001389",
+      "held": "0",
+      "latency_ms": 1363.6832080082968
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "dataclasses-json",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001624",
+      "held": "0",
+      "latency_ms": 916.8888329877518
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "cattrs",
+      "accepted": true,
+      "error": null,
+      "cost": "2.83e-05",
+      "held": "0",
+      "latency_ms": 1293.8542920164764
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "dataclasses-json",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.19e-05",
+      "held": "0",
+      "latency_ms": 987.656999961473
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "dataclasses-json",
+      "accepted": true,
+      "error": null,
+      "cost": "3.19e-05",
+      "held": "0",
+      "latency_ms": 1242.4303750158288
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "typing-extensions",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.48e-05",
+      "held": "0",
+      "latency_ms": 786.7409159662202
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "typing-extensions",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001551",
+      "held": "0",
+      "latency_ms": 1185.152875026688
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "typing-extensions",
+      "accepted": true,
+      "error": null,
+      "cost": "3.48e-05",
+      "held": "0",
+      "latency_ms": 878.3911670325324
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "annotated-types",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.05e-05",
+      "held": "0",
+      "latency_ms": 801.8985000089742
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "annotated-types",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001435",
+      "held": "0",
+      "latency_ms": 1314.9691669968888
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "annotated-types",
+      "accepted": true,
+      "error": null,
+      "cost": "3.05e-05",
+      "held": "0",
+      "latency_ms": 1186.2529159989208
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "packaging",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.29e-05",
+      "held": "0",
+      "latency_ms": 777.4881249642931
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "packaging",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001178",
+      "held": "0",
+      "latency_ms": 1456.149749981705
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "python-dateutil",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.75e-05",
+      "held": "0",
+      "latency_ms": 765.0095419958234
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "packaging",
+      "accepted": true,
+      "error": null,
+      "cost": "2.29e-05",
+      "held": "0",
+      "latency_ms": 1701.7811250407249
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "python-dateutil",
+      "accepted": true,
+      "error": null,
+      "cost": "3.75e-05",
+      "held": "0",
+      "latency_ms": 1181.548541993834
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "python-dateutil",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001866",
+      "held": "0",
+      "latency_ms": 1629.101917031221
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "numpy",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001333",
+      "held": "0",
+      "latency_ms": 1183.324708021246
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "numpy",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.97e-05",
+      "held": "0",
+      "latency_ms": 767.3766250372864
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "numpy",
+      "accepted": true,
+      "error": null,
+      "cost": "2.97e-05",
+      "held": "0",
+      "latency_ms": 1121.2530829943717
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "pandas",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001297",
+      "held": "0",
+      "latency_ms": 1235.8732919674367
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "pandas",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.6e-05",
+      "held": "0",
+      "latency_ms": 769.5929579786025
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "pandas",
+      "accepted": true,
+      "error": null,
+      "cost": "2.6e-05",
+      "held": "0",
+      "latency_ms": 874.9767500557937
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "scipy",
+      "accepted": true,
+      "error": null,
+      "cost": "2.78e-05",
+      "held": "0",
+      "latency_ms": 774.7709159739316
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "scipy",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.78e-05",
+      "held": "0",
+      "latency_ms": 1046.3145830435678
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "sympy",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.000115",
+      "held": "0",
+      "latency_ms": 849.3592499871738
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "scipy",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001374",
+      "held": "0",
+      "latency_ms": 1368.1226670159958
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "sympy",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.48e-05",
+      "held": "0",
+      "latency_ms": 812.9899590276182
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "sympy",
+      "accepted": true,
+      "error": null,
+      "cost": "2.48e-05",
+      "held": "0",
+      "latency_ms": 1028.810792020522
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "mpmath",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.000127",
+      "held": "0",
+      "latency_ms": 1223.860958009027
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "mpmath",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.76e-05",
+      "held": "0",
+      "latency_ms": 1259.5276669599116
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "mpmath",
+      "accepted": true,
+      "error": null,
+      "cost": "2.76e-05",
+      "held": "0",
+      "latency_ms": 1329.7095829620957
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "matplotlib",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001466",
+      "held": "0",
+      "latency_ms": 1149.935249995906
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "matplotlib",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.88e-05",
+      "held": "0",
+      "latency_ms": 1207.6198749709874
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "matplotlib",
+      "accepted": true,
+      "error": null,
+      "cost": "2.88e-05",
+      "held": "0",
+      "latency_ms": 1524.4324579834938
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "seaborn",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.43e-05",
+      "held": "0",
+      "latency_ms": 889.7816659882665
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "seaborn",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001259",
+      "held": "0",
+      "latency_ms": 1065.6187920249067
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "seaborn",
+      "accepted": true,
+      "error": null,
+      "cost": "2.43e-05",
+      "held": "0",
+      "latency_ms": 1140.7183329574764
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "plotly",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.54e-05",
+      "held": "0",
+      "latency_ms": 882.6352910255082
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "plotly",
+      "accepted": true,
+      "error": null,
+      "cost": "2.54e-05",
+      "held": "0",
+      "latency_ms": 935.8738749870099
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "plotly",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001338",
+      "held": "0",
+      "latency_ms": 1164.3872910062782
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "bokeh",
+      "accepted": true,
+      "error": null,
+      "cost": "2.3e-05",
+      "held": "0",
+      "latency_ms": 871.6088340152055
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "bokeh",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.3e-05",
+      "held": "0",
+      "latency_ms": 1022.6792909670621
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "bokeh",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001292",
+      "held": "0",
+      "latency_ms": 1298.5704580205493
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "altair",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001283",
+      "held": "0",
+      "latency_ms": 1565.1355829904787
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "altair",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.27e-05",
+      "held": "0",
+      "latency_ms": 849.953499971889
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "click",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001369",
+      "held": "0",
+      "latency_ms": 938.6588329798542
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "altair",
+      "accepted": true,
+      "error": null,
+      "cost": "2.27e-05",
+      "held": "0",
+      "latency_ms": 1027.8330839937553
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "typer",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.27e-05",
+      "held": "0",
+      "latency_ms": 763.0677910055965
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "click",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.96e-05",
+      "held": "0",
+      "latency_ms": 1184.7941249725409
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "click",
+      "accepted": true,
+      "error": null,
+      "cost": "2.96e-05",
+      "held": "0",
+      "latency_ms": 1135.972500022035
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "typer",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001413",
+      "held": "0",
+      "latency_ms": 1195.195833046455
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "typer",
+      "accepted": true,
+      "error": null,
+      "cost": "3.27e-05",
+      "held": "0",
+      "latency_ms": 803.56337496778
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "rich",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.4e-05",
+      "held": "0",
+      "latency_ms": 696.1949589895085
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "rich",
+      "accepted": true,
+      "error": null,
+      "cost": "2.4e-05",
+      "held": "0",
+      "latency_ms": 987.7845830051228
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "rich",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001335",
+      "held": "0",
+      "latency_ms": 1296.340374974534
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "tqdm",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.54e-05",
+      "held": "0",
+      "latency_ms": 710.2144589880481
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "tqdm",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001364",
+      "held": "0",
+      "latency_ms": 1145.8992919651791
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "loguru",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.1e-05",
+      "held": "0",
+      "latency_ms": 736.1617079586722
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "tqdm",
+      "accepted": true,
+      "error": null,
+      "cost": "2.54e-05",
+      "held": "0",
+      "latency_ms": 925.1758749596775
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "loguru",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001463",
+      "held": "0",
+      "latency_ms": 1287.8020419739187
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "structlog",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001587",
+      "held": "0",
+      "latency_ms": 803.3169169793837
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "loguru",
+      "accepted": true,
+      "error": null,
+      "cost": "3.1e-05",
+      "held": "0",
+      "latency_ms": 1568.2219159789383
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "structlog",
+      "accepted": true,
+      "error": null,
+      "cost": "3.85e-05",
+      "held": "0",
+      "latency_ms": 971.7707919771783
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "structlog",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.85e-05",
+      "held": "0",
+      "latency_ms": 1379.6607499825768
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "colorama",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0002296",
+      "held": "0",
+      "latency_ms": 1108.6664170143194
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "colorama",
+      "accepted": true,
+      "error": null,
+      "cost": "4.48e-05",
+      "held": "0",
+      "latency_ms": 1019.3755829823203
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "colorama",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "4.48e-05",
+      "held": "0",
+      "latency_ms": 1198.1592500233091
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "prompt-toolkit",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.000136",
+      "held": "0",
+      "latency_ms": 1058.2326659932733
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "prompt-toolkit",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.68e-05",
+      "held": "0",
+      "latency_ms": 762.5927079934627
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "prompt-toolkit",
+      "accepted": true,
+      "error": null,
+      "cost": "2.68e-05",
+      "held": "0",
+      "latency_ms": 845.1432500150986
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "pygments",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.21e-05",
+      "held": "0",
+      "latency_ms": 896.320250001736
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "pygments",
+      "accepted": true,
+      "error": null,
+      "cost": "3.21e-05",
+      "held": "0",
+      "latency_ms": 921.4458329952322
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "pygments",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.000147",
+      "held": "0",
+      "latency_ms": 1528.1525839818642
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "tabulate",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.13e-05",
+      "held": "0",
+      "latency_ms": 835.5962919886224
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "tabulate",
+      "accepted": true,
+      "error": null,
+      "cost": "2.13e-05",
+      "held": "0",
+      "latency_ms": 679.3362500029616
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "tabulate",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001179",
+      "held": "0",
+      "latency_ms": 1056.265750026796
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "pytest",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001489",
+      "held": "0",
+      "latency_ms": 976.9137919647619
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "pytest",
+      "accepted": true,
+      "error": null,
+      "cost": "3e-05",
+      "held": "0",
+      "latency_ms": 713.1840840447694
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "pytest",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3e-05",
+      "held": "0",
+      "latency_ms": 900.4774170462042
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "hypothesis",
+      "accepted": true,
+      "error": null,
+      "cost": "2.76e-05",
+      "held": "0",
+      "latency_ms": 672.4230829859152
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "hypothesis",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.76e-05",
+      "held": "0",
+      "latency_ms": 960.2791249635629
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "hypothesis",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001368",
+      "held": "0",
+      "latency_ms": 1639.6363750100136
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "coverage",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001583",
+      "held": "0",
+      "latency_ms": 1175.489540968556
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "coverage",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.27e-05",
+      "held": "0",
+      "latency_ms": 694.2144589847885
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "coverage",
+      "accepted": true,
+      "error": null,
+      "cost": "3.27e-05",
+      "held": "0",
+      "latency_ms": 967.391999962274
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "tox",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.71e-05",
+      "held": "0",
+      "latency_ms": 716.2018329836428
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "tox",
+      "accepted": true,
+      "error": null,
+      "cost": "2.71e-05",
+      "held": "0",
+      "latency_ms": 675.9922089986503
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "tox",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.000134",
+      "held": "0",
+      "latency_ms": 1151.0193329886533
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "nox",
+      "accepted": true,
+      "error": null,
+      "cost": "2.98e-05",
+      "held": "0",
+      "latency_ms": 715.1639999938197
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "nox",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.98e-05",
+      "held": "0",
+      "latency_ms": 762.3917500022799
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "nox",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001463",
+      "held": "0",
+      "latency_ms": 1184.2647500452586
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "ruff",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001349",
+      "held": "0",
+      "latency_ms": 1030.6140829925425
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "ruff",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.1e-05",
+      "held": "0",
+      "latency_ms": 772.4922090419568
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "ruff",
+      "accepted": true,
+      "error": null,
+      "cost": "3.1e-05",
+      "held": "0",
+      "latency_ms": 982.3274170048535
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "mypy",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.21e-05",
+      "held": "0",
+      "latency_ms": 873.6179170082323
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "mypy",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001457",
+      "held": "0",
+      "latency_ms": 1118.858291010838
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "mypy",
+      "accepted": true,
+      "error": null,
+      "cost": "3.21e-05",
+      "held": "0",
+      "latency_ms": 749.0385000128299
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "black",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001304",
+      "held": "0",
+      "latency_ms": 1007.4531249701977
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "black",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.59e-05",
+      "held": "0",
+      "latency_ms": 1121.2575000245124
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "black",
+      "accepted": true,
+      "error": null,
+      "cost": "2.59e-05",
+      "held": "0",
+      "latency_ms": 990.6844170182012
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "isort",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001432",
+      "held": "0",
+      "latency_ms": 1180.3769579855725
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "isort",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.68e-05",
+      "held": "0",
+      "latency_ms": 758.37875000434
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "flake8",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001169",
+      "held": "0",
+      "latency_ms": 1083.1152090104297
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "flake8",
+      "accepted": true,
+      "error": null,
+      "cost": "2.38e-05",
+      "held": "0",
+      "latency_ms": 841.2535410025157
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "flake8",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.38e-05",
+      "held": "0",
+      "latency_ms": 985.4534170008264
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "isort",
+      "accepted": true,
+      "error": null,
+      "cost": "2.68e-05",
+      "held": "0",
+      "latency_ms": 1493.9871659735218
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "sqlalchemy",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.22e-05",
+      "held": "0",
+      "latency_ms": 851.266875048168
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "sqlalchemy",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001385",
+      "held": "0",
+      "latency_ms": 1035.9633340267465
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "sqlalchemy",
+      "accepted": true,
+      "error": null,
+      "cost": "3.22e-05",
+      "held": "0",
+      "latency_ms": 1101.5868749818765
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "alembic",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.000151",
+      "held": "0",
+      "latency_ms": 1157.1835419745184
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "alembic",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.3e-05",
+      "held": "0",
+      "latency_ms": 822.5202920148149
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "peewee",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001355",
+      "held": "0",
+      "latency_ms": 1100.8118329918943
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "peewee",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.51e-05",
+      "held": "0",
+      "latency_ms": 985.8580000000075
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "alembic",
+      "accepted": true,
+      "error": null,
+      "cost": "3.3e-05",
+      "held": "0",
+      "latency_ms": 1500.994083005935
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "peewee",
+      "accepted": true,
+      "error": null,
+      "cost": "2.51e-05",
+      "held": "0",
+      "latency_ms": 1043.7571659567766
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "tortoise-orm",
+      "accepted": true,
+      "error": null,
+      "cost": "2.82e-05",
+      "held": "0",
+      "latency_ms": 968.7950840452686
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "tortoise-orm",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.82e-05",
+      "held": "0",
+      "latency_ms": 1008.9728750172071
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "tortoise-orm",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001402",
+      "held": "0",
+      "latency_ms": 1148.1214580126107
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "duckdb",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001474",
+      "held": "0",
+      "latency_ms": 1065.936958999373
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "duckdb",
+      "accepted": true,
+      "error": null,
+      "cost": "3.06e-05",
+      "held": "0",
+      "latency_ms": 984.9903750000522
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "duckdb",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.06e-05",
+      "held": "0",
+      "latency_ms": 1025.955916964449
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "redis",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001339",
+      "held": "0",
+      "latency_ms": 998.5167499980889
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "redis",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.11e-05",
+      "held": "0",
+      "latency_ms": 950.7596250041388
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "pymongo",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.02e-05",
+      "held": "0",
+      "latency_ms": 892.0196249964647
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "pymongo",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.00014",
+      "held": "0",
+      "latency_ms": 1185.177666018717
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "redis",
+      "accepted": true,
+      "error": null,
+      "cost": "3.11e-05",
+      "held": "0",
+      "latency_ms": 1446.399292035494
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "pymongo",
+      "accepted": true,
+      "error": null,
+      "cost": "3.02e-05",
+      "held": "0",
+      "latency_ms": 1459.0639999951236
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "psycopg",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001256",
+      "held": "0",
+      "latency_ms": 1034.36954197241
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "psycopg",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.29e-05",
+      "held": "0",
+      "latency_ms": 863.9972920063883
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "asyncpg",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001273",
+      "held": "0",
+      "latency_ms": 1012.3135829926468
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "asyncpg",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.15e-05",
+      "held": "0",
+      "latency_ms": 1179.3623749981634
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "asyncpg",
+      "accepted": true,
+      "error": null,
+      "cost": "2.15e-05",
+      "held": "0",
+      "latency_ms": 1079.61883302778
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "psycopg",
+      "accepted": true,
+      "error": null,
+      "cost": "3.29e-05",
+      "held": "0",
+      "latency_ms": 2117.5337090389803
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "databases",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001158",
+      "held": "0",
+      "latency_ms": 1148.8072500214912
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "databases",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.18e-05",
+      "held": "0",
+      "latency_ms": 991.5120420046151
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "databases",
+      "accepted": true,
+      "error": null,
+      "cost": "2.18e-05",
+      "held": "0",
+      "latency_ms": 1530.390708008781
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "pillow",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001598",
+      "held": "0",
+      "latency_ms": 1387.3354169772938
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "pillow",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.32e-05",
+      "held": "0",
+      "latency_ms": 1216.6277499636635
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "pillow",
+      "accepted": true,
+      "error": null,
+      "cost": "3.32e-05",
+      "held": "0",
+      "latency_ms": 1227.513584017288
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "imageio",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001425",
+      "held": "0",
+      "latency_ms": 1194.960374967195
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "imageio",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.94e-05",
+      "held": "0",
+      "latency_ms": 1063.2630420150235
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "imageio",
+      "accepted": true,
+      "error": null,
+      "cost": "2.94e-05",
+      "held": "0",
+      "latency_ms": 908.6880830000155
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "opencv-python",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001307",
+      "held": "0",
+      "latency_ms": 1114.376625046134
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "opencv-python",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.46e-05",
+      "held": "0",
+      "latency_ms": 987.3642920283601
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "opencv-python",
+      "accepted": true,
+      "error": null,
+      "cost": "2.46e-05",
+      "held": "0",
+      "latency_ms": 1083.9120839955285
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "scikit-image",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001454",
+      "held": "0",
+      "latency_ms": 1080.3439999581315
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "scikit-image",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.32e-05",
+      "held": "0",
+      "latency_ms": 788.8450419995934
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "scikit-image",
+      "accepted": true,
+      "error": null,
+      "cost": "3.32e-05",
+      "held": "0",
+      "latency_ms": 981.8461670074612
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "scikit-learn",
+      "accepted": true,
+      "error": null,
+      "cost": "3.01e-05",
+      "held": "0",
+      "latency_ms": 773.621708038263
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "scikit-learn",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.01e-05",
+      "held": "0",
+      "latency_ms": 1005.7364579988644
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "scikit-learn",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001531",
+      "held": "0",
+      "latency_ms": 1243.6706249718554
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "xgboost",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.23e-05",
+      "held": "0",
+      "latency_ms": 718.7753330217674
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "xgboost",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001271",
+      "held": "0",
+      "latency_ms": 1075.1542919897474
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "xgboost",
+      "accepted": true,
+      "error": null,
+      "cost": "2.23e-05",
+      "held": "0",
+      "latency_ms": 925.1289999810979
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "lightgbm",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.7e-05",
+      "held": "0",
+      "latency_ms": 698.6945410026237
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "lightgbm",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001412",
+      "held": "0",
+      "latency_ms": 1165.2238329988904
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "catboost",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001173",
+      "held": "0",
+      "latency_ms": 1168.0248340126127
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "lightgbm",
+      "accepted": true,
+      "error": null,
+      "cost": "2.7e-05",
+      "held": "0",
+      "latency_ms": 1362.0460840174928
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "catboost",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.61e-05",
+      "held": "0",
+      "latency_ms": 844.8555000359192
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "catboost",
+      "accepted": true,
+      "error": null,
+      "cost": "2.61e-05",
+      "held": "0",
+      "latency_ms": 1646.7550410307012
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "joblib",
+      "accepted": true,
+      "error": null,
+      "cost": "2.46e-05",
+      "held": "0",
+      "latency_ms": 884.6265420434065
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "joblib",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.46e-05",
+      "held": "0",
+      "latency_ms": 917.3572500003502
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "joblib",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001268",
+      "held": "0",
+      "latency_ms": 1796.3132919976488
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "threadpoolctl",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.29e-05",
+      "held": "0",
+      "latency_ms": 896.0666250204667
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "threadpoolctl",
+      "accepted": true,
+      "error": null,
+      "cost": "2.29e-05",
+      "held": "0",
+      "latency_ms": 897.3417499801144
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "threadpoolctl",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001142",
+      "held": "0",
+      "latency_ms": 1074.8544170055538
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "beautifulsoup4",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.86e-05",
+      "held": "0",
+      "latency_ms": 894.431833003182
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "beautifulsoup4",
+      "accepted": true,
+      "error": null,
+      "cost": "2.86e-05",
+      "held": "0",
+      "latency_ms": 901.0131669929251
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "beautifulsoup4",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001391",
+      "held": "0",
+      "latency_ms": 1174.0965830394998
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "lxml",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001246",
+      "held": "0",
+      "latency_ms": 1070.7734579918906
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "lxml",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.68e-05",
+      "held": "0",
+      "latency_ms": 887.7446670085192
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "lxml",
+      "accepted": true,
+      "error": null,
+      "cost": "2.68e-05",
+      "held": "0",
+      "latency_ms": 894.4291250081733
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "parsel",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.29e-05",
+      "held": "0",
+      "latency_ms": 840.2552919578739
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "parsel",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001494",
+      "held": "0",
+      "latency_ms": 1097.7308750152588
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "parsel",
+      "accepted": true,
+      "error": null,
+      "cost": "3.29e-05",
+      "held": "0",
+      "latency_ms": 1055.6844170205295
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "scrapy",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.99e-05",
+      "held": "0",
+      "latency_ms": 883.5315830074251
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "scrapy",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.000144",
+      "held": "0",
+      "latency_ms": 1281.3467090018094
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "scrapy",
+      "accepted": true,
+      "error": null,
+      "cost": "2.99e-05",
+      "held": "0",
+      "latency_ms": 906.238374998793
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "feedparser",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.66e-05",
+      "held": "0",
+      "latency_ms": 862.9463749821298
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "feedparser",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001413",
+      "held": "0",
+      "latency_ms": 1056.1277500237338
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "feedparser",
+      "accepted": true,
+      "error": null,
+      "cost": "2.66e-05",
+      "held": "0",
+      "latency_ms": 829.8737090080976
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "markdown",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001371",
+      "held": "0",
+      "latency_ms": 1521.9870419823565
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "markdown",
+      "accepted": true,
+      "error": null,
+      "cost": "3.01e-05",
+      "held": "0",
+      "latency_ms": 930.0419579958543
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "markdown",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.01e-05",
+      "held": "0",
+      "latency_ms": 1568.9135830034502
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "markdown-it-py",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001382",
+      "held": "0",
+      "latency_ms": 1570.0490839662962
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "markdown-it-py",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.83e-05",
+      "held": "0",
+      "latency_ms": 892.5596670014784
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "markdown-it-py",
+      "accepted": true,
+      "error": null,
+      "cost": "2.83e-05",
+      "held": "0",
+      "latency_ms": 901.8670420045964
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "mistune",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.74e-05",
+      "held": "0",
+      "latency_ms": 963.9064169605263
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "mistune",
+      "accepted": true,
+      "error": null,
+      "cost": "2.74e-05",
+      "held": "0",
+      "latency_ms": 959.0386669733562
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "mistune",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001303",
+      "held": "0",
+      "latency_ms": 1494.5394999813288
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "docutils",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001341",
+      "held": "0",
+      "latency_ms": 1616.6401670197956
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "docutils",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.8e-05",
+      "held": "0",
+      "latency_ms": 896.1229579872452
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "docutils",
+      "accepted": true,
+      "error": null,
+      "cost": "2.8e-05",
+      "held": "0",
+      "latency_ms": 997.4386249668896
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "jinja2",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001406",
+      "held": "0",
+      "latency_ms": 1330.9114589937963
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "jinja2",
+      "accepted": true,
+      "error": null,
+      "cost": "3.04e-05",
+      "held": "0",
+      "latency_ms": 935.5021660448983
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "jinja2",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.04e-05",
+      "held": "0",
+      "latency_ms": 1438.0056250374764
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "pyyaml",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001501",
+      "held": "0",
+      "latency_ms": 1604.03733397834
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "pyyaml",
+      "accepted": true,
+      "error": null,
+      "cost": "3.4e-05",
+      "held": "0",
+      "latency_ms": 1172.7764999959618
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "pyyaml",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.4e-05",
+      "held": "0",
+      "latency_ms": 1503.9897919632494
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "toml",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.96e-05",
+      "held": "0",
+      "latency_ms": 907.1586249629036
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "toml",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001636",
+      "held": "0",
+      "latency_ms": 1334.7350409603678
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "toml",
+      "accepted": true,
+      "error": null,
+      "cost": "2.96e-05",
+      "held": "0",
+      "latency_ms": 738.0167919909582
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "tomli",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001285",
+      "held": "0",
+      "latency_ms": 1170.1939999475144
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "tomli",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.68e-05",
+      "held": "0",
+      "latency_ms": 991.0970409982838
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "tomli",
+      "accepted": true,
+      "error": null,
+      "cost": "2.68e-05",
+      "held": "0",
+      "latency_ms": 987.0344999944791
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "tomlkit",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001199",
+      "held": "0",
+      "latency_ms": 959.0793329989538
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "tomlkit",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.24e-05",
+      "held": "0",
+      "latency_ms": 882.1473339921795
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "tomlkit",
+      "accepted": true,
+      "error": null,
+      "cost": "2.24e-05",
+      "held": "0",
+      "latency_ms": 941.513457975816
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "orjson",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.61e-05",
+      "held": "0",
+      "latency_ms": 1012.9251669859514
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "orjson",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001398",
+      "held": "0",
+      "latency_ms": 1151.0406660381705
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "orjson",
+      "accepted": true,
+      "error": null,
+      "cost": "2.61e-05",
+      "held": "0",
+      "latency_ms": 733.6883749812841
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "ujson",
+      "accepted": true,
+      "error": null,
+      "cost": "2.41e-05",
+      "held": "0",
+      "latency_ms": 900.068791990634
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "ujson",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.41e-05",
+      "held": "0",
+      "latency_ms": 1073.7271250109188
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "msgpack",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001373",
+      "held": "0",
+      "latency_ms": 943.3519999729469
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "ujson",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001325",
+      "held": "0",
+      "latency_ms": 1990.3786670183763
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "msgpack",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.06e-05",
+      "held": "0",
+      "latency_ms": 885.1743750274181
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "msgpack",
+      "accepted": true,
+      "error": null,
+      "cost": "3.06e-05",
+      "held": "0",
+      "latency_ms": 1037.7812500228174
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "cbor2",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001464",
+      "held": "0",
+      "latency_ms": 1162.4253339832649
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "cbor2",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "3.07e-05",
+      "held": "0",
+      "latency_ms": 943.5717499582097
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "cbor2",
+      "accepted": true,
+      "error": null,
+      "cost": "3.07e-05",
+      "held": "0",
+      "latency_ms": 955.3766659810208
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "protobuf",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.38e-05",
+      "held": "0",
+      "latency_ms": 752.8549160342664
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "protobuf",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001208",
+      "held": "0",
+      "latency_ms": 1156.2886669998989
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "protobuf",
+      "accepted": true,
+      "error": null,
+      "cost": "2.38e-05",
+      "held": "0",
+      "latency_ms": 1039.8690840229392
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "zstandard",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "0.0001286",
+      "held": "0",
+      "latency_ms": 1087.5307919923216
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "zstandard",
+      "accepted": false,
+      "error": "UnsettledAttempt",
+      "cost": "2.52e-05",
+      "held": "0",
+      "latency_ms": 750.2059169928543
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "zstandard",
+      "accepted": true,
+      "error": null,
+      "cost": "2.52e-05",
+      "held": "0",
+      "latency_ms": 825.5392499850132
+    }
+  ],
+  "initial_faults": [
+    {
+      "case_id": "requests",
+      "arm": "fault-static",
+      "accepted_results": 0,
+      "stopped_calls": 0,
+      "known_cost": "0",
+      "reserved_cost": "0.015",
+      "pending_requests": 5
+    },
+    {
+      "case_id": "requests",
+      "arm": "fault-controlled",
+      "accepted_results": 0,
+      "stopped_calls": 2,
+      "known_cost": "0",
+      "reserved_cost": "0.009",
+      "pending_requests": 3
+    },
+    {
+      "case_id": "httpx",
+      "arm": "fault-static",
+      "accepted_results": 0,
+      "stopped_calls": 0,
+      "known_cost": "0",
+      "reserved_cost": "0.015",
+      "pending_requests": 5
+    },
+    {
+      "case_id": "httpx",
+      "arm": "fault-controlled",
+      "accepted_results": 0,
+      "stopped_calls": 2,
+      "known_cost": "0",
+      "reserved_cost": "0.009",
+      "pending_requests": 3
+    },
+    {
+      "case_id": "aiohttp",
+      "arm": "fault-static",
+      "accepted_results": 0,
+      "stopped_calls": 0,
+      "known_cost": "0",
+      "reserved_cost": "0.015",
+      "pending_requests": 5
+    },
+    {
+      "case_id": "aiohttp",
+      "arm": "fault-controlled",
+      "accepted_results": 0,
+      "stopped_calls": 2,
+      "known_cost": "0",
+      "reserved_cost": "0.009",
+      "pending_requests": 3
+    },
+    {
+      "case_id": "urllib3",
+      "arm": "fault-static",
+      "accepted_results": 0,
+      "stopped_calls": 0,
+      "known_cost": "0",
+      "reserved_cost": "0.015",
+      "pending_requests": 5
+    },
+    {
+      "case_id": "urllib3",
+      "arm": "fault-controlled",
+      "accepted_results": 0,
+      "stopped_calls": 2,
+      "known_cost": "0",
+      "reserved_cost": "0.009",
+      "pending_requests": 3
+    }
+  ],
+  "cached_recovery": [
+    {
+      "arm": "existing-flash",
+      "case_id": "requests",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "httpx",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "aiohttp",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "urllib3",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "certifi",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "charset-normalizer",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "idna",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "anyio",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "sniffio",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "h11",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "fastapi",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "starlette",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "uvicorn",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "flask",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "django",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "tornado",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "sanic",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "bottle",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "falcon",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "pyramid",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "pydantic",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "attrs",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "marshmallow",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "jsonschema",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "cattrs",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "dataclasses-json",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "typing-extensions",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "annotated-types",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "packaging",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "python-dateutil",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "numpy",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "pandas",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "scipy",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "sympy",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "mpmath",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "matplotlib",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "seaborn",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "plotly",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "bokeh",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "altair",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "click",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "typer",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "rich",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "tqdm",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "loguru",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "structlog",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "colorama",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "prompt-toolkit",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "pygments",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "tabulate",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "pytest",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "hypothesis",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "coverage",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "tox",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "nox",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "ruff",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "mypy",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "black",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "isort",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "flake8",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "sqlalchemy",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "alembic",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "peewee",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "tortoise-orm",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "duckdb",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "redis",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "pymongo",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "psycopg",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "asyncpg",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "databases",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "pillow",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "imageio",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "opencv-python",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "scikit-image",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "scikit-learn",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "xgboost",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "lightgbm",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "catboost",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "joblib",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "threadpoolctl",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "beautifulsoup4",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "lxml",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "parsel",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "scrapy",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "feedparser",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "markdown",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "markdown-it-py",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "mistune",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "docutils",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "jinja2",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "pyyaml",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "toml",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "tomli",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "tomlkit",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "orjson",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "ujson",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "msgpack",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "cbor2",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "protobuf",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "zstandard",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "requests",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "httpx",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "aiohttp",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "urllib3",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "certifi",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "charset-normalizer",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "idna",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "anyio",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "sniffio",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "h11",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "fastapi",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "starlette",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "uvicorn",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "flask",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "django",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "tornado",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "sanic",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "bottle",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "falcon",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "pyramid",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "pydantic",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "attrs",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "marshmallow",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "jsonschema",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "cattrs",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "dataclasses-json",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "typing-extensions",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "annotated-types",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "packaging",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "python-dateutil",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "numpy",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "pandas",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "scipy",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "sympy",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "mpmath",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "matplotlib",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "seaborn",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "plotly",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "bokeh",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "altair",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "click",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "typer",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "rich",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "tqdm",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "loguru",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "structlog",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "colorama",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "prompt-toolkit",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "pygments",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "tabulate",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "pytest",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "hypothesis",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "coverage",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "tox",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "nox",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "ruff",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "mypy",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "black",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "isort",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "flake8",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "sqlalchemy",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "alembic",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "peewee",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "tortoise-orm",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "duckdb",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "redis",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "pymongo",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "psycopg",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "asyncpg",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "databases",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "pillow",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "imageio",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "opencv-python",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "scikit-image",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "scikit-learn",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "xgboost",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "lightgbm",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "catboost",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "joblib",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "threadpoolctl",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "beautifulsoup4",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "lxml",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "parsel",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "scrapy",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "feedparser",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "markdown",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "markdown-it-py",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "mistune",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "docutils",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "jinja2",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "pyyaml",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "toml",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "tomli",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "tomlkit",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "orjson",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "ujson",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "msgpack",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "cbor2",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "protobuf",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "zstandard",
+      "recovered_from_saved_response": true,
+      "accepted": true
+    }
+  ],
+  "followup_protocol": {
+    "frozen_at": 1790918318.748183,
+    "cases_sha256": "79f095071fb7007209a25da08b093713051e7ff57985fe174bdd1799489a886a",
+    "cases": 30,
+    "arms": [
+      [
+        "existing-flash",
+        "flash"
+      ],
+      [
+        "static-lite",
+        "lite"
+      ],
+      [
+        "controlled-lite",
+        "lite"
+      ]
+    ],
+    "max_provider_calls": 500,
+    "acceptance": "Exact equality on all three frozen fields",
+    "context": "Same public source and prompt for all arms; ordinary static baseline uses same Lite model",
+    "retries": 0,
+    "concurrency": 4,
+    "model_max_tokens": 4096,
+    "thinking_budget": 0,
+    "faults": "First 4 frozen cases, 5 identical requests each. Compare static and repeat-limit=3. Separate from normal traffic.",
+    "rates": {
+      "flash": [
+        ".30",
+        "2.50",
+        ".03"
+      ],
+      "lite": [
+        ".10",
+        ".40",
+        ".01"
+      ]
+    },
+    "pricing_source": "https://ai.google.dev/gemini-api/docs/pricing",
+    "pricing_checked": "2026-10-02",
+    "interpretation": "Usage-priced estimates, not provider invoice. Public structured records can also be parsed without an LLM. Fault incidence is constructed, not measured in production.",
+    "followup": "First 30 frozen cases, all 3 arms after fixing tracing-context integration. Original 300 results and 200 cached recoveries retained. Separate follow-up, not a replacement for original outcomes.",
+    "cumulative_call_cap": 500
+  },
+  "followup_summary": [
+    {
+      "arm": "existing-flash",
+      "cases": 30,
+      "accepted": 30,
+      "known_cost": "0.0042813",
+      "unresolved": 0,
+      "cost_per_accepted": "0.00014271",
+      "p95_case_cost": "0.0001794",
+      "median_ms": 1007.4839584995061,
+      "p95_ms": 1546.5824999846518,
+      "partial_results": 0,
+      "human_interventions": 0
+    },
+    {
+      "arm": "static-lite",
+      "cases": 30,
+      "accepted": 30,
+      "known_cost": "0.0009047",
+      "unresolved": 0,
+      "cost_per_accepted": "0.00003015666666666666666666666667",
+      "p95_case_cost": "0.000038",
+      "median_ms": 906.5493960515596,
+      "p95_ms": 1761.498458974529,
+      "partial_results": 0,
+      "human_interventions": 0
+    },
+    {
+      "arm": "controlled-lite",
+      "cases": 30,
+      "accepted": 30,
+      "known_cost": "0.0009047",
+      "unresolved": 0,
+      "cost_per_accepted": "0.00003015666666666666666666666667",
+      "p95_case_cost": "0.000038",
+      "median_ms": 1036.5972500294447,
+      "p95_ms": 1436.9668749859557,
+      "partial_results": 0,
+      "human_interventions": 0
+    }
+  ],
+  "followup_results": [
+    {
+      "arm": "static-lite",
+      "case_id": "requests",
+      "accepted": true,
+      "error": null,
+      "cost": "2.4e-05",
+      "held": "0",
+      "latency_ms": 679.0825420175679
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "requests",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001175",
+      "held": "0",
+      "latency_ms": 865.6312499660999
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "requests",
+      "accepted": true,
+      "error": null,
+      "cost": "2.4e-05",
+      "held": "0",
+      "latency_ms": 937.0071670273319
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "httpx",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001388",
+      "held": "0",
+      "latency_ms": 1078.103541978635
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "httpx",
+      "accepted": true,
+      "error": null,
+      "cost": "2.98e-05",
+      "held": "0",
+      "latency_ms": 743.5609999811277
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "httpx",
+      "accepted": true,
+      "error": null,
+      "cost": "2.98e-05",
+      "held": "0",
+      "latency_ms": 1081.4097909606062
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "aiohttp",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001794",
+      "held": "0",
+      "latency_ms": 976.953000004869
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "aiohttp",
+      "accepted": true,
+      "error": null,
+      "cost": "4.29e-05",
+      "held": "0",
+      "latency_ms": 915.1235000463203
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "aiohttp",
+      "accepted": true,
+      "error": null,
+      "cost": "4.29e-05",
+      "held": "0",
+      "latency_ms": 735.9208749840036
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "urllib3",
+      "accepted": true,
+      "error": null,
+      "cost": "3.45e-05",
+      "held": "0",
+      "latency_ms": 761.8803330115043
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "urllib3",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001542",
+      "held": "0",
+      "latency_ms": 990.9600839600898
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "urllib3",
+      "accepted": true,
+      "error": null,
+      "cost": "3.45e-05",
+      "held": "0",
+      "latency_ms": 1264.0592909883708
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "certifi",
+      "accepted": true,
+      "error": null,
+      "cost": "2.69e-05",
+      "held": "0",
+      "latency_ms": 778.7055420340039
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "certifi",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001376",
+      "held": "0",
+      "latency_ms": 1246.1747080087662
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "certifi",
+      "accepted": true,
+      "error": null,
+      "cost": "2.69e-05",
+      "held": "0",
+      "latency_ms": 1074.395874980837
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "charset-normalizer",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001494",
+      "held": "0",
+      "latency_ms": 928.8984590093605
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "charset-normalizer",
+      "accepted": true,
+      "error": null,
+      "cost": "3.29e-05",
+      "held": "0",
+      "latency_ms": 772.9328329442069
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "charset-normalizer",
+      "accepted": true,
+      "error": null,
+      "cost": "3.29e-05",
+      "held": "0",
+      "latency_ms": 1069.2545840283856
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "idna",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001236",
+      "held": "0",
+      "latency_ms": 962.0405419846065
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "idna",
+      "accepted": true,
+      "error": null,
+      "cost": "2.81e-05",
+      "held": "0",
+      "latency_ms": 699.7538749710657
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "idna",
+      "accepted": true,
+      "error": null,
+      "cost": "2.81e-05",
+      "held": "0",
+      "latency_ms": 1023.3865000191145
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "anyio",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001461",
+      "held": "0",
+      "latency_ms": 922.3580830148421
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "anyio",
+      "accepted": true,
+      "error": null,
+      "cost": "2.82e-05",
+      "held": "0",
+      "latency_ms": 848.3023750013672
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "anyio",
+      "accepted": true,
+      "error": null,
+      "cost": "2.82e-05",
+      "held": "0",
+      "latency_ms": 795.2022079844028
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "sniffio",
+      "accepted": true,
+      "error": null,
+      "cost": "2.53e-05",
+      "held": "0",
+      "latency_ms": 796.9685000134632
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "sniffio",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001361",
+      "held": "0",
+      "latency_ms": 1308.435750019271
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "h11",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001227",
+      "held": "0",
+      "latency_ms": 845.7812090055086
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "sniffio",
+      "accepted": true,
+      "error": null,
+      "cost": "2.53e-05",
+      "held": "0",
+      "latency_ms": 1048.4542500344105
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "h11",
+      "accepted": true,
+      "error": null,
+      "cost": "2.65e-05",
+      "held": "0",
+      "latency_ms": 784.0272909961641
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "fastapi",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001444",
+      "held": "0",
+      "latency_ms": 809.2300000134856
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "h11",
+      "accepted": true,
+      "error": null,
+      "cost": "2.65e-05",
+      "held": "0",
+      "latency_ms": 1142.3635000246577
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "starlette",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001412",
+      "held": "0",
+      "latency_ms": 909.2068750178441
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "fastapi",
+      "accepted": true,
+      "error": null,
+      "cost": "3.33e-05",
+      "held": "0",
+      "latency_ms": 1251.9414169946685
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "starlette",
+      "accepted": true,
+      "error": null,
+      "cost": "3.06e-05",
+      "held": "0",
+      "latency_ms": 1032.7559169963934
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "starlette",
+      "accepted": true,
+      "error": null,
+      "cost": "3.06e-05",
+      "held": "0",
+      "latency_ms": 731.586082954891
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "uvicorn",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001389",
+      "held": "0",
+      "latency_ms": 1023.7269580247812
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "fastapi",
+      "accepted": true,
+      "error": null,
+      "cost": "3.33e-05",
+      "held": "0",
+      "latency_ms": 2764.3122920417227
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "uvicorn",
+      "accepted": true,
+      "error": null,
+      "cost": "2.58e-05",
+      "held": "0",
+      "latency_ms": 989.4661250291392
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "uvicorn",
+      "accepted": true,
+      "error": null,
+      "cost": "2.58e-05",
+      "held": "0",
+      "latency_ms": 723.771958029829
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "flask",
+      "accepted": true,
+      "error": null,
+      "cost": "2.58e-05",
+      "held": "0",
+      "latency_ms": 705.9390000067651
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "django",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001432",
+      "held": "0",
+      "latency_ms": 877.5861249887384
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "flask",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001275",
+      "held": "0",
+      "latency_ms": 1270.6602080143057
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "flask",
+      "accepted": true,
+      "error": null,
+      "cost": "2.58e-05",
+      "held": "0",
+      "latency_ms": 1436.9668749859557
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "django",
+      "accepted": true,
+      "error": null,
+      "cost": "3.05e-05",
+      "held": "0",
+      "latency_ms": 1086.7419579881243
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "django",
+      "accepted": true,
+      "error": null,
+      "cost": "3.05e-05",
+      "held": "0",
+      "latency_ms": 1761.498458974529
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "tornado",
+      "accepted": true,
+      "error": null,
+      "cost": "0.000127",
+      "held": "0",
+      "latency_ms": 1292.4339590244927
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "tornado",
+      "accepted": true,
+      "error": null,
+      "cost": "2.63e-05",
+      "held": "0",
+      "latency_ms": 1070.619334001094
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "tornado",
+      "accepted": true,
+      "error": null,
+      "cost": "2.63e-05",
+      "held": "0",
+      "latency_ms": 1020.5450420035049
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "sanic",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001327",
+      "held": "0",
+      "latency_ms": 973.424541996792
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "sanic",
+      "accepted": true,
+      "error": null,
+      "cost": "2.69e-05",
+      "held": "0",
+      "latency_ms": 1134.6337919821963
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "sanic",
+      "accepted": true,
+      "error": null,
+      "cost": "2.69e-05",
+      "held": "0",
+      "latency_ms": 1351.2542499811389
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "bottle",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001031",
+      "held": "0",
+      "latency_ms": 1087.7591660246253
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "bottle",
+      "accepted": true,
+      "error": null,
+      "cost": "1.98e-05",
+      "held": "0",
+      "latency_ms": 1171.7639999696985
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "bottle",
+      "accepted": true,
+      "error": null,
+      "cost": "1.98e-05",
+      "held": "0",
+      "latency_ms": 1466.0245419945568
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "falcon",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001482",
+      "held": "0",
+      "latency_ms": 990.6988329603337
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "falcon",
+      "accepted": true,
+      "error": null,
+      "cost": "3.02e-05",
+      "held": "0",
+      "latency_ms": 1328.5448329988867
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "pyramid",
+      "accepted": true,
+      "error": null,
+      "cost": "3.24e-05",
+      "held": "0",
+      "latency_ms": 781.6971660358831
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "pyramid",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001476",
+      "held": "0",
+      "latency_ms": 1232.1483750129119
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "falcon",
+      "accepted": true,
+      "error": null,
+      "cost": "3.02e-05",
+      "held": "0",
+      "latency_ms": 1447.1881249919534
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "pyramid",
+      "accepted": true,
+      "error": null,
+      "cost": "3.24e-05",
+      "held": "0",
+      "latency_ms": 1024.7402500244789
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "pydantic",
+      "accepted": true,
+      "error": null,
+      "cost": "3.21e-05",
+      "held": "0",
+      "latency_ms": 849.9334160005674
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "pydantic",
+      "accepted": true,
+      "error": null,
+      "cost": "3.21e-05",
+      "held": "0",
+      "latency_ms": 1001.875999965705
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "pydantic",
+      "accepted": true,
+      "error": null,
+      "cost": "0.000147",
+      "held": "0",
+      "latency_ms": 1546.5824999846518
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "attrs",
+      "accepted": true,
+      "error": null,
+      "cost": "3.26e-05",
+      "held": "0",
+      "latency_ms": 919.1352499765344
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "attrs",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001384",
+      "held": "0",
+      "latency_ms": 1287.338541005738
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "marshmallow",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001556",
+      "held": "0",
+      "latency_ms": 916.7801670264453
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "attrs",
+      "accepted": true,
+      "error": null,
+      "cost": "3.26e-05",
+      "held": "0",
+      "latency_ms": 1049.5002090465277
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "marshmallow",
+      "accepted": true,
+      "error": null,
+      "cost": "3.54e-05",
+      "held": "0",
+      "latency_ms": 858.5922920028679
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "jsonschema",
+      "accepted": true,
+      "error": null,
+      "cost": "3.8e-05",
+      "held": "0",
+      "latency_ms": 897.9752920567989
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "marshmallow",
+      "accepted": true,
+      "error": null,
+      "cost": "3.54e-05",
+      "held": "0",
+      "latency_ms": 1381.7713339813054
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "jsonschema",
+      "accepted": true,
+      "error": null,
+      "cost": "3.8e-05",
+      "held": "0",
+      "latency_ms": 894.2770419525914
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "jsonschema",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001768",
+      "held": "0",
+      "latency_ms": 1350.601291982457
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "cattrs",
+      "accepted": true,
+      "error": null,
+      "cost": "2.83e-05",
+      "held": "0",
+      "latency_ms": 721.3673340156674
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "cattrs",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001389",
+      "held": "0",
+      "latency_ms": 991.240958974231
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "cattrs",
+      "accepted": true,
+      "error": null,
+      "cost": "2.83e-05",
+      "held": "0",
+      "latency_ms": 699.5097500039265
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "dataclasses-json",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001624",
+      "held": "0",
+      "latency_ms": 1185.4575839824975
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "dataclasses-json",
+      "accepted": true,
+      "error": null,
+      "cost": "3.19e-05",
+      "held": "0",
+      "latency_ms": 861.373417021241
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "typing-extensions",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001551",
+      "held": "0",
+      "latency_ms": 988.1390000227839
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "dataclasses-json",
+      "accepted": true,
+      "error": null,
+      "cost": "3.19e-05",
+      "held": "0",
+      "latency_ms": 1264.106000016909
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "typing-extensions",
+      "accepted": true,
+      "error": null,
+      "cost": "3.48e-05",
+      "held": "0",
+      "latency_ms": 755.7043340057135
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "typing-extensions",
+      "accepted": true,
+      "error": null,
+      "cost": "3.48e-05",
+      "held": "0",
+      "latency_ms": 993.8652080018073
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "annotated-types",
+      "accepted": true,
+      "error": null,
+      "cost": "3.05e-05",
+      "held": "0",
+      "latency_ms": 1305.1797910011373
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "annotated-types",
+      "accepted": true,
+      "error": null,
+      "cost": "3.05e-05",
+      "held": "0",
+      "latency_ms": 1276.8983749556355
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "annotated-types",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001435",
+      "held": "0",
+      "latency_ms": 1697.3902080208063
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "packaging",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001178",
+      "held": "0",
+      "latency_ms": 1253.2135410001501
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "packaging",
+      "accepted": true,
+      "error": null,
+      "cost": "2.29e-05",
+      "held": "0",
+      "latency_ms": 726.5999999945052
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "packaging",
+      "accepted": true,
+      "error": null,
+      "cost": "2.29e-05",
+      "held": "0",
+      "latency_ms": 987.1440420392901
+    },
+    {
+      "arm": "static-lite",
+      "case_id": "python-dateutil",
+      "accepted": true,
+      "error": null,
+      "cost": "3.75e-05",
+      "held": "0",
+      "latency_ms": 1065.3911249828525
+    },
+    {
+      "arm": "existing-flash",
+      "case_id": "python-dateutil",
+      "accepted": true,
+      "error": null,
+      "cost": "0.0001866",
+      "held": "0",
+      "latency_ms": 1200.2513750339858
+    },
+    {
+      "arm": "controlled-lite",
+      "case_id": "python-dateutil",
+      "accepted": true,
+      "error": null,
+      "cost": "3.75e-05",
+      "held": "0",
+      "latency_ms": 980.6045409641229
+    }
+  ],
+  "followup_faults": [
+    {
+      "case_id": "requests",
+      "arm": "fault-static",
+      "accepted_results": 5,
+      "stopped_calls": 0,
+      "known_cost": "0.00012",
+      "reserved_cost": "0",
+      "pending_requests": 0
+    },
+    {
+      "case_id": "requests",
+      "arm": "fault-controlled",
+      "accepted_results": 3,
+      "stopped_calls": 2,
+      "known_cost": "0.000072",
+      "reserved_cost": "0",
+      "pending_requests": 0
+    },
+    {
+      "case_id": "httpx",
+      "arm": "fault-static",
+      "accepted_results": 5,
+      "stopped_calls": 0,
+      "known_cost": "0.000149",
+      "reserved_cost": "0",
+      "pending_requests": 0
+    },
+    {
+      "case_id": "httpx",
+      "arm": "fault-controlled",
+      "accepted_results": 3,
+      "stopped_calls": 2,
+      "known_cost": "0.0000894",
+      "reserved_cost": "0",
+      "pending_requests": 0
+    },
+    {
+      "case_id": "aiohttp",
+      "arm": "fault-static",
+      "accepted_results": 5,
+      "stopped_calls": 0,
+      "known_cost": "0.0002145",
+      "reserved_cost": "0",
+      "pending_requests": 0
+    },
+    {
+      "case_id": "aiohttp",
+      "arm": "fault-controlled",
+      "accepted_results": 3,
+      "stopped_calls": 2,
+      "known_cost": "0.0001287",
+      "reserved_cost": "0",
+      "pending_requests": 0
+    },
+    {
+      "case_id": "urllib3",
+      "arm": "fault-static",
+      "accepted_results": 5,
+      "stopped_calls": 0,
+      "known_cost": "0.0001725",
+      "reserved_cost": "0",
+      "pending_requests": 0
+    },
+    {
+      "case_id": "urllib3",
+      "arm": "fault-controlled",
+      "accepted_results": 3,
+      "stopped_calls": 2,
+      "known_cost": "0.0001035",
+      "reserved_cost": "0",
+      "pending_requests": 0
+    }
+  ],
+  "repeat_loop_saving": "0.4",
+  "note": "Initial baseline wrappers failed after provider success because tracing context was absent. All original outcomes retained. 200 outputs recovered from durable state with zero new calls. Follow-up uses first 30 frozen cases after fix; no case replacement or threshold change."
+}

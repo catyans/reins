@@ -40,6 +40,31 @@ class ReinsCallbackHandler:
 
     # --- LLM callbacks ---
 
+    def on_chat_model_start(self, serialized, messages, *, run_id, metadata=None, **kwargs):
+        """Extract chat roles without importing LangChain or persisting prompt text."""
+        components = {"system": [], "history": [], "user": []}
+        for conversation in messages:
+            for index, message in enumerate(conversation):
+                role = getattr(message, "type", "human")
+                content = str(getattr(message, "content", ""))
+                group = (
+                    "system"
+                    if role == "system"
+                    else (
+                        "user" if index == len(conversation) - 1 and role == "human" else "history"
+                    )
+                )
+                components[group].append(content)
+        context = {k: "\n".join(v) for k, v in components.items()}
+        context.update((metadata or {}).get("reins_context", {}))
+        self.on_llm_start(
+            serialized,
+            [],
+            run_id=run_id,
+            metadata={**(metadata or {}), "reins_context": context},
+            **kwargs,
+        )
+
     def on_llm_start(
         self,
         serialized: dict[str, Any],
@@ -68,6 +93,17 @@ class ReinsCallbackHandler:
             estimated_input_tokens=estimated_in,
             estimated_max_output_tokens=kwargs.get("invocation_params", {}).get("max_tokens", 1024),
         )
+        from reins.control.usage import estimate_components
+
+        supplied = (metadata or {}).get("reins_context", {})
+        span.metadata["context_estimates"] = estimate_components(
+            user="\n".join(prompts) if not supplied else supplied.get("user", ""),
+            system=supplied.get("system", ""),
+            history=supplied.get("history", ""),
+            retrieval=supplied.get("retrieval", ""),
+            tools=supplied.get("tools", kwargs.get("invocation_params", {}).get("tools", [])),
+        )
+        span.metadata["context_revision"] = (metadata or {}).get("reins_revision", "unversioned")
         span.metadata["agent_name"] = self.agent_name
         if parent_run_id:
             span.parent_span_id = str(parent_run_id)
@@ -110,6 +146,23 @@ class ReinsCallbackHandler:
                     tokens_in += usage.get("input_tokens", 0) or usage.get("prompt_tokens", 0)
                     tokens_out += usage.get("output_tokens", 0) or usage.get("completion_tokens", 0)
 
+        from reins.control.client import active_workflow
+
+        current = active_workflow()
+        if current:
+            try:
+                current.client.post(
+                    "context/sample",
+                    {
+                        "task_id": current.context["task_id"],
+                        "sample_id": str(run_id),
+                        "revision": span.metadata["context_revision"],
+                        "components": span.metadata["context_estimates"],
+                        "provider_input_tokens": tokens_in if tokens_in else None,
+                    },
+                )
+            except Exception:
+                logger.warning("Context observation unavailable; billing is unaffected")
         span.complete(tokens_in=tokens_in, tokens_out=tokens_out)
         finalize_span(span)
 

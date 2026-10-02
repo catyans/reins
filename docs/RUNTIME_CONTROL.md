@@ -8,6 +8,9 @@ timeout keeps the reservation held.
 This extends the existing trace, outcome evaluation, and policy optimizer. It
 does not replace the current website or measured cases.
 
+See [the practical-control guide](PRACTICAL_CONTROLS.md) for the latest extensions
+and [validation](PRACTICAL_CONTROLS_VALIDATION.md) for current evidence.
+
 ## Run locally
 
 Install this checkout, then start one service:
@@ -19,8 +22,10 @@ reins control serve
 
 Open **http://127.0.0.1:8795**. Paste the token from
 `~/.reins/control.token` into the local dashboard. The token stays in tab memory;
-it is not put in URLs, local storage, or exported task contexts. The page is
-read-only. CLI operator commands can pause/resume work and reconcile charges.
+it is not put in URLs, local storage, or exported task contexts. The operator dashboard
+can pause/resume work, enter terminal wrap-up, and approve exact tool calls. CLI
+commands also reconcile charges. See [practical controls](PRACTICAL_CONTROLS.md) for
+separate operator/worker credentials, budget pools and the new opt-in policies.
 
 The service binds to loopback, requires a credential, checks Host/Origin, and owns
 one SQLite WAL database. Worker trace databases remain separate DuckDB files.
@@ -204,6 +209,8 @@ savings or superiority to a well-implemented static policy.
 
 Not included: distributed consensus across hosts; remotely exposed control;
 provider billing connectors; automatic business-value prediction; semantic
-loop detection; general tool-permission policy; memory correction; arbitrary
-multi-agent handoff repair. Existing agents keep their original behavior until
+loop detection; enterprise-wide tool-permission enforcement; automatic semantic
+memory correction; arbitrary multi-agent handoff repair. Local registered-tool
+policies, explicit state corrections and structured handoffs are documented in
+the practical-control guide. Existing agents keep their original behavior until
 they opt into the control service.

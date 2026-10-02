@@ -25,9 +25,10 @@ def control(ctx, url, token_file):
 @control.command()
 @click.option("--database", default="~/.reins/control.sqlite")
 @click.option("--port", type=click.IntRange(1, 65535), default=8795)
+@click.option("--worker-token-file", default="~/.reins/worker.token")
 @click.pass_context
-def serve(ctx, database, port):
-    """Start the authoritative ledger and read-only dashboard."""
+def serve(ctx, database, port, worker_token_file):
+    """Start the authoritative ledger and local operator dashboard."""
     path = Path(ctx.obj["token_file"])
     path.parent.mkdir(parents=True, exist_ok=True)
     try:
@@ -39,7 +40,20 @@ def serve(ctx, database, port):
         with os.fdopen(fd, "w") as f:
             f.write(secrets.token_urlsafe(48))
     ledger = Ledger(Path(database).expanduser())
-    server = ControlServer(ledger, path.read_text().strip(), port)
+    worker = Path(worker_token_file).expanduser()
+    worker.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        fd = os.open(worker, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    except FileExistsError:
+        if worker.stat().st_mode & 0o077:
+            ledger.close()
+            raise click.ClickException("Worker credential file must have permissions 0600")
+    else:
+        with os.fdopen(fd, "w") as f:
+            f.write(secrets.token_urlsafe(48))
+    server = ControlServer(
+        ledger, path.read_text().strip(), port, worker_token=worker.read_text().strip()
+    )
     click.echo(f"Control dashboard: http://127.0.0.1:{port}\nCredential file: {path}")
     try:
         server.serve_forever()
@@ -96,3 +110,51 @@ def reconcile(ctx, csv_path):
         for row in csv.DictReader(f):
             row["revision"] = int(row.get("revision") or 1)
             click.echo(json.dumps({"line_id": row.get("line_id"), **client.post("reconcile", row)}))
+
+
+@control.command("apply")
+@click.argument(
+    "operation",
+    type=click.Choice(
+        [
+            "pools",
+            "tools",
+            "approvals",
+            "economics",
+            "state/write",
+            "state/read",
+            "handoff",
+            "workflows",
+            "context/sample",
+        ]
+    ),
+)
+@click.argument("input_file", type=click.Path(exists=True, dir_okay=False))
+@click.pass_context
+def apply_operation(ctx, operation, input_file):
+    """Submit an explicit JSON document to the local control API."""
+    click.echo(
+        json.dumps(
+            Client(**ctx.obj).post(operation, json.loads(Path(input_file).read_text())), indent=2
+        )
+    )
+
+
+@control.command("regression")
+@click.argument("input_file", type=click.Path(exists=True, dir_okay=False))
+@click.option("--output", required=True, type=click.Path())
+def regression(input_file, output):
+    """Evaluate a frozen trajectory suite; write HTML/JSON and fail on regression."""
+    from .regression import evaluate_suite, write_report
+
+    body = json.loads(Path(input_file).read_text())
+    report = evaluate_suite(
+        body["cases"], body["contract"], expected_case_ids=body["expected_case_ids"]
+    )
+    write_report(report, output)
+    click.echo(
+        f"{report['passing']}/{report['total']} cases passed; "
+        f"report: {Path(output).with_suffix('.html')}"
+    )
+    if not report["passed"]:
+        raise click.exceptions.Exit(1)
