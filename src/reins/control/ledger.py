@@ -13,6 +13,8 @@ import time
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
+from .governance import Governance
+
 SCALE = 1_000_000_000
 
 
@@ -50,7 +52,7 @@ def identity(value, name):
     return value
 
 
-class Ledger:
+class Ledger(Governance):
     def __init__(self, path):
         path = Path(path)
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -102,8 +104,15 @@ class Ledger:
           amount INTEGER, revision INTEGER, reference TEXT, body TEXT, matched INTEGER,
           PRIMARY KEY(provider,invoice_id,line_id,revision));
         CREATE TABLE IF NOT EXISTS schema_version(version INTEGER PRIMARY KEY);
-        INSERT OR IGNORE INTO schema_version VALUES(1);
+        INSERT INTO schema_version SELECT 1 WHERE NOT EXISTS (SELECT 1 FROM schema_version);
         """)
+
+        try:
+            self.migrate(path)
+        except BaseException:
+            self.db.close()
+            self.lockfile.close()
+            raise
 
     @contextlib.contextmanager
     def transaction(self):
@@ -131,6 +140,7 @@ class Ledger:
             "max_cost_per_accepted_result": body.get("max_cost_per_accepted_result"),
             "approved_models": body.get("approved_models", []),
         }
+        config.update(self.governance_config(body))
         for key in ("max_branches", "max_iterations", "max_retries"):
             if type(config[key]) is not int or config[key] < 0 or config[key] > 100000:
                 raise ValueError("Limits must be bounded nonnegative integers")
@@ -169,6 +179,7 @@ class Ledger:
                 self.db.execute(
                     "INSERT INTO tasks VALUES(?,?,NULL,?,?)", (wid, wid, values[4], time.time())
                 )
+                self.join_pool(wid, values[0], config)
                 self.event(wid, wid, "workflow_started")
         return self.context(wid)
 
@@ -218,7 +229,11 @@ class Ledger:
                 reason = (
                     "workflow_not_running"
                     if w["state"] != "running"
-                    else ("branch_limit" if count >= cfg["max_branches"] else None)
+                    else (
+                        "branch_limit"
+                        if count >= cfg["max_branches"]
+                        else self.branch_limit(parent, cfg)
+                    )
                 )
                 if reason and (w["mode"] == "enforce" or reason == "workflow_not_running"):
                     return {"decision": "pause", "reason": reason}
@@ -271,8 +286,9 @@ class Ledger:
                 and model not in cfg["approved_models"]
             ):
                 raise ValueError("Model is not in the workflow approved-model set")
-            reason = None
-            if w["state"] != "running":
+            approval = self.tool_check(body, t, cfg)
+            reason = self.admission_check(body, t, w, cfg, reserve)
+            if w["state"] not in ("running", "wrapping"):
                 reason = "workflow_not_running"
             if not reason and key:
                 cached = self.db.execute(
@@ -295,7 +311,7 @@ class Ledger:
             retries = self.db.execute(
                 "SELECT count(*) FROM events WHERE workflow=? AND kind='retry_admitted'", (w["id"],)
             ).fetchone()[0]
-            if not reason and count >= cfg["max_iterations"]:
+            if not reason and body.get("phase") != "wrapup" and count >= cfg["max_iterations"]:
                 reason = "iteration_limit"
             if not reason and retry and retries >= cfg["max_retries"]:
                 reason = "retry_limit"
@@ -317,6 +333,7 @@ class Ledger:
                 ).fetchone()[0]
                 if used + reserve > ancestor["budget"] and not reason:
                     reason = "shared_budget"
+            reason = reason or self.pool_check(w["id"], reserve)
             if reason:
                 self.event(
                     w["id"],
@@ -324,7 +341,12 @@ class Ledger:
                     "denied" if w["mode"] == "enforce" else "would_pause",
                     reason=reason,
                 )
-                if w["mode"] == "enforce" or reason == "workflow_not_running":
+                if w["mode"] == "enforce" or reason in (
+                    "workflow_not_running",
+                    "wrapup_only",
+                    "wrapup_not_started",
+                    "wrapup_already_admitted",
+                ):
                     return {"decision": "pause", "reason": reason}
             self.db.execute(
                 """INSERT INTO requests(id,workflow,task,fingerprint,model,category,
@@ -342,6 +364,14 @@ class Ledger:
                     time.time(),
                 ),
             )
+            self.db.execute(
+                "INSERT INTO operation_meta VALUES(?,?,?,?,NULL)",
+                (rid, body.get("operation_key"), body.get("phase", "work"), body.get("tool_name")),
+            )
+            if approval:
+                self.db.execute(
+                    "UPDATE approvals SET state='consumed',request=? WHERE id=?", (rid, approval)
+                )
             self.db.executemany(
                 "INSERT INTO allocations VALUES(?,?)", [(rid, a["id"]) for a in ancestors]
             )
@@ -357,6 +387,12 @@ class Ledger:
 
     def settle(self, body):
         actual = amount(body["actual_cost"])
+        success = body.get("success", True)
+        if type(success) is not bool:
+            raise ValueError("success must be boolean")
+        validation_name = body.get("validation_name")
+        if validation_name is not None:
+            identity(validation_name, "validation_name")
         valid = body.get("validated", False)
         if type(valid) is not bool:
             raise ValueError("validated must be boolean")
@@ -399,6 +435,11 @@ class Ledger:
             if not r:
                 raise ValueError("Unknown reservation")
             if r["actual"] is not None:
+                meta = self.db.execute(
+                    "SELECT success FROM operation_meta WHERE request=?", (r["id"],)
+                ).fetchone()
+                if meta and meta[0] is not None and meta[0] != int(success):
+                    raise ValueError("Conflicting operation outcome")
                 if (r["actual"], r["result"], r["validated"], r["usage"]) == (
                     actual,
                     result,
@@ -412,6 +453,18 @@ class Ledger:
                 "actual=?,state='settled',result=?,validated=?,usage=?,settled=? WHERE id=?",
                 (actual, result, int(valid), usage, time.time(), r["id"]),
             )
+            self.db.execute(
+                "UPDATE operation_meta SET success=? WHERE request=?", (int(success), r["id"])
+            )
+            if validation_name:
+                self.event(
+                    r["workflow"],
+                    r["task"],
+                    "validation",
+                    name=validation_name,
+                    passed=valid,
+                    request_id=r["id"],
+                )
             self.event(
                 r["workflow"], r["task"], "settled", request_id=r["id"], actual=dollars(actual)
             )
@@ -429,12 +482,13 @@ class Ledger:
                 raise ValueError("Unknown reservation")
             if r["actual"] is None:
                 self.db.execute("UPDATE requests SET state='uncertain' WHERE id=?", (r["id"],))
+                self.db.execute("UPDATE operation_meta SET success=0 WHERE request=?", (r["id"],))
                 self.event(r["workflow"], r["task"], "uncertain", request_id=r["id"])
         return {"status": "held"}
 
     def transition(self, body):
         action = body["action"]
-        if action not in ("pause", "resume", "finish"):
+        if action not in ("pause", "resume", "finish", "wrapup"):
             raise ValueError("Invalid workflow action")
         with self.transaction():
             w = self.db.execute(
@@ -458,7 +512,14 @@ class Ledger:
                 identity(body.get("reason"), "operator reason")
                 if w["finished"] is not None:
                     raise ValueError("A finished workflow cannot resume")
-                state = "paused" if action == "pause" else "running"
+                state = {"pause": "paused", "resume": "running", "wrapup": "wrapping"}[action]
+                if (
+                    action == "resume"
+                    and self.db.execute(
+                        "SELECT 1 FROM events WHERE workflow=? AND kind='wrapup'", (w["id"],)
+                    ).fetchone()
+                ):
+                    raise ValueError("Wrap-up is terminal; start a new workflow for new work")
                 self.db.execute("UPDATE workflows SET state=? WHERE id=?", (state, w["id"]))
             self.event(w["id"], w["id"], action, reason=body.get("reason"))
         return {"state": "completed" if action == "finish" else state}
@@ -708,14 +769,16 @@ class Ledger:
                         "forecast": self.forecast(w["id"]),
                     }
                 )
-            return {
-                "workflows": result,
-                "unmatched_bill_lines": self.db.execute(
-                    """SELECT count(*) FROM bills b WHERE matched=0 AND revision=(
+            return self.governance_status(
+                {
+                    "workflows": result,
+                    "unmatched_bill_lines": self.db.execute(
+                        """SELECT count(*) FROM bills b WHERE matched=0 AND revision=(
                     SELECT max(revision) FROM bills latest WHERE latest.provider=b.provider
                     AND latest.invoice_id=b.invoice_id AND latest.line_id=b.line_id)"""
-                ).fetchone()[0],
-            }
+                    ).fetchone()[0],
+                }
+            )
 
     def close(self):
         self.db.close()

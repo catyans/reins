@@ -21,13 +21,25 @@ No savings or quality improvement is claimed until measured on your tasks.
 
 ## Shared runtime economic control
 
+**Practical controls:** protect a team budget across workflows, stop exact-repeat
+loops, reserve funds for graceful wrap-up, approve precise tool calls, and gate
+releases on execution trajectories. The local English dashboard exposes real
+operator actions. [Setup and research-to-feature mapping](docs/PRACTICAL_CONTROLS.md)
+· [Tests and live results](docs/PRACTICAL_CONTROLS_VALIDATION.md).
+
+In a **constructed repeated-call test**, Reins reduced paid calls from 20 to 12
+(40%) while preserving a valid result for all four tasks. Normal workloads matched
+the cost of the same static Lite baseline; this is a control benefit under a
+repeat-loop condition, not a claim of universal 40% savings.
+
+
 Reserve before spending. Attribute every paid operation to a customer, workflow
 and parent task. Keep uncertain charges held, constrain runaway branches, and
 reconcile confirmed invoice lines without erasing history.
 
 ```sh
 reins control serve
-# Local read-only dashboard: http://127.0.0.1:8795
+# Local operator dashboard: http://127.0.0.1:8795
 ```
 
 [Integration guide and failure semantics](docs/RUNTIME_CONTROL.md) ·

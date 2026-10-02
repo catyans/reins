@@ -1,4 +1,10 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reins · Runtime control</title><link rel="stylesheet" href="/control.css">
 <header><b>reins</b><span>Runtime economic control · Local workspace</span></header>
-<main><h1>Every task. One shared budget.</h1><p>Track committed spend, unresolved charges and task ownership as agents run.</p>
-<form id="connect"><input id="token" type="password" autocomplete="off" placeholder="Local control token" aria-label="Local control token"><button>Connect</button></form><p id="message" role="status">Read-only dashboard. Credentials stay in this tab's memory.</p><label>Workflow <select id="filter"><option value="">All workflows</option></select></label><section id="workflows"></section></main><script src="/control.js"></script></html>
+<main><h1>Every task. One shared budget.</h1><p>Keep agents within budget, protect critical work, and understand the cost of a successful result.</p>
+<form id="connect"><input id="token" type="password" autocomplete="off" placeholder="Local operator token" aria-label="Local operator token"><button>Connect</button></form><p id="message" role="status">Credentials stay in this tab's memory. Actions affect the connected local service.</p>
+<section id="pools" aria-label="Team budgets"></section><section id="rollups" aria-label="Customer economics"></section>
+<label>Workflow <select id="filter"><option value="">All workflows</option></select></label><section id="workflows"></section>
+<details class="operator"><summary>Approve a registered tool call</summary><p>Approval is bound to this task, tool, exact arguments and current tool policy. It expires after five minutes and can be used once.</p>
+<form id="approval"><label>Task ID<input name="task" required></label><label>Tool name<input name="tool" required></label><label>Exact arguments (JSON)<textarea name="arguments" required rows="4">{}</textarea></label><button>Approve exact call</button></form><p id="approval-result" role="status"></p></details>
+<details class="operator"><summary>Review a regression report</summary><p>Open the JSON report produced by <code>reins control regression</code>. This viewer does not run evaluations.</p><input id="regression-file" type="file" accept=".json" aria-label="Regression report"><div id="regression-result"></div></details>
+</main><script src="/control.js"></script></html>

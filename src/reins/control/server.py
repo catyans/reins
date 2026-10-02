@@ -11,9 +11,12 @@ from reins.control.ledger import Ledger
 
 
 class ControlServer(ThreadingHTTPServer):
-    def __init__(self, ledger: Ledger, token: str, port=8795):
+    def __init__(self, ledger: Ledger, token: str, port=8795, *, worker_token=None):
         if not isinstance(token, str) or len(token) < 32:
             raise ValueError("Use a credential of at least 32 characters")
+        if worker_token is not None and (len(worker_token) < 32 or worker_token == token):
+            raise ValueError("Worker credential must be distinct and at least 32 characters")
+        self.worker_token = worker_token
         self.ledger, self.token = ledger, token
         super().__init__(("127.0.0.1", port), Handler)
 
@@ -65,11 +68,26 @@ class Handler(BaseHTTPRequestHandler):
         self.respond(200, (Path(__file__).parent / "static" / name).read_bytes(), mime)
 
     def do_POST(self):
-        if not self.trusted_origin() or not hmac.compare_digest(
-            self.headers.get("Authorization", ""), "Bearer " + self.server.token
-        ):
+        auth = self.headers.get("Authorization", "")
+        operator = hmac.compare_digest(auth, "Bearer " + self.server.token)
+        worker = bool(self.server.worker_token) and hmac.compare_digest(
+            auth, "Bearer " + (self.server.worker_token or "")
+        )
+        if not self.trusted_origin() or not (operator or worker):
             return self.respond(403, {"error": "Local credential required"})
+        privileged = {"/v1/pools", "/v1/tools", "/v1/approvals", "/v1/reconcile", "/v1/economics"}
+        if not operator and self.path in privileged:
+            return self.respond(403, {"error": "Operator credential required"})
         actions = {
+            "/v1/regression/case": self.server.ledger.regression_case,
+            "/v1/pools": self.server.ledger.pool,
+            "/v1/tools": self.server.ledger.register_tool,
+            "/v1/approvals": self.server.ledger.approval,
+            "/v1/state/write": self.server.ledger.state_write,
+            "/v1/state/read": self.server.ledger.state_read,
+            "/v1/handoff": self.server.ledger.handoff,
+            "/v1/economics": self.server.ledger.economic_entry,
+            "/v1/context/sample": self.server.ledger.context_sample,
             "/v1/workflows": self.server.ledger.workflow,
             "/v1/tasks": self.server.ledger.branch,
             "/v1/reserve": self.server.ledger.reserve,
@@ -90,6 +108,18 @@ class Handler(BaseHTTPRequestHandler):
             body = json.loads(self.rfile.read(n))
             if not isinstance(body, dict):
                 raise ValueError("Expected object")
+            if not operator:
+                if self.path == "/v1/workflows":
+                    # Operators provision immutable workflow policy before dispatching workers.
+                    wid = body.get("workflow_id")
+                    with self.server.ledger.lock:
+                        exists = self.server.ledger.db.execute(
+                            "SELECT 1 FROM workflows WHERE id=?", (wid,)
+                        ).fetchone()
+                    if not exists:
+                        return self.respond(403, {"error": "Operator must provision workflow"})
+                if self.path == "/v1/transition" and body.get("action") not in ("finish", "wrapup"):
+                    return self.respond(403, {"error": "Operator required to pause or resume"})
             result = actions[self.path](body)
         except (KeyError, ValueError, TypeError, OverflowError) as exc:
             return self.respond(400, {"error": str(exc)})

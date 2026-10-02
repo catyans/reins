@@ -19,6 +19,7 @@ from reins import (
     step,
 )
 from reins.checkpoints import fingerprint
+from reins.core.context import get_current_run
 from reins.core.decorators import trace
 from reins.google_usage import GoogleTextPrices, estimate_google_text_cost
 from reins.projects.documents import (
@@ -200,8 +201,9 @@ class State:
 
 
 class Gemini:
-    def __init__(self, state, key, *, limit=30.0):
+    def __init__(self, state, key, *, limit=30.0, control=None):
         self.state, self.key, self.limit = state, key, limit
+        self.control = control
         self.semaphore = asyncio.Semaphore(4)
 
     async def call(self, text, model, job_id, purpose="extraction"):
@@ -276,7 +278,45 @@ class Gemini:
                     return json.load(response)
 
             try:
-                response = await asyncio.to_thread(request)
+                from reins.control.client import active_workflow
+                from reins.control.usage import estimate_components
+
+                controlled = self.control or active_workflow()
+                usage_record = {}
+
+                async def measured_request():
+                    result = await asyncio.to_thread(request)
+                    counts = result.get("usage")
+                    measured = estimate_google_text_cost(counts, prices)
+                    usage_record.update(
+                        input_tokens=counts["prompt_tokens"],
+                        output_tokens=counts["completion_tokens"],
+                    )
+                    return result, str(measured)
+
+                if controlled:
+                    response = await controlled.acall(
+                        measured_request,
+                        model="google/" + MODELS[model],
+                        category="evaluation" if purpose != "extraction" else "model",
+                        max_cost=str(Decimal(str(reserve)).quantize(Decimal("0.000000001"))),
+                        operation_inputs={"job": job_id, "purpose": purpose, "text": text},
+                        usage=usage_record,
+                    )
+                    # Component estimates are diagnostic only, separate from billed totals.
+                    with contextlib.suppress(Exception):
+                        controlled.client.post(
+                            "context/sample",
+                            {
+                                "task_id": controlled.context["task_id"],
+                                "sample_id": digest([str(self.state.root.resolve()), call_id]),
+                                "revision": EXTRACTOR_VERSION,
+                                "components": estimate_components(user=text),
+                                "provider_input_tokens": usage_record.get("input_tokens"),
+                            },
+                        )
+                else:
+                    response, _ = await measured_request()
                 cost = float(estimate_google_text_cost(response.get("usage"), prices))
                 seconds = time.perf_counter() - started
                 content = response["choices"][0]["message"]["content"]
@@ -303,10 +343,18 @@ class Gemini:
                         "price_per_million": PRICES[model],
                     },
                 )
-                if purpose == "extraction":
+                if purpose == "extraction" and get_current_run() is not None:
                     record_external_cost(cost, label="Gemini text usage estimate")
                 return answer
             except BaseException as exc:
+                from reins.control import ControlDenied
+
+                if isinstance(exc, ControlDenied):
+                    self.state.db.execute(
+                        "DELETE FROM calls WHERE id=? AND state='inflight'", (call_id,)
+                    )
+                    self.state.db.commit()
+                    raise
                 self.state.db.execute(
                     "UPDATE calls SET state='uncertain',seconds=?,response=? "
                     "WHERE id=? AND state='inflight'",

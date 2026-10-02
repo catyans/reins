@@ -20,6 +20,9 @@ def options(fn):
     for decorator in (
         click.option("--dataset", type=click.Path(exists=True), required=True),
         click.option("--output", type=click.Path(), required=True),
+        click.option("--control-url", default="http://127.0.0.1:8795"),
+        click.option("--control-token-file", type=click.Path(exists=True)),
+        click.option("--control-task", help="Existing operator-provisioned task ID"),
         click.option("--key-file", type=click.Path(exists=True)),
         click.option("--public-output", type=click.Path(), default=None),
         click.option(
@@ -32,15 +35,34 @@ def options(fn):
     return fn
 
 
-def execute(dataset, output, key_file, public_output, split, policy, budget):
+def execute(
+    dataset,
+    output,
+    key_file,
+    public_output,
+    split,
+    policy,
+    budget,
+    control_url="http://127.0.0.1:8795",
+    control_token_file=None,
+    control_task=None,
+):
     dataset = json.loads(Path(dataset).read_text())
     state = State(output)
     runner = None
     try:
         configure(storage_path=str(Path(output) / "traces.duckdb"))
+        controlled = None
+        if bool(control_token_file) != bool(control_task):
+            raise click.UsageError("Supply both --control-token-file and --control-task")
+        if control_task:
+            from reins.control.client import Client, Workflow
+
+            client = Client(control_url, token_file=control_token_file)
+            controlled = Workflow(client, client.post("context", {"task_id": control_task}))
         runner = Runner(
             state,
-            Gemini(state, load_key(key_file), limit=budget),
+            Gemini(state, load_key(key_file), limit=budget, control=controlled),
             public_output or Path(output) / "public-status.json",
         )
         asyncio.run(runner.run(dataset, splits=split or None, policies=policy or POLICIES))
